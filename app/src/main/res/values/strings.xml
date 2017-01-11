@@ -6,4 +6,9 @@
     <string name="questiontype_option">Choose Question Type</string>
     <string name="questiontype_buttontext">Text</string>
     <string name="questiontype_buttonmcq">MCQ</string>
+    <string name="mcqmaker_edittext">Enter the Question</string>
+    <string name="mcqmaker_radiobuttonone">Enter the First Option</string>
+    <string name="mcqmaker_radiiobuttontwo">Enter the Second Option</string>
+    <string name="mcqmaker_radiiobuttonthree">Enter the Three Option</string>
+    <string name="mcqmaker_radiiobuttonanswer">Enter the Answer Option</string>
 </resources>
