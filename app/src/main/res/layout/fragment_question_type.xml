@@ -22,9 +22,10 @@
         android:text="@string/questiontype_buttontext" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/button_mcq"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="150dp"
         android:text="@string/questiontype_buttonmcq" />
+
 </LinearLayout>
