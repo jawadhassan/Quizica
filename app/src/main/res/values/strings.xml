@@ -7,8 +7,9 @@
     <string name="questiontype_buttontext">Text</string>
     <string name="questiontype_buttonmcq">MCQ</string>
     <string name="mcqmaker_edittext">Enter the Question</string>
-    <string name="mcqmaker_radiobuttonone">Enter the First Option</string>
-    <string name="mcqmaker_radiiobuttontwo">Enter the Second Option</string>
-    <string name="mcqmaker_radiiobuttonthree">Enter the Three Option</string>
-    <string name="mcqmaker_radiiobuttonanswer">Enter the Answer Option</string>
+    <string name="mcqmaker_edittextone">Enter the First Option</string>
+    <string name="mcqmaker_edittexttwo">Enter the Second Option</string>
+    <string name="mcqmaker_edittextthree">Enter the Three Option</string>
+    <string name="mcqmaker_edittextfour">Enter the Three Option</string>
+    <string name="mcqmaker_edittextnswer">Enter the Answer Option</string>
 </resources>

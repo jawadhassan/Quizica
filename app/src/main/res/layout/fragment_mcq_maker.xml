@@ -15,40 +15,58 @@
         android:paddingLeft="10dp"
         android:text="@string/mcqmaker_edittext" />
 
-    <RadioButton
-        android:id="@+id/button_option_one"
+    <EditText
+        android:id="@+id/view_edittext_optionOne"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="20dp"
+        android:ems="10"
+        android:inputType="textPersonName"
         android:paddingLeft="10dp"
-        android:text="@string/mcqmaker_radiobuttonone" />
+        android:text="@string/mcqmaker_edittextone" />
 
-    <RadioButton
-        android:id="@+id/button_option_two"
+    <EditText
+        android:id="@+id/view_edittext_optionTwo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
+        android:ems="10"
+        android:inputType="textPersonName"
         android:paddingLeft="10dp"
-        android:text="@string/mcqmaker_radiiobuttontwo" />
+        android:text="@string/mcqmaker_edittexttwo" />
 
-    <RadioButton
-        android:id="@+id/button_option_three"
+    <EditText
+        android:id="@+id/view_edittext_optionThree"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
+        android:ems="10"
+        android:inputType="textPersonName"
         android:paddingLeft="10dp"
-        android:text="@string/mcqmaker_radiiobuttonthree" />
+        android:text="@string/mcqmaker_edittextthree" />
 
-    <RadioButton
-        android:id="@+id/button_option_answer"
+    <EditText
+        android:id="@+id/view_edittext_optionFour"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
+        android:ems="10"
+        android:inputType="textPersonName"
         android:paddingLeft="10dp"
-        android:text="@string/mcqmaker_radiiobuttonanswer" />
+        android:text="@string/mcqmaker_edittextfour" />
 
+
+    <EditText
+        android:id="@+id/view_edittext_answer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:paddingLeft="10dp"
+        android:text="@string/mcqmaker_edittextnswer" />
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/button_publish"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Button"

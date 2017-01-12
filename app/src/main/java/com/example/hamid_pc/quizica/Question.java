@@ -22,9 +22,9 @@ public class Question {
         this.answer = answer;
     }
 
-    public Question(String question, String answer) {
+    public Question(String question) {
         this.quesiton = question;
-        this.answer = answer;
+
     }
 
 
