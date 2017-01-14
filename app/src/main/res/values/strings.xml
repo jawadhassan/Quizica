@@ -6,10 +6,12 @@
     <string name="questiontype_option">Choose Question Type</string>
     <string name="questiontype_buttontext">Text</string>
     <string name="questiontype_buttonmcq">MCQ</string>
-    <string name="mcqmaker_edittext">Enter the Question</string>
-    <string name="mcqmaker_edittextone">Enter the First Option</string>
-    <string name="mcqmaker_edittexttwo">Enter the Second Option</string>
-    <string name="mcqmaker_edittextthree">Enter the Three Option</string>
-    <string name="mcqmaker_edittextfour">Enter the Three Option</string>
-    <string name="mcqmaker_edittextnswer">Enter the Answer Option</string>
+    <string name="mcqmaker_edittext">MCQ Question</string>
+    <string name="mcqmaker_edittextone">First Option</string>
+    <string name="mcqmaker_edittexttwo">Second Option</string>
+    <string name="mcqmaker_edittextthree">Third Option</string>
+    <string name="mcqmaker_edittextfour">Fourth Option</string>
+    <string name="mcqmaker_edittextnswer">Answer</string>
+    <string name="mcqmaker_buttondone">Done</string>
+    <string name="mcqmaker_buttonaddmore">Add More</string>
 </resources>

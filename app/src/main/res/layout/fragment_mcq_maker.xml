@@ -5,70 +5,129 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/view_edittext_layout_question"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp">
     <EditText
         android:id="@+id/view_edittext_question"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:ems="10"
+        android:hint="@string/mcqmaker_edittext"
         android:inputType="textPersonName"
-        android:paddingLeft="10dp"
-        android:text="@string/mcqmaker_edittext" />
+        android:paddingLeft="10dp" />
+    </android.support.design.widget.TextInputLayout>
 
-    <EditText
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/view_edittext_layout_optionOne"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp">
+
+        <EditText
         android:id="@+id/view_edittext_optionOne"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:ems="10"
+            android:hint="@string/mcqmaker_edittextone"
         android:inputType="textPersonName"
-        android:paddingLeft="10dp"
-        android:text="@string/mcqmaker_edittextone" />
+            android:paddingLeft="10dp" />
+    </android.support.design.widget.TextInputLayout>
 
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/view_edittext_layout_optionTwo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp">
     <EditText
         android:id="@+id/view_edittext_optionTwo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:ems="10"
+        android:hint="@string/mcqmaker_edittexttwo"
         android:inputType="textPersonName"
-        android:paddingLeft="10dp"
-        android:text="@string/mcqmaker_edittexttwo" />
+        android:paddingLeft="10dp" />
+    </android.support.design.widget.TextInputLayout>
 
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/view_edittext_layout_optionThree"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp">
     <EditText
         android:id="@+id/view_edittext_optionThree"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:ems="10"
+        android:hint="@string/mcqmaker_edittextthree"
         android:inputType="textPersonName"
-        android:paddingLeft="10dp"
-        android:text="@string/mcqmaker_edittextthree" />
+        android:paddingLeft="10dp" />
+    </android.support.design.widget.TextInputLayout>
 
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/view_edittext_layout_optionFour"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp">
     <EditText
         android:id="@+id/view_edittext_optionFour"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:ems="10"
+        android:hint="@string/mcqmaker_edittextfour"
         android:inputType="textPersonName"
-        android:paddingLeft="10dp"
-        android:text="@string/mcqmaker_edittextfour" />
+        android:paddingLeft="10dp" />
 
+    </android.support.design.widget.TextInputLayout>
 
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/view_edittext_layout_optionAnswer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp">
     <EditText
         android:id="@+id/view_edittext_answer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:ems="10"
+        android:hint="@string/mcqmaker_edittextnswer"
         android:inputType="textPersonName"
-        android:paddingLeft="10dp"
-        android:text="@string/mcqmaker_edittextnswer" />
-    <Button
-        android:id="@+id/button_publish"
+        android:paddingLeft="10dp" />
+    </android.support.design.widget.TextInputLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Button"
-        tools:text="Publish" />
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/mcqmaker_buttonaddmore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/mcqmaker_buttonaddmore" />
+
+        <Button
+            android:id="@+id/button_publish"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/mcqmaker_buttondone"
+            tools:text="Publish" />
+    </LinearLayout>
 </LinearLayout>

@@ -8,6 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
+
+import static android.app.Activity.RESULT_OK;
 
 /**
  * Created by Hamid-PC on 1/11/2017.
@@ -16,7 +19,7 @@ import android.widget.Button;
 public class QuestionTypeFragment extends Fragment {
 
 
-
+    static final int ADD_QUESTION_REQUEST = 1;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -33,9 +36,19 @@ public class QuestionTypeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent i = McqMakerActivity.newIntent(getContext());
-                startActivity(i);
+                startActivityForResult(i, ADD_QUESTION_REQUEST);
             }
         });
         return v;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == ADD_QUESTION_REQUEST) {
+            if (resultCode == RESULT_OK) {
+                Toast.makeText(getContext(), "Question Added", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 }
