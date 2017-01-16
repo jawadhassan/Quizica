@@ -7,10 +7,9 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -22,11 +21,10 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class McqMakerFragment extends Fragment {
 
-    Animation animShake;
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mDatabaseReference;
     private EditText editTextQuestion;
-    private EditText edittTextOptionOne;
+    private EditText editTextOptionOne;
     private EditText editTextOptionTwo;
     private EditText editTextOptionThree;
     private EditText editTextOptionFour;
@@ -38,6 +36,25 @@ public class McqMakerFragment extends Fragment {
     private TextInputLayout layoutOptioFour;
     private TextInputLayout layoutAnswer;
     private Button publishButton;
+
+    private String optionOne;
+    private String optionTwo;
+    private String optionThree;
+    private String optionFour;
+
+    private Boolean isQuestionTextValidated = false;
+    private Boolean isOptionOneTextValidated = false;
+    private Boolean isOptionTwoTextValidated = false;
+    private Boolean isOptionThreeTextValidated = false;
+    private Boolean isOptionFourTextValidated = false;
+    private Boolean isAnswerValidated = false;
+
+
+    private Boolean isOptionTwoValidated = false;
+    private Boolean isOptionThreeValidated = false;
+    private Boolean isOptionFourValidated = false;
+
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -52,7 +69,7 @@ public class McqMakerFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_mcq_maker, container, false);
         editTextQuestion = (EditText) v.findViewById(R.id.view_edittext_question);
-        edittTextOptionOne = (EditText) v.findViewById(R.id.view_edittext_optionOne);
+        editTextOptionOne = (EditText) v.findViewById(R.id.view_edittext_optionOne);
         editTextOptionTwo = (EditText) v.findViewById(R.id.view_edittext_optionTwo);
         editTextOptionThree = (EditText) v.findViewById(R.id.view_edittext_optionThree);
         editTextOptionFour = (EditText) v.findViewById(R.id.view_edittext_optionFour);
@@ -67,29 +84,117 @@ public class McqMakerFragment extends Fragment {
         layoutQuestion = (TextInputLayout) v.findViewById(R.id.view_edittext_layout_optionAnswer);
 
 
-        animShake = AnimationUtils.loadAnimation(getContext(), R.anim.shake);
+
 
 
         publishButton = (Button) v.findViewById(R.id.button_publish);
+        publishButton.setEnabled(false);
+
 
         publishButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Question question = new Question(editTextQuestion.getText().toString(), edittTextOptionOne.getText().toString(), editTextOptionTwo.getText().toString(), editTextOptionThree.getText().toString(), editTextOptionFour.getText().toString(), editTextAnswer.getText().toString());
+                //Question question = new Question(editTextQuestion.getText().toString(), editTextOptionOne.getText().toString(), editTextOptionTwo.getText().toString(), editTextOptionThree.getText().toString(), editTextOptionFour.getText().toString(), editTextAnswer.getText().toString());
                 //Question question = new Question(editTextQuestion.getText().toString());
                 //mDatabaseReference.push().setValue(question);
                 submitForm();
             }
         });
 
+
+        editTextQuestion.addTextChangedListener(new TextValidator(editTextQuestion) {
+            @Override
+            public void validate(EditText editText, String text) {
+                isQuestionTextValidated = textValidate(text);
+                enableButton();
+
+            }
+        });
+        editTextOptionOne.addTextChangedListener(new TextValidator(editTextOptionOne) {
+            @Override
+            public void validate(EditText editText, String text) {
+                isOptionOneTextValidated = textValidate(text);
+                isAnswerValidated = answerValidate(text, optionOne, optionTwo, optionThree, optionFour, editTextAnswer);
+                enableButton();
+            }
+        });
+        editTextOptionTwo.addTextChangedListener(new TextValidator(editTextOptionTwo) {
+            @Override
+            public void validate(EditText editText, String text) {
+                isOptionTwoTextValidated = textValidate(text);
+
+                optionOne = editTextOptionOne.getText().toString();
+                optionThree = editTextOptionThree.getText().toString();
+                optionFour = editTextOptionFour.getText().toString();
+                isOptionTwoValidated = optionValidate(text, optionOne, optionThree, optionFour);
+                isAnswerValidated = answerValidate(text, optionOne, optionTwo, optionThree, optionFour, editTextAnswer);
+                enableButton();
+
+            }
+        });
+        editTextOptionFour.addTextChangedListener(new TextValidator(editTextOptionFour) {
+            @Override
+            public void validate(EditText editText, String text) {
+                isOptionFourTextValidated = textValidate(text);
+
+                optionOne = editTextOptionOne.getText().toString();
+                optionTwo = editTextOptionTwo.getText().toString();
+                optionThree = editTextOptionThree.getText().toString();
+                isOptionFourValidated = optionValidate(text, optionOne, optionTwo, optionThree);
+                isAnswerValidated = answerValidate(text, optionOne, optionTwo, optionThree, optionFour, editTextAnswer);
+                enableButton();
+            }
+        });
+        editTextOptionThree.addTextChangedListener(new TextValidator(editTextOptionThree) {
+            @Override
+            public void validate(EditText editText, String text) {
+                isOptionThreeTextValidated = textValidate(text);
+
+                optionOne = editTextOptionOne.getText().toString();
+                optionTwo = editTextOptionTwo.getText().toString();
+                optionFour = editTextOptionFour.getText().toString();
+
+                isOptionThreeValidated = optionValidate(text, optionOne, optionTwo, optionFour);
+                isAnswerValidated = answerValidate(text, optionOne, optionTwo, optionThree, optionFour, editTextAnswer);
+                enableButton();
+
+            }
+        });
+        editTextAnswer.addTextChangedListener(new TextValidator(editTextAnswer) {
+
+
+            @Override
+            public void validate(EditText editText, String text) {
+                optionOne = editTextOptionOne.getText().toString();
+                optionTwo = editTextOptionTwo.getText().toString();
+                optionThree = editTextOptionThree.getText().toString();
+                optionFour = editTextOptionFour.getText().toString();
+
+                isAnswerValidated = answerValidate(text, optionOne, optionTwo, optionThree, optionFour, editTextAnswer);
+                enableButton();
+            }
+        });
+
+
+
         return v;
     }
 
 
     public void submitForm() {
-        // Toast.makeText(getContext(),"Successful",Toast.LENGTH_LONG).show();
-       
+        Toast.makeText(getContext(), "Successful", Toast.LENGTH_LONG).show();
+
+
     }
 
 
+    public void enableButton() {
+        if (isQuestionTextValidated && isOptionOneTextValidated && isOptionTwoTextValidated && isOptionThreeTextValidated && isOptionFourTextValidated && isAnswerValidated && isOptionTwoValidated && isOptionThreeValidated && isOptionFourValidated) {
+            publishButton.setEnabled(true);
+
+        } else {
+            publishButton.setEnabled(false);
+        }
+
+    }
 }
