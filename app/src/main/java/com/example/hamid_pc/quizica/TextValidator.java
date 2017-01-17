@@ -11,7 +11,7 @@ import android.widget.EditText;
 public abstract class TextValidator implements TextWatcher {
 
     private final EditText editText;
-    private EditText Answer;
+    private String answerText;
 
 
     public TextValidator(EditText editText) {
@@ -45,7 +45,7 @@ public abstract class TextValidator implements TextWatcher {
         } else if (text.length() >= 400) {
             editText.setError("Maximum letters limit is 400");
             return false;
-        } else if (text.length() <= 2) {
+        } else if (text.length() <= 1) {
             editText.setError("Too Short");
             return false;
         }
@@ -61,19 +61,18 @@ public abstract class TextValidator implements TextWatcher {
         return true;
     }
 
-    public boolean answerValidate(String text, String optionOne, String optionTwo, String optionThree, String optionFour, EditText Answer) {
-        this.Answer = Answer;
+    public boolean answerValidate(String text, String optionOne, String optionTwo, String optionThree, String optionFour) {
+
+
+
         if (!text.equals(optionOne) && !text.equals(optionTwo) && !text.equals(optionThree) && !text.equals(optionFour)) {
-            Answer.setError("Answer does not match with given options");
+            editText.setError("Answer does not match with given options");
             return false;
         } else if (text == null) {
+
             return false;
         }
         return true;
-    }
-
-    public boolean compareAnswer(String text, String optionOne, String optionTwo, String optionThree, String optionFour) {
-        return !(!text.equals(optionOne) && !text.equals(optionTwo) && !text.equals(optionThree) && !text.equals(optionFour));
     }
 
 

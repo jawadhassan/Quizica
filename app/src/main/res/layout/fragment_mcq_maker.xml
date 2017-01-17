@@ -122,7 +122,7 @@
             android:text="@string/mcqmaker_buttonaddmore" />
 
         <Button
-            android:id="@+id/button_publish"
+            android:id="@+id/mcqmaker_buttondone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"

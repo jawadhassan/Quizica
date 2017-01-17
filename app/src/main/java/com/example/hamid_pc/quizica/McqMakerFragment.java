@@ -35,7 +35,8 @@ public class McqMakerFragment extends Fragment {
     private TextInputLayout layoutOptionThree;
     private TextInputLayout layoutOptioFour;
     private TextInputLayout layoutAnswer;
-    private Button publishButton;
+    private Button doneButton;
+    private Button addMoreButton;
 
     private String optionOne;
     private String optionTwo;
@@ -84,14 +85,21 @@ public class McqMakerFragment extends Fragment {
         layoutQuestion = (TextInputLayout) v.findViewById(R.id.view_edittext_layout_optionAnswer);
 
 
+        doneButton = (Button) v.findViewById(R.id.mcqmaker_buttondone);
+        doneButton.setEnabled(false);
+
+        addMoreButton = (Button) v.findViewById(R.id.mcqmaker_buttonaddmore);
+        addMoreButton.setEnabled(false);
+
+        addMoreButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                submitForm();
+            }
+        });
 
 
-
-        publishButton = (Button) v.findViewById(R.id.button_publish);
-        publishButton.setEnabled(false);
-
-
-        publishButton.setOnClickListener(new View.OnClickListener() {
+        doneButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //Question question = new Question(editTextQuestion.getText().toString(), editTextOptionOne.getText().toString(), editTextOptionTwo.getText().toString(), editTextOptionThree.getText().toString(), editTextOptionFour.getText().toString(), editTextAnswer.getText().toString());
@@ -114,7 +122,6 @@ public class McqMakerFragment extends Fragment {
             @Override
             public void validate(EditText editText, String text) {
                 isOptionOneTextValidated = textValidate(text);
-                isAnswerValidated = answerValidate(text, optionOne, optionTwo, optionThree, optionFour, editTextAnswer);
                 enableButton();
             }
         });
@@ -127,7 +134,6 @@ public class McqMakerFragment extends Fragment {
                 optionThree = editTextOptionThree.getText().toString();
                 optionFour = editTextOptionFour.getText().toString();
                 isOptionTwoValidated = optionValidate(text, optionOne, optionThree, optionFour);
-                isAnswerValidated = answerValidate(text, optionOne, optionTwo, optionThree, optionFour, editTextAnswer);
                 enableButton();
 
             }
@@ -141,7 +147,6 @@ public class McqMakerFragment extends Fragment {
                 optionTwo = editTextOptionTwo.getText().toString();
                 optionThree = editTextOptionThree.getText().toString();
                 isOptionFourValidated = optionValidate(text, optionOne, optionTwo, optionThree);
-                isAnswerValidated = answerValidate(text, optionOne, optionTwo, optionThree, optionFour, editTextAnswer);
                 enableButton();
             }
         });
@@ -155,7 +160,6 @@ public class McqMakerFragment extends Fragment {
                 optionFour = editTextOptionFour.getText().toString();
 
                 isOptionThreeValidated = optionValidate(text, optionOne, optionTwo, optionFour);
-                isAnswerValidated = answerValidate(text, optionOne, optionTwo, optionThree, optionFour, editTextAnswer);
                 enableButton();
 
             }
@@ -170,7 +174,7 @@ public class McqMakerFragment extends Fragment {
                 optionThree = editTextOptionThree.getText().toString();
                 optionFour = editTextOptionFour.getText().toString();
 
-                isAnswerValidated = answerValidate(text, optionOne, optionTwo, optionThree, optionFour, editTextAnswer);
+                isAnswerValidated = answerValidate(text, optionOne, optionTwo, optionThree, optionFour);
                 enableButton();
             }
         });
@@ -183,17 +187,19 @@ public class McqMakerFragment extends Fragment {
 
     public void submitForm() {
         Toast.makeText(getContext(), "Successful", Toast.LENGTH_LONG).show();
-
+        getActivity().finish();
 
     }
 
 
     public void enableButton() {
         if (isQuestionTextValidated && isOptionOneTextValidated && isOptionTwoTextValidated && isOptionThreeTextValidated && isOptionFourTextValidated && isAnswerValidated && isOptionTwoValidated && isOptionThreeValidated && isOptionFourValidated) {
-            publishButton.setEnabled(true);
+            doneButton.setEnabled(true);
+            addMoreButton.setEnabled(true);
 
         } else {
-            publishButton.setEnabled(false);
+            doneButton.setEnabled(false);
+            addMoreButton.setEnabled(false);
         }
 
     }
