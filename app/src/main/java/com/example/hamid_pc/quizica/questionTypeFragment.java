@@ -15,8 +15,8 @@ import android.widget.Button;
 
 public class QuestionTypeFragment extends Fragment {
 
-
-
+    private Button mMcqButton;
+    private Button mTextButton;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -28,14 +28,25 @@ public class QuestionTypeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.fragment_question_type, container, false);
-        Button button = (Button) v.findViewById(R.id.button_mcq);
-        button.setOnClickListener(new View.OnClickListener() {
+        mMcqButton = (Button) v.findViewById(R.id.button_mcq);
+        mTextButton = (Button) v.findViewById(R.id.button_text);
+
+        mMcqButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = McqMakerActivity.newIntent(getContext());
                 startActivity(i);
             }
         });
+
+        mTextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = TextMakerActivity.newIntent(getContext());
+                startActivity(i);
+            }
+        });
+
         return v;
     }
 

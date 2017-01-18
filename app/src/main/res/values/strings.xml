@@ -14,4 +14,5 @@
     <string name="mcqmaker_edittextnswer">Answer</string>
     <string name="mcqmaker_buttondone">Done</string>
     <string name="mcqmaker_buttonaddmore">Add More</string>
+    <string name="textmaker_edittext">Question</string>
 </resources>

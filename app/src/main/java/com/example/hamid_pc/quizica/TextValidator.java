@@ -42,8 +42,8 @@ public abstract class TextValidator implements TextWatcher {
             editText.setError("The field is required");
             return false;
 
-        } else if (text.length() >= 400) {
-            editText.setError("Maximum letters limit is 400");
+        } else if (text.length() >= 100) {
+            editText.setError("Maximum letters limit is 100");
             return false;
         } else if (text.length() <= 1) {
             editText.setError("Too Short");
