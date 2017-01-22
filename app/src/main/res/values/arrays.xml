@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="operation_options">
+        <item>Start Quiz</item>
+        <item>Edit Quiz</item>
+        <item>Delete Quiz</item>
+    </string-array>
+</resources>

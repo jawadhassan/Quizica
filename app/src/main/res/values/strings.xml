@@ -15,4 +15,5 @@
     <string name="mcqmaker_buttondone">Done</string>
     <string name="mcqmaker_buttonaddmore">Add More</string>
     <string name="textmaker_edittext">Question</string>
+    <string name="operation_picker">Choose Operation</string>
 </resources>
