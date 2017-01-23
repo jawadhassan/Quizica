@@ -2,7 +2,7 @@
 <resources>
     <string-array name="operation_options">
         <item>Start Quiz</item>
-        <item>Edit Quiz</item>
+        <item>View Quiz</item>
         <item>Delete Quiz</item>
     </string-array>
 </resources>

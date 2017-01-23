@@ -26,6 +26,7 @@
         <!--</activity>-->
         <activity android:name=".McqMakerActivity"></activity>
         <activity android:name=".TextMakerActivity"></activity>
+        <activity android:name=".QuizCreateActivity"></activity>
 
 
     </application>

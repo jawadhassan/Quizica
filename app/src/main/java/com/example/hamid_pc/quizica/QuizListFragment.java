@@ -1,7 +1,9 @@
 package com.example.hamid_pc.quizica;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -21,6 +23,7 @@ public class QuizListFragment extends Fragment {
     private RecyclerView mCrimeRecyclerView;
     private QuizAdapter mAdapter;
     private List<Quiz> mquizes;
+    private FloatingActionButton mfloatingActionButton;
 
     @Nullable
     @Override
@@ -28,7 +31,18 @@ public class QuizListFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_quiz_list, container, false);
         mCrimeRecyclerView = (RecyclerView) view.findViewById(R.id.quiz_recycler_view);
         mCrimeRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mfloatingActionButton = (FloatingActionButton) view.findViewById(R.id.quiz_floating_button);
         updateUI();
+
+
+        mfloatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = QuizCreateActivity.newIntent(getContext());
+                startActivity(intent);
+            }
+        });
+
         return view;
     }
 
