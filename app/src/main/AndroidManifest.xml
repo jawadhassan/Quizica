@@ -9,7 +9,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".QuizListActivity">
+        <activity android:name=".CourseListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -27,7 +27,7 @@
         <activity android:name=".McqMakerActivity"></activity>
         <activity android:name=".TextMakerActivity"></activity>
         <activity android:name=".QuizCreateActivity"></activity>
-
+        <activity android:name=".QuizListActivity"></activity>
 
     </application>
 

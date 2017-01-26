@@ -20,17 +20,17 @@ import java.util.List;
 public class QuizListFragment extends Fragment {
 
     private static final String DIALOG_OPERATION = "DialogOperation";
-    private RecyclerView mCrimeRecyclerView;
+    private RecyclerView mQuizRecyclerView;
     private QuizAdapter mAdapter;
-    private List<Quiz> mquizes;
+    private List<Quiz> mQuizes;
     private FloatingActionButton mfloatingActionButton;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_quiz_list, container, false);
-        mCrimeRecyclerView = (RecyclerView) view.findViewById(R.id.quiz_recycler_view);
-        mCrimeRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mQuizRecyclerView = (RecyclerView) view.findViewById(R.id.quiz_recycler_view);
+        mQuizRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mfloatingActionButton = (FloatingActionButton) view.findViewById(R.id.quiz_floating_button);
         updateUI();
 
@@ -50,13 +50,13 @@ public class QuizListFragment extends Fragment {
         //  page no 184 of Big nerd ranch
         //Temporary Code For Checking
 
-        mquizes = new ArrayList<>();
+        mQuizes = new ArrayList<>();
         for (int i = 0; i < 20; i++) {
-            mquizes.add(new Quiz("Database Introduction", 1));
+            mQuizes.add(new Quiz("Database Introduction", 1));
         }
 
-        mAdapter = new QuizAdapter(mquizes);
-        mCrimeRecyclerView.setAdapter(mAdapter);
+        mAdapter = new QuizAdapter(mQuizes);
+        mQuizRecyclerView.setAdapter(mAdapter);
     }
 
     private class QuizHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
