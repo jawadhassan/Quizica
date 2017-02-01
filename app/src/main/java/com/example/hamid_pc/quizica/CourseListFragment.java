@@ -1,16 +1,22 @@
 package com.example.hamid_pc.quizica;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.firebase.ui.auth.AuthUI;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,11 +26,38 @@ import java.util.List;
  */
 
 public class CourseListFragment extends Fragment {
+    public static final int RC_SIGN_IN = 1;
     private RecyclerView mCourseRecyclerView;
     private CourseAdapter mAdapter;
     private List<Course> mCourses;
     private FloatingActionButton mfloatingActionButton;
+    private FirebaseAuth mFireAuth;
+    private FirebaseAuth.AuthStateListener mAuthListener;
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mFireAuth = FirebaseAuth.getInstance();
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if (user != null) {
+                    Log.d("Check", "OK");
+                } else {
+                    startActivityForResult(
+                            AuthUI.getInstance()
+                                    .createSignInIntentBuilder()
+                                    .setIsSmartLockEnabled(false)
+                                    .setProviders(AuthUI.GOOGLE_PROVIDER,
+                                            AuthUI.EMAIL_PROVIDER)
+                                    .build(),
+                            RC_SIGN_IN);
+                }
+            }
+        };
+
+    }
 
     @Nullable
     @Override
@@ -52,6 +85,18 @@ public class CourseListFragment extends Fragment {
 
         mAdapter = new CourseAdapter(mCourses);
         mCourseRecyclerView.setAdapter(mAdapter);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mFireAuth.addAuthStateListener(mAuthListener);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mFireAuth.addAuthStateListener(mAuthListener);
     }
 
     private class CourseHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
