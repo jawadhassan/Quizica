@@ -34,9 +34,8 @@ public class CourseListFragment extends Fragment {
     private FirebaseAuth mFireAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public CourseListFragment() {
+        super();
         mFireAuth = FirebaseAuth.getInstance();
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -56,6 +55,12 @@ public class CourseListFragment extends Fragment {
                 }
             }
         };
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
 
     }
 
