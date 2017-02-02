@@ -11,7 +11,7 @@
         android:theme="@style/AppTheme"
         tools:replace="android:supportsRtl">
 
-        <activity android:name=".CourseListActivity">
+        <activity android:name=".AuthenticationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -30,6 +30,9 @@
         <activity android:name=".TextMakerActivity"></activity>
         <activity android:name=".QuizCreateActivity"></activity>
         <activity android:name=".QuizListActivity"></activity>
+        <activity android:name=".CourseListActivity"></activity>
+        <activity android:name=".ProfileDataActivity"></activity>
+
 
     </application>
 

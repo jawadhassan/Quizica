@@ -16,4 +16,6 @@
     <string name="mcqmaker_buttonaddmore">Add More</string>
     <string name="textmaker_edittext">Question</string>
     <string name="operation_picker">Choose Operation</string>
+    <string name="pref_file_key">MYPREF</string>
+    <string name="pref_sign_key">SIGNED</string>
 </resources>

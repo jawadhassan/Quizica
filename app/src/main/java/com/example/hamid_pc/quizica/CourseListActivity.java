@@ -1,7 +1,10 @@
 package com.example.hamid_pc.quizica;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+
 
 
 /**
@@ -12,6 +15,11 @@ import android.support.v4.app.Fragment;
 public class CourseListActivity extends SingleFragmentActivity {
 
 
+    public static Intent newIntent(Context packageContext) {
+        Intent i = new Intent(packageContext, CourseListActivity.class);
+        return i;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,7 +29,6 @@ public class CourseListActivity extends SingleFragmentActivity {
 
     @Override
     protected Fragment createFragment() {
-
         return new CourseListFragment();
     }
 
