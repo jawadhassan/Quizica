@@ -32,7 +32,7 @@
         <activity android:name=".QuizListActivity"></activity>
         <activity android:name=".CourseListActivity"></activity>
         <activity android:name=".ProfileDataActivity"></activity>
-
+        <activity android:name=".TeacherProfileActivity"></activity>
 
     </application>
 

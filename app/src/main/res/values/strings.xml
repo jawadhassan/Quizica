@@ -16,6 +16,11 @@
     <string name="mcqmaker_buttonaddmore">Add More</string>
     <string name="textmaker_edittext">Question</string>
     <string name="operation_picker">Choose Operation</string>
+    <string name="profile_picker">Choose Profile</string>
+    <string name="teacher_picker">Teacher</string>
+    <string name="student_picker">Student</string>
     <string name="pref_file_key">MYPREF</string>
     <string name="pref_sign_key">SIGNED</string>
+    <string name="profile_edittext_name">Enter Name</string>
+    <string name="profile_edittext_id">Enter ID</string>
 </resources>
