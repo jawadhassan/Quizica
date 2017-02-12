@@ -16,12 +16,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 /**
- * Created by Hamid-PC on 2/3/2017.
+ * Created by Hamid-PC on 2/8/2017.
  */
 
-public class TeacherProfileFragment extends Fragment {
-
-
+public class StudentProfileFragment extends Fragment {
     private EditText mEditTextName;
     private EditText mEditTextId;
     private Button mSubmit;
@@ -29,24 +27,25 @@ public class TeacherProfileFragment extends Fragment {
     private String mId;
     private String mUsername;
 
+
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mDatabaseReference;
 
     private SharedPreferences mPref;
     private Context context;
 
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mFirebaseDatabase = FirebaseDatabase.getInstance();
-        mDatabaseReference = mFirebaseDatabase.getReference().child("teacher");
-
+        mDatabaseReference = mFirebaseDatabase.getReference().child("student");
     }
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_teacher_profile, container, false);
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_student_profile, container, false);
         mEditTextName = (EditText) view.findViewById(R.id.view_edittext_name);
         mEditTextId = (EditText) view.findViewById(R.id.view_edittext_id);
 
@@ -69,5 +68,6 @@ public class TeacherProfileFragment extends Fragment {
             }
         });
         return view;
+
     }
 }

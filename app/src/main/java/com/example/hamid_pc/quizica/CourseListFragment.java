@@ -1,16 +1,24 @@
 package com.example.hamid_pc.quizica;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,15 +29,22 @@ import java.util.List;
 
 public class CourseListFragment extends Fragment {
 
+    private final int RC_COURSE = 2;
     private RecyclerView mCourseRecyclerView;
     private CourseAdapter mAdapter;
     private List<Course> mCourses;
     private FloatingActionButton mfloatingActionButton;
-
+    private ChildEventListener mChildEventListener;
+    private FirebaseDatabase mFirebaseDatabase;
+    private DatabaseReference mDatabaseReference;
+    private Course course;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        mDatabaseReference = mFirebaseDatabase.getReference().child("course");
 
 
     }
@@ -45,7 +60,8 @@ public class CourseListFragment extends Fragment {
         mfloatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(), "Successful", Toast.LENGTH_SHORT).show();
+                Intent intent = CourseCreateActivity.newIntent(getActivity());
+                startActivityForResult(intent, RC_COURSE);
             }
         });
 
@@ -53,15 +69,65 @@ public class CourseListFragment extends Fragment {
     }
 
     public void updateUI() {
-        mCourses = new ArrayList<>();
-        for (int i = 0; i < 20; i++) {
-            mCourses.add(new Course("CS101", "Introduction To computer Science", "Dr.Smith"));
-        }
 
+//        for (int i = 0; i < 20; i++) {
+//            mCourses.add(new Course("CS101", "Introduction To computer Science", "Dr.Smith"));
+//        }
+
+        mCourses = new ArrayList<>();
         mAdapter = new CourseAdapter(mCourses);
+        attachDatabaseListener();
         mCourseRecyclerView.setAdapter(mAdapter);
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == RC_COURSE) {
+            if (resultCode == Activity.RESULT_OK) {
+                updateUI();
+            }
+        }
+    }
+
+    public void attachDatabaseListener() {
+        if (mChildEventListener == null) {
+            mChildEventListener = new ChildEventListener() {
+                @Override
+                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+
+                    course = dataSnapshot.getValue(Course.class);
+                    Log.d("check", "okay" + "" + dataSnapshot.getValue(Course.class).getCourseName());
+                    mAdapter.CourseList.add(course);
+
+
+                }
+
+                @Override
+                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                }
+
+                @Override
+                public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                }
+
+                @Override
+                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            };
+
+            mDatabaseReference.addChildEventListener(mChildEventListener);
+        }
+
+    }
 
     private class CourseHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView mTextView;
@@ -81,16 +147,16 @@ public class CourseListFragment extends Fragment {
 
     private class CourseAdapter extends RecyclerView.Adapter<CourseHolder> {
 
-        private List<Course> mCourse;
+        private List<Course> CourseList;
 
-        public CourseAdapter(List<Course> mCourse) {
+        public CourseAdapter(List<Course> CourseList) {
 
-            this.mCourse = mCourse;
+            this.CourseList = CourseList;
         }
 
         @Override
         public void onBindViewHolder(CourseHolder holder, int position) {
-            Course course = mCourse.get(position);
+            Course course = CourseList.get(position);
             holder.mTextView.setText(course.getCourseName());
 
         }
@@ -107,9 +173,7 @@ public class CourseListFragment extends Fragment {
 
         @Override
         public int getItemCount() {
-            return mCourse.size();
+            return CourseList.size();
         }
     }
-
-
 }

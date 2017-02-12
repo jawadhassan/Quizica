@@ -33,6 +33,8 @@
         <activity android:name=".CourseListActivity"></activity>
         <activity android:name=".ProfileDataActivity"></activity>
         <activity android:name=".TeacherProfileActivity"></activity>
+        <activity android:name=".StudentProfileActivity"></activity>
+        <activity android:name=".CourseCreateActivity"></activity>
 
     </application>
 

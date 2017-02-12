@@ -83,7 +83,9 @@ public class AuthenticationActivity extends AppCompatActivity {
     @Override
     public void onPause() {
         super.onPause();
-        mFireAuth.addAuthStateListener(mAuthListener);
+        if (mAuthListener != null) {
+            mFireAuth.removeAuthStateListener(mAuthListener);
+        }
     }
 
 }

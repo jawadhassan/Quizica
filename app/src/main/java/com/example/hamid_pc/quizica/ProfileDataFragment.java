@@ -16,20 +16,29 @@ import android.widget.Button;
 public class ProfileDataFragment extends Fragment {
 
     Button teacher;
-
+    Button student;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_profile_data, container, false);
         teacher = (Button) view.findViewById(R.id.button_teacher);
-        Button student = (Button) view.findViewById(R.id.button_student);
+        student = (Button) view.findViewById(R.id.button_student);
         teacher.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Intent intent = TeacherProfileActivity.newIntent(getContext());
                 startActivity(intent);
 
+            }
+        });
+
+        student.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = StudentProfileActivity.newIntent(getContext());
+                startActivity(intent);
             }
         });
         return view;

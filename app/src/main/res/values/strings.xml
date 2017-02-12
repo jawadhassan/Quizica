@@ -23,4 +23,6 @@
     <string name="pref_sign_key">SIGNED</string>
     <string name="profile_edittext_name">Enter Name</string>
     <string name="profile_edittext_id">Enter ID</string>
+    <string name="course_edittext_name">Enter Course Name</string>
+    <string name="course_edittext_id">Enter Course ID</string>
 </resources>
