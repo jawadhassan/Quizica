@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -23,13 +25,14 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class CourseListFragment extends Fragment {
 
+    private static final String DIALOG_OPERATION = "CourseDialogOperation";
     public final int RC_COURSE = 2;
     private RecyclerView mRecyclerView;
-    private TextView mTextView;
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mDatabaseReference;
     private FirebaseRecyclerAdapter<Course, CourseViewHolder> mAdapter;
     private FloatingActionButton mFLoatingButton;
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -37,7 +40,6 @@ public class CourseListFragment extends Fragment {
         super.onCreate(savedInstanceState);
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mDatabaseReference = mFirebaseDatabase.getReference().child("course");
-
 
     }
 
@@ -72,6 +74,8 @@ public class CourseListFragment extends Fragment {
                 viewHolder.textView.setText(model.getCourseName());
 
             }
+
+
         };
         mRecyclerView.setAdapter(mAdapter);
     }
@@ -84,12 +88,26 @@ public class CourseListFragment extends Fragment {
         }
     }
 
-    public static class CourseViewHolder extends RecyclerView.ViewHolder {
+    private static class CourseViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView textView;
 
         public CourseViewHolder(View itemView) {
             super(itemView);
+            itemView.setOnClickListener(this);
             textView = (TextView) itemView.findViewById(R.id.list_item_course_title_text_view);
+
+        }
+
+        @Override
+        public void onClick(View v) {
+            AppCompatActivity appCompatActivity = (AppCompatActivity) v.getContext();
+            if (appCompatActivity instanceof CourseListActivity) {
+                CourseListActivity activityCourseList = (CourseListActivity) appCompatActivity;
+                FragmentManager manager = activityCourseList.getSupportFragmentManager();
+
+                CourseOperationFragment CourseOperationFragment = new CourseOperationFragment();
+                CourseOperationFragment.show(manager, DIALOG_OPERATION);
+            }
 
         }
     }
