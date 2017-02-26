@@ -25,4 +25,7 @@
     <string name="profile_edittext_id">Enter ID</string>
     <string name="course_edittext_name">Enter Course Name</string>
     <string name="course_edittext_id">Enter Course ID</string>
+    <string name="search_title">Search Students</string>
+    <string name="app_label"></string>
+    <string name="search_hint"></string>
 </resources>

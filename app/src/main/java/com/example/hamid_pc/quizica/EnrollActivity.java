@@ -23,6 +23,6 @@ public class EnrollActivity extends SingleFragmentActivity {
 
     @Override
     protected Fragment createFragment() {
-        return null;
+        return new EnrollFragment();
     }
 }
