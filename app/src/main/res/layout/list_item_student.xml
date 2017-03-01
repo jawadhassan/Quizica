@@ -4,11 +4,13 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <ListView
-        android:id="@+id/listView"
+    <TextView
+        android:id="@+id/list_item_student_title_text_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-    </ListView>
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:text="Title"
+        android:textColor="#212121"
+        android:textSize="22sp" />
 
 </LinearLayout>
