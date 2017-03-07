@@ -8,7 +8,9 @@ public class Teacher {
     private String name;
     private String id;
 
+    public Teacher() {
 
+    }
     public Teacher(String name, String id) {
 
         this.name = name;
