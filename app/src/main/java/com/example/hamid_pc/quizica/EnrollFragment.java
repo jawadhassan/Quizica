@@ -7,6 +7,7 @@ import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -18,6 +19,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -32,13 +36,14 @@ public class EnrollFragment extends Fragment {
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mDatabaseReference;
     private FirebaseRecyclerAdapter<Student, StudentViewHolder> mRecyclerAdapter;
-
+    private String mSearchQuery;
+    private Teacher teacher;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
         mFirebaseDatabase = FirebaseDatabase.getInstance();
-        mDatabaseReference = mFirebaseDatabase.getReference().child("student");
+        mDatabaseReference = mFirebaseDatabase.getReference().child("teacher");
 
     }
 
@@ -46,7 +51,7 @@ public class EnrollFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_enroll, container, false);
+        View view = inflater.inflate(R.layout.fragment_student_list, container, false);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.student_recycler_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         UpdateUI();
@@ -72,12 +77,45 @@ public class EnrollFragment extends Fragment {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                return false;
+                mSearchQuery = query.trim();
+                mDatabaseReference.orderByChild("name").addChildEventListener(new ChildEventListener() {
+                    @Override
+                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+
+                        //student = dataSnapshot.getValue(Student.class);
+                        //Toast.makeText(getContext(),s,Toast.LENGTH_LONG).show();
+                        teacher = dataSnapshot.getValue(Teacher.class);
+
+                        Log.d("check", "" + teacher.getName());
+                    }
+
+                    @Override
+                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                    }
+
+                    @Override
+                    public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                    }
+
+                    @Override
+                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
+                return true;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                // Here To get The SearchQuery
+
                 return false;
             }
 
