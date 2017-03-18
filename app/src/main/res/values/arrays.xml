@@ -5,4 +5,10 @@
         <item>View Quiz</item>
         <item>Delete Quiz</item>
     </string-array>
+    <string-array name="course_dialog_options">
+        <item>Quizzes</item>
+        <item>Enroll Students</item>
+        <item>Delete Course</item>
+    </string-array>
+
 </resources>

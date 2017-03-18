@@ -13,7 +13,7 @@ public class StudentProfileActivity extends SingleFragmentActivity {
 
 
     public static Intent newIntent(Context packageContext) {
-        Intent i = new Intent(packageContext, TeacherProfileActivity.class);
+        Intent i = new Intent(packageContext, StudentProfileActivity.class);
         return i;
     }
 

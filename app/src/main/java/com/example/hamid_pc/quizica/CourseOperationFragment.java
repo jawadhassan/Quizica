@@ -20,16 +20,16 @@ public class CourseOperationFragment extends DialogFragment {
         return new AlertDialog.Builder(getActivity())
                 //        .setView(v)
                 .setTitle(R.string.operation_picker)
-                .setItems(R.array.operation_options, new DialogInterface.OnClickListener() {
+                .setItems(R.array.course_dialog_options, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         switch (which) {
                             case 0:
-                                Intent intent = EnrollActivity.newIntent(getContext());
-                                startActivity(intent);
+
                                 break;
                             case 1:
-                                Toast.makeText(getActivity(), "You have pressed Edit Quiz", Toast.LENGTH_LONG).show();
+                                Intent intent = EnrollActivity.newIntent(getContext());
+                                startActivity(intent);
                                 break;
                             case 2:
                                 Toast.makeText(getActivity(), "You have pressed Update Quiz", Toast.LENGTH_LONG).show();

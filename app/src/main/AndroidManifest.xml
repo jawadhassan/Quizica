@@ -34,8 +34,7 @@
         <activity android:name=".TeacherProfileActivity"></activity>
         <activity android:name=".StudentProfileActivity"></activity>
         <activity android:name=".CourseCreateActivity"></activity>
-        <!-- this activity enables the search dialog to initiate searches
-        in the SearchableActivity -->
+
         <activity android:name=".EnrollActivity"></activity>
 
 

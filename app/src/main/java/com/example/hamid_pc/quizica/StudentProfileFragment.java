@@ -56,8 +56,8 @@ public class StudentProfileFragment extends Fragment {
             public void onClick(View v) {
                 mName = mEditTextName.getText().toString();
                 mId = mEditTextId.getText().toString();
-                Teacher teacher = new Teacher(mName, mId);
-                mDatabaseReference.push().setValue(teacher);
+                Student student = new Student(mName, mId);
+                mDatabaseReference.push().setValue(student);
                 context = getActivity();
                 mPref = context.getSharedPreferences(getString(R.string.pref_file_key), Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = mPref.edit();

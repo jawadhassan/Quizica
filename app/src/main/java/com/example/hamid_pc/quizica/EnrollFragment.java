@@ -3,11 +3,11 @@ package com.example.hamid_pc.quizica;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -29,21 +29,24 @@ import com.google.firebase.database.FirebaseDatabase;
  * Created by Hamid-PC on 1/27/2017.
  */
 
-public class EnrollFragment extends Fragment {
+public class EnrollFragment extends Fragment implements DialogFragmentListener {
 
+    private static final String ENROLL_OPERATION = "EnrollOperationFragment";
     ListView listView;
     private RecyclerView mRecyclerView;
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mDatabaseReference;
+    private DatabaseReference mCourseReference;
     private FirebaseRecyclerAdapter<Student, StudentViewHolder> mRecyclerAdapter;
     private String mSearchQuery;
-    private Teacher teacher;
+    private Student student;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
         mFirebaseDatabase = FirebaseDatabase.getInstance();
-        mDatabaseReference = mFirebaseDatabase.getReference().child("teacher");
+        mDatabaseReference = mFirebaseDatabase.getReference().child("student");
 
     }
 
@@ -79,14 +82,22 @@ public class EnrollFragment extends Fragment {
             public boolean onQueryTextSubmit(String query) {
                 mSearchQuery = query.trim();
                 mDatabaseReference.orderByChild("name").startAt(mSearchQuery).addChildEventListener(new ChildEventListener() {
+
+
                     @Override
                     public void onChildAdded(DataSnapshot dataSnapshot, String s) {
 
                         //student = dataSnapshot.getValue(Student.class);
                         //Toast.makeText(getContext(),s,Toast.LENGTH_LONG).show();
-                        teacher = dataSnapshot.getValue(Teacher.class);
 
-                        Log.d("check", "" + teacher.getName());
+                        student = dataSnapshot.getValue(Student.class);
+
+                        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                        EnrollOperationFragment enrollOperationFragment = EnrollOperationFragment.newInstance(student.getName(), student.getId());
+                        enrollOperationFragment.show(fragmentManager, ENROLL_OPERATION);
+//                        Log.d("check",student.getName());
+
+
                     }
 
                     @Override
@@ -108,7 +119,10 @@ public class EnrollFragment extends Fragment {
                     public void onCancelled(DatabaseError databaseError) {
 
                     }
+
+
                 });
+
 
                 return true;
             }
@@ -145,6 +159,15 @@ public class EnrollFragment extends Fragment {
         mRecyclerAdapter.notifyDataSetChanged();
     }
 
+    @Override
+    public void ReturnValue(Boolean status) {
+        if (status) {
+            mCourseReference = mFirebaseDatabase.getReference("course");
+            mCourseReference.push().setValue(student);
+        }
+
+    }
+
     private static class StudentViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView textView;
@@ -163,4 +186,7 @@ public class EnrollFragment extends Fragment {
 
         }
     }
+
+
 }
+

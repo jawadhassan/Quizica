@@ -13,6 +13,11 @@ public class Student {
         this.id = id;
     }
 
+    public Student() {
+
+    }
+
+
     public String getName() {
         return name;
     }

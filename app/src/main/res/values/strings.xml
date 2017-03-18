@@ -27,5 +27,9 @@
     <string name="course_edittext_id">Enter Course ID</string>
     <string name="search_title">Search Students</string>
     <string name="app_label"></string>
-    <string name="search_hint"></string>
+    <string name="search_hint">Search Students to Enroll</string>
+    <string name="enroll_operation_dialog_title">Result Found</string>
+    <string name="enroll_operation_dialog_msg">Do you want to enroll: </string>
+    <string name="enroll_operation_dialog_positive">Yes</string>
+    <string name="enroll_operation_dialog_negative">No</string>
 </resources>
