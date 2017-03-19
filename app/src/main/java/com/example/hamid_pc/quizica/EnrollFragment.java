@@ -159,7 +159,7 @@ public class EnrollFragment extends Fragment {
                 viewHolder.textView.setText(student.getName());
             }
         };
-        mRecyclerAdapter.notifyDataSetChanged();
+        mRecyclerView.setAdapter(mRecyclerAdapter);
     }
 
 
