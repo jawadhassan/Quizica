@@ -14,9 +14,21 @@ import android.widget.Toast;
  */
 
 public class CourseOperationFragment extends DialogFragment {
+
+
+    public static CourseOperationFragment newInstance(String CourseName) {
+        CourseOperationFragment frag = new CourseOperationFragment();
+        Bundle args = new Bundle();
+        args.putString("coursename", CourseName);
+        frag.setArguments(args);
+        return frag;
+    }
+
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
+        final String CourseName = getArguments().getString("coursename");
+
         return new AlertDialog.Builder(getActivity())
                 //        .setView(v)
                 .setTitle(R.string.operation_picker)
@@ -28,7 +40,7 @@ public class CourseOperationFragment extends DialogFragment {
 
                                 break;
                             case 1:
-                                Intent intent = EnrollActivity.newIntent(getContext());
+                                Intent intent = EnrollActivity.newIntent(getContext(), CourseName);
                                 startActivity(intent);
                                 break;
                             case 2:

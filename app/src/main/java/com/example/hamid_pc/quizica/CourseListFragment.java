@@ -49,6 +49,7 @@ public class CourseListFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_course_list, container, false);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.course_recycler_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
         UpdateUI();
         mFLoatingButton = (FloatingActionButton) view.findViewById(R.id.course_floating_button);
         mFLoatingButton.setOnClickListener(new View.OnClickListener() {
@@ -69,9 +70,14 @@ public class CourseListFragment extends Fragment {
                 CourseViewHolder.class,
                 mDatabaseReference
         ) {
+
+
             @Override
             protected void populateViewHolder(CourseViewHolder viewHolder, Course model, int position) {
                 viewHolder.textView.setText(model.getCourseName());
+                Course course = getItem(position);
+                viewHolder.bindCourse(course);
+
 
             }
 
@@ -90,26 +96,36 @@ public class CourseListFragment extends Fragment {
 
     private static class CourseViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView textView;
-
+        Course mCourse;
         public CourseViewHolder(View itemView) {
             super(itemView);
             itemView.setOnClickListener(this);
             textView = (TextView) itemView.findViewById(R.id.list_item_course_title_text_view);
 
+
+        }
+
+
+        public void bindCourse(Course course) {
+            mCourse = course;
+
         }
 
         @Override
         public void onClick(View v) {
+
             AppCompatActivity appCompatActivity = (AppCompatActivity) v.getContext();
             if (appCompatActivity instanceof CourseListActivity) {
+
                 CourseListActivity activityCourseList = (CourseListActivity) appCompatActivity;
                 FragmentManager manager = activityCourseList.getSupportFragmentManager();
-
-                CourseOperationFragment CourseOperationFragment = new CourseOperationFragment();
-                CourseOperationFragment.show(manager, DIALOG_OPERATION);
+                CourseOperationFragment courseOperationFragment = CourseOperationFragment.newInstance(mCourse.getCourseName());
+                courseOperationFragment.show(manager, DIALOG_OPERATION);
             }
 
         }
+
+
     }
 
 

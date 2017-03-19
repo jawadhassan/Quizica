@@ -9,11 +9,13 @@ public class Course {
     private String courseName;
     private String courseInstructor;
 
+
     public Course(String courseCode, String courseName, String courseInstructor) {
         this.courseCode = courseCode;
         this.courseName = courseName;
         this.courseInstructor = courseInstructor;
     }
+
 
     public Course() {
 

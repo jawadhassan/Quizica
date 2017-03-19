@@ -29,25 +29,28 @@ import com.google.firebase.database.FirebaseDatabase;
  * Created by Hamid-PC on 1/27/2017.
  */
 
-public class EnrollFragment extends Fragment implements DialogFragmentListener {
+public class EnrollFragment extends Fragment {
 
     private static final String ENROLL_OPERATION = "EnrollOperationFragment";
     ListView listView;
     private RecyclerView mRecyclerView;
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mDatabaseReference;
-    private DatabaseReference mCourseReference;
+    private DatabaseReference mStudentReference;
     private FirebaseRecyclerAdapter<Student, StudentViewHolder> mRecyclerAdapter;
     private String mSearchQuery;
     private Student student;
+    private String mCourseName;
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+        mCourseName = getArguments().getString("coursename");
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mDatabaseReference = mFirebaseDatabase.getReference().child("student");
-
+        mStudentReference = mFirebaseDatabase.getReference().child(mCourseName + "/students");
     }
 
 
@@ -93,7 +96,7 @@ public class EnrollFragment extends Fragment implements DialogFragmentListener {
                         student = dataSnapshot.getValue(Student.class);
 
                         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                        EnrollOperationFragment enrollOperationFragment = EnrollOperationFragment.newInstance(student.getName(), student.getId());
+                        EnrollOperationFragment enrollOperationFragment = EnrollOperationFragment.newInstance(student, mCourseName);
                         enrollOperationFragment.show(fragmentManager, ENROLL_OPERATION);
 //                        Log.d("check",student.getName());
 
@@ -149,24 +152,17 @@ public class EnrollFragment extends Fragment implements DialogFragmentListener {
                 Student.class,
                 R.layout.list_item_student,
                 StudentViewHolder.class,
-                mDatabaseReference
+                mStudentReference
         ) {
             @Override
-            protected void populateViewHolder(StudentViewHolder viewHolder, Student model, int position) {
-                viewHolder.textView.setText(model.getName());
+            protected void populateViewHolder(StudentViewHolder viewHolder, Student student, int position) {
+                viewHolder.textView.setText(student.getName());
             }
         };
         mRecyclerAdapter.notifyDataSetChanged();
     }
 
-    @Override
-    public void ReturnValue(Boolean status) {
-        if (status) {
-            mCourseReference = mFirebaseDatabase.getReference("course");
-            mCourseReference.push().setValue(student);
-        }
 
-    }
 
     private static class StudentViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
