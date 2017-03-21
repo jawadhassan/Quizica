@@ -14,6 +14,8 @@ public class Quiz {
         this.mQuizNumber = mQuizNumber;
     }
 
+    public Quiz() {
+    }
 
     public String getmTitle() {
         return mTitle;
