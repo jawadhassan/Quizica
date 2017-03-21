@@ -49,7 +49,8 @@ public class CourseOperationFragment extends DialogFragment {
                     public void onClick(DialogInterface dialog, int which) {
                         switch (which) {
                             case 0:
-
+                                Intent quizIntent = QuizListActivity.newIntent(getContext());
+                                startActivity(quizIntent);
                                 break;
                             case 1:
                                 Intent intent = EnrollActivity.newIntent(getContext(), CourseName);

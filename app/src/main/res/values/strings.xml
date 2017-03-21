@@ -32,4 +32,7 @@
     <string name="enroll_operation_dialog_msg">Do you want to enroll: </string>
     <string name="enroll_operation_dialog_positive">Yes</string>
     <string name="enroll_operation_dialog_negative">No</string>
+    <string name="quizcreate_edittext_title">Enter Quiz Ttile</string>
+    <string name="quizcreate_edittext_quiznumber">Enter Quiz Number</string>
+
 </resources>

@@ -38,7 +38,7 @@ public class QuizListFragment extends Fragment {
         mfloatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = QuizCreateActivity.newIntent(getContext());
+                Intent intent = QuestionCreateActivity.newIntent(getContext());
                 startActivity(intent);
             }
         });
