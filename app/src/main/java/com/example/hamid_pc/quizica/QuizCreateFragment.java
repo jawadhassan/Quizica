@@ -24,11 +24,12 @@ public class QuizCreateFragment extends Fragment {
 
     private String mQuizName;
     private int mQuizNumber;
-
+    private String mCourseName;
     private Quiz mQuiz;
 
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mDatabaseReference;
+
 
     @Nullable
     @Override
@@ -43,8 +44,6 @@ public class QuizCreateFragment extends Fragment {
             public void onClick(View v) {
                 mQuizName = QuizTitleText.getText().toString();
                 mQuizNumber = Integer.parseInt(QuizIdText.getText().toString());
-
-
                 mQuiz = new Quiz(mQuizName, mQuizNumber);
                 mDatabaseReference.push().setValue(mQuiz);
 
@@ -58,8 +57,10 @@ public class QuizCreateFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mCourseName = getArguments().getString("coursename");
         mFirebaseDatabase = FirebaseDatabase.getInstance();
-        mDatabaseReference = mFirebaseDatabase.getReference().child("quiz");
+        mDatabaseReference = mFirebaseDatabase.getReference().child(mCourseName + "/quizzes");
+
 
     }
 }

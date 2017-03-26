@@ -21,7 +21,15 @@ public class Quiz {
         return mTitle;
     }
 
+    public void setmTitle(String mTitle) {
+        this.mTitle = mTitle;
+    }
+
     public int getmQuizNumber() {
         return mQuizNumber;
+    }
+
+    public void setmQuizNumber(int mQuizNumber) {
+        this.mQuizNumber = mQuizNumber;
     }
 }

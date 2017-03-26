@@ -28,11 +28,15 @@ public class QuizListFragment extends Fragment {
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mDatabaseReference;
 
+    private String mCourseName;
+
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mFirebaseDatabase = FirebaseDatabase.getInstance();
-        mDatabaseReference = mFirebaseDatabase.getReference("quiz");
+        mCourseName = getArguments().getString("coursename");
+        mDatabaseReference = mFirebaseDatabase.getReference(mCourseName + "/quizzes");
     }
 
     @Nullable
@@ -50,8 +54,7 @@ public class QuizListFragment extends Fragment {
             public void onClick(View v) {
                 //  Intent intent = QuestionCreateActivity.newIntent(getContext());
                 //  startActivity(intent);
-
-                Intent intent = QuizCreateActivity.newIntent(getContext());
+                Intent intent = QuizCreateActivity.newIntent(getContext(), mCourseName);
                 startActivity(intent);
             }
         });
@@ -72,9 +75,7 @@ public class QuizListFragment extends Fragment {
                 Quiz.class,
                 R.layout.list_item_quiz,
                 QuizHolder.class,
-                mDatabaseReference
-
-        ) {
+                mDatabaseReference) {
             @Override
             protected void populateViewHolder(QuizHolder viewHolder, Quiz model, int position) {
                 viewHolder.mTitleTextView.setText(model.getmTitle());

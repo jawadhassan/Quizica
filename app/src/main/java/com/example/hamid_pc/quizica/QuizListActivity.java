@@ -2,6 +2,7 @@ package com.example.hamid_pc.quizica;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
 /**
@@ -10,12 +11,19 @@ import android.support.v4.app.Fragment;
 
 public class QuizListActivity extends SingleFragmentActivity {
 
-    public static Intent newIntent(Context packageContext) {
+    private static String mCourseName;
+
+    public static Intent newIntent(Context packageContext, String CourseName) {
         Intent i = new Intent(packageContext, QuizListActivity.class);
+        mCourseName = CourseName;
         return i;
     }
     @Override
     protected Fragment createFragment() {
-        return new QuizListFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("coursename", mCourseName);
+        QuizListFragment quizListFragment = new QuizListFragment();
+        quizListFragment.setArguments(bundle);
+        return quizListFragment;
     }
 }

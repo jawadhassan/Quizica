@@ -28,7 +28,6 @@ public class EnrollActivity extends SingleFragmentActivity {
     protected Fragment createFragment() {
         Bundle bundle = new Bundle();
         bundle.putString("coursename", mCourseName);
-
         EnrollFragment enrollFragment = new EnrollFragment();
         enrollFragment.setArguments(bundle);
         return enrollFragment;
