@@ -3,6 +3,7 @@ package com.example.hamid_pc.quizica;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,18 +19,16 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class QuizCreateFragment extends Fragment {
 
+    private final String QUESTION_FRAG = "QuestionCreateFragment";
     private EditText QuizTitleText;
     private EditText QuizIdText;
     private Button submitButton;
-
     private String mQuizName;
     private int mQuizNumber;
     private String mCourseName;
     private Quiz mQuiz;
-
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mDatabaseReference;
-
 
     @Nullable
     @Override
@@ -46,6 +45,12 @@ public class QuizCreateFragment extends Fragment {
                 mQuizNumber = Integer.parseInt(QuizIdText.getText().toString());
                 mQuiz = new Quiz(mQuizName, mQuizNumber);
                 mDatabaseReference.push().setValue(mQuiz);
+
+                // Replacing QuizCreateFragment with QuestionCreateFragment
+                final FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                ft.replace(R.id.fragment_container, new QuestionTypeFragment(), QUESTION_FRAG);
+                ft.commit();
+
 
             }
         });

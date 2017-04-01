@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -42,6 +41,8 @@ public class McqMakerFragment extends Fragment {
     private String optionTwo;
     private String optionThree;
     private String optionFour;
+
+    private Question question;
 
     private Boolean isQuestionTextValidated = false;
     private Boolean isOptionOneTextValidated = false;
@@ -186,7 +187,9 @@ public class McqMakerFragment extends Fragment {
 
 
     public void submitForm() {
-        Toast.makeText(getContext(), "Successful", Toast.LENGTH_LONG).show();
+        question = new Question(editTextQuestion.getText().toString(), editTextOptionOne.getText().toString(), editTextOptionTwo.getText().toString(), editTextOptionThree.getText().toString(), editTextOptionFour.getText().toString(), editTextAnswer.getText().toString());
+        mDatabaseReference.push().setValue(question);
+
         getActivity().finish();
 
     }

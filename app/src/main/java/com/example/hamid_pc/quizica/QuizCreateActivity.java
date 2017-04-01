@@ -26,4 +26,6 @@ public class QuizCreateActivity extends SingleFragmentActivity {
         quizCreateFragment.setArguments(bundle);
         return quizCreateFragment;
     }
+
+
 }
