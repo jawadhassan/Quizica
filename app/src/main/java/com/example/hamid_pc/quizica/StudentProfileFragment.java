@@ -63,7 +63,7 @@ public class StudentProfileFragment extends Fragment {
                 SharedPreferences.Editor editor = mPref.edit();
                 editor.putBoolean(getString(R.string.pref_sign_key), true);
                 editor.commit();
-                Intent intent = CourseListActivity.newIntent(getActivity());
+                Intent intent = CourseListStudentPanelActivity.newIntent(getActivity());
                 startActivity(intent);
             }
         });

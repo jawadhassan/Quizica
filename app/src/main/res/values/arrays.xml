@@ -10,5 +10,9 @@
         <item>Enroll Students</item>
         <item>Delete Course</item>
     </string-array>
+    <string-array name="student_course_dialog_options">
+        <item>Quiz</item>
+        <item>View Results</item>
+    </string-array>
 
 </resources>

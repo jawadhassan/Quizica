@@ -30,13 +30,13 @@ public class AuthenticationActivity extends AppCompatActivity {
         final SharedPreferences sharedPref = getSharedPreferences(
                 getString(R.string.pref_file_key), Context.MODE_PRIVATE);
 
-        signed_in = sharedPref.getBoolean(getString(R.string.pref_sign_key), false);
+
         mFireAuth = FirebaseAuth.getInstance();
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
-
+                signed_in = sharedPref.getBoolean(getString(R.string.pref_sign_key), false);
                 if (user != null && signed_in == false) {
                     Intent intent = ProfileDataActivity.newIntent(AuthenticationActivity.this);
                     startActivity(intent);

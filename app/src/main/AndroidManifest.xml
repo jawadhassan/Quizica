@@ -36,7 +36,7 @@
         <activity android:name=".CourseCreateActivity"></activity>
         <activity android:name=".QuizCreateActivity"></activity>
         <activity android:name=".EnrollActivity"></activity>
-
+        <activity android:name=".CourseListStudentPanelActivity"></activity>
 
     </application>
 
