@@ -12,6 +12,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -28,10 +30,15 @@ public class TeacherProfileFragment extends Fragment {
     private String mName;
     private String mId;
     private String mUsername;
+    private User mUser;
+    private Teacher mTeacher;
+    private FirebaseAuth mFirebaseAuth;
+
 
     private FirebaseDatabase mFirebaseDatabase;
-    private DatabaseReference mDatabaseReference;
-
+    private DatabaseReference mDatabaseTeacherReference;
+    private DatabaseReference mDatabaseUserReference;
+    private FirebaseUser mFirebaseUser;
     private SharedPreferences mPref;
     private Context context;
 
@@ -39,7 +46,8 @@ public class TeacherProfileFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mFirebaseDatabase = FirebaseDatabase.getInstance();
-        mDatabaseReference = mFirebaseDatabase.getReference().child("teacher");
+        mDatabaseTeacherReference = mFirebaseDatabase.getReference().child("teacher");
+        mDatabaseUserReference = mFirebaseDatabase.getReference().child("user");
 
     }
 
@@ -57,8 +65,12 @@ public class TeacherProfileFragment extends Fragment {
             public void onClick(View v) {
                 mName = mEditTextName.getText().toString();
                 mId = mEditTextId.getText().toString();
-                Teacher teacher = new Teacher(mName, mId);
-                mDatabaseReference.push().setValue(teacher);
+                mTeacher = new Teacher(mName, mId);
+                mDatabaseTeacherReference.push().setValue(mTeacher);
+
+                mUser = new User(FirebaseAuth.getInstance().getCurrentUser().getUid(), mName, "Teacher");
+                mDatabaseUserReference.push().setValue(mUser);
+
                 context = getActivity();
                 mPref = context.getSharedPreferences(getString(R.string.pref_file_key), Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = mPref.edit();

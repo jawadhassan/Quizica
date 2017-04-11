@@ -12,6 +12,8 @@ import android.widget.Toast;
 import com.firebase.ui.auth.AuthUI;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 /**
  * Created by Hamid-PC on 1/30/2017.
@@ -22,6 +24,8 @@ public class AuthenticationActivity extends AppCompatActivity {
     public static final int RC_SIGN_IN = 1;
     private boolean signed_in;
     private FirebaseAuth mFireAuth;
+    private FirebaseDatabase mFirebaseDatabase;
+    private DatabaseReference mDatabaseReference;
     private FirebaseAuth.AuthStateListener mAuthListener;
 
     @Override
@@ -32,19 +36,27 @@ public class AuthenticationActivity extends AppCompatActivity {
 
 
         mFireAuth = FirebaseAuth.getInstance();
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+
+
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 signed_in = sharedPref.getBoolean(getString(R.string.pref_sign_key), false);
-                if (user != null && signed_in == false) {
-                    Intent intent = ProfileDataActivity.newIntent(AuthenticationActivity.this);
-                    startActivity(intent);
 
-                } else if (user != null && signed_in == true) {
-                    Toast.makeText(AuthenticationActivity.this, "Successful", Toast.LENGTH_SHORT).show();
-                    Intent intent = CourseListActivity.newIntent(AuthenticationActivity.this);
-                    startActivity(intent);
+                if (user != null) {
+
+                    mDatabaseReference = mFirebaseDatabase.getReference(user.getUid());
+                    if (mDatabaseReference == null) {
+                        Intent intent = ProfileDataActivity.newIntent(AuthenticationActivity.this);
+                        startActivity(intent);
+                    } else {
+
+                        Intent intent = CourseListActivity.newIntent(AuthenticationActivity.this);
+                        startActivity(intent);
+                    }
+
                 } else {
                     startActivityForResult(
                             AuthUI.getInstance()

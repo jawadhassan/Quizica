@@ -84,7 +84,7 @@ public class EnrollFragment extends Fragment {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 mSearchQuery = query.trim();
-                mDatabaseReference.orderByChild("name").startAt(mSearchQuery).addChildEventListener(new ChildEventListener() {
+                mDatabaseReference.orderByChild("name").equalTo(mSearchQuery).addChildEventListener(new ChildEventListener() {
 
 
                     @Override

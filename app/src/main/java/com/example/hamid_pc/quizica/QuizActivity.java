@@ -6,6 +6,6 @@ public class QuizActivity extends SingleFragmentActivity {
 
     @Override
     protected Fragment createFragment() {
-        return new QuizFragment();
+        return new MCQQuizFragment();
     }
 }

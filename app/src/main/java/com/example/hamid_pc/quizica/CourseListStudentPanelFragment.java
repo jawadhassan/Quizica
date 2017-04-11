@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.firebase.ui.auth.ResultCodes;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -36,7 +37,8 @@ public class CourseListStudentPanelFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mFirebaseDatabase = FirebaseDatabase.getInstance();
-        mDatabaseReference = mFirebaseDatabase.getReference().child("course");
+
+        mDatabaseReference = mFirebaseDatabase.getReference().child(FirebaseAuth.getInstance().getCurrentUser().getUid());
     }
 
     @Nullable

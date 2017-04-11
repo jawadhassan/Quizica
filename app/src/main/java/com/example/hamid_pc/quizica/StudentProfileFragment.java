@@ -12,6 +12,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -26,10 +28,15 @@ public class StudentProfileFragment extends Fragment {
     private String mName;
     private String mId;
     private String mUsername;
+    private User mUser;
+    private Student mStudent;
 
 
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mDatabaseReference;
+    private DatabaseReference mDatabaseUserReference;
+    private FirebaseUser mFirebaseUser;
+    private FirebaseAuth mFirebaseAuth;
 
     private SharedPreferences mPref;
     private Context context;
@@ -40,6 +47,8 @@ public class StudentProfileFragment extends Fragment {
         super.onCreate(savedInstanceState);
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mDatabaseReference = mFirebaseDatabase.getReference().child("student");
+        mDatabaseUserReference = mFirebaseDatabase.getReference().child("user");
+
     }
 
     @Nullable
@@ -56,8 +65,14 @@ public class StudentProfileFragment extends Fragment {
             public void onClick(View v) {
                 mName = mEditTextName.getText().toString();
                 mId = mEditTextId.getText().toString();
-                Student student = new Student(mName, mId);
-                mDatabaseReference.push().setValue(student);
+                mStudent = new Student(FirebaseAuth.getInstance().getCurrentUser().getUid(), mName, mId);
+                mDatabaseReference.push().setValue(mStudent);
+
+
+                mUser = new User(FirebaseAuth.getInstance().getCurrentUser().getUid(), mName, "student");
+                mDatabaseUserReference.push().setValue(mUser);
+
+
                 context = getActivity();
                 mPref = context.getSharedPreferences(getString(R.string.pref_file_key), Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = mPref.edit();

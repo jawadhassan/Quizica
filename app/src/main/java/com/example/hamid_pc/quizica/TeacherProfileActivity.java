@@ -11,6 +11,7 @@ import android.support.v4.app.Fragment;
 
 public class TeacherProfileActivity extends SingleFragmentActivity {
 
+
     public static Intent newIntent(Context packageContext) {
         Intent i = new Intent(packageContext, TeacherProfileActivity.class);
         return i;

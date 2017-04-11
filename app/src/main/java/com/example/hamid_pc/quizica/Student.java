@@ -7,10 +7,12 @@ package com.example.hamid_pc.quizica;
 public class Student {
     private String name;
     private String id;
+    private String uuid;
 
-    public Student(String name, String id) {
+    public Student(String uuid, String name, String id) {
         this.name = name;
         this.id = id;
+        this.uuid = uuid;
     }
 
     public Student() {
@@ -32,5 +34,13 @@ public class Student {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
     }
 }

@@ -18,6 +18,7 @@ public class EnrollOperationFragment extends DialogFragment {
 
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mDatabaseReference;
+    private DatabaseReference mStudentReference;
     private Student mStudent;
 
 
@@ -26,6 +27,7 @@ public class EnrollOperationFragment extends DialogFragment {
         Bundle args = new Bundle();
         args.putString("username", student.getName());
         args.putString("id", student.getId());
+        args.putString("uuid", student.getUuid());
         args.putString("coursename", CourseName);
         frag.setStudent(student);
         frag.setArguments(args);
@@ -43,6 +45,7 @@ public class EnrollOperationFragment extends DialogFragment {
         final String UserName = getArguments().getString("username");
         final String ID = getArguments().getString("id");
         final String CourseName = getArguments().getString("coursename");
+        final String uuid = getArguments().getString("uuid");
         String Message = getString(R.string.enroll_operation_dialog_msg) + " " + UserName + " " + ID;
 
         return new AlertDialog.Builder(getActivity())
@@ -55,10 +58,8 @@ public class EnrollOperationFragment extends DialogFragment {
                         mDatabaseReference = mFirebaseDatabase.getReference(CourseName + "/students");
                         mDatabaseReference.push().setValue(mStudent);
 
-
-
-
-
+                        mStudentReference = mFirebaseDatabase.getReference(uuid);
+                        mStudentReference.push().setValue(CourseName);
 
 
                     }

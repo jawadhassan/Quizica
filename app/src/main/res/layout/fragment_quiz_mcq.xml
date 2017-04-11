@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.example.hamid_pc.quizica.QuizFragment">
+    tools:context="com.example.hamid_pc.quizica.MCQQuizFragment">
 
     <!-- TODO: Update blank fragment layout -->
 
