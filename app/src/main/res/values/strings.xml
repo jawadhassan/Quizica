@@ -33,5 +33,5 @@
     <string name="enroll_operation_dialog_negative">No</string>
     <string name="quizcreate_edittext_title">Enter Quiz Ttile</string>
     <string name="quizcreate_edittext_quiznumber">Enter Quiz Number</string>
-
+    <string name="Sign_out">Sign Out</string>
 </resources>

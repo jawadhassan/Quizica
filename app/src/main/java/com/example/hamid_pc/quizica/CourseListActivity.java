@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 
 /**
@@ -14,6 +16,9 @@ import android.support.v4.app.Fragment;
 
 public class CourseListActivity extends SingleFragmentActivity {
 
+
+    private FirebaseDatabase mFirebaseDatabase;
+    private DatabaseReference mDatabaseReference;
 
     public static Intent newIntent(Context packageContext) {
         Intent i = new Intent(packageContext, CourseListActivity.class);
@@ -27,8 +32,8 @@ public class CourseListActivity extends SingleFragmentActivity {
 
     @Override
     protected Fragment createFragment() {
+
         return new CourseListFragment();
     }
-
 
 }

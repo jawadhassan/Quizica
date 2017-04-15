@@ -9,13 +9,18 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.firebase.ui.auth.ResultCodes;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -33,13 +38,33 @@ public class CourseListFragment extends Fragment {
     private FirebaseRecyclerAdapter<Course, CourseViewHolder> mAdapter;
     private FloatingActionButton mFLoatingButton;
 
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mDatabaseReference = mFirebaseDatabase.getReference().child("course");
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.miProfile:
+                Log.d("check", "okay");
+                FirebaseAuth.getInstance().signOut();
+                AuthenticationActivity.newIntent(getActivity());
+
+        }
+
+        return true;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        MenuInflater inflater1 = getActivity().getMenuInflater();
+        inflater1.inflate(R.menu.signoutmenu, menu);
 
     }
 
@@ -50,7 +75,10 @@ public class CourseListFragment extends Fragment {
         mRecyclerView = (RecyclerView) view.findViewById(R.id.course_recycler_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
+        setHasOptionsMenu(true);
         UpdateUI();
+
+
         mFLoatingButton = (FloatingActionButton) view.findViewById(R.id.course_floating_button);
         mFLoatingButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,6 +87,7 @@ public class CourseListFragment extends Fragment {
                 startActivityForResult(intent, RC_COURSE);
             }
         });
+
 
         return view;
     }

@@ -7,6 +7,9 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -19,6 +22,7 @@ public class EnrollOperationFragment extends DialogFragment {
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mDatabaseReference;
     private DatabaseReference mStudentReference;
+    private DatabaseReference mCourseReference;
     private Student mStudent;
 
 
@@ -58,8 +62,39 @@ public class EnrollOperationFragment extends DialogFragment {
                         mDatabaseReference = mFirebaseDatabase.getReference(CourseName + "/students");
                         mDatabaseReference.push().setValue(mStudent);
 
-                        mStudentReference = mFirebaseDatabase.getReference(uuid);
-                        mStudentReference.push().setValue(CourseName);
+                        mStudentReference = mFirebaseDatabase.getReference(mStudent.getUuid());
+
+                        mCourseReference = mFirebaseDatabase.getReference().child("course");
+                        mCourseReference.orderByChild("courseName").equalTo(CourseName).addChildEventListener(new ChildEventListener() {
+                            @Override
+                            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                                Course course = dataSnapshot.getValue(Course.class);
+                                mStudentReference.push().setValue(course);
+                            }
+
+                            @Override
+                            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                            }
+
+                            @Override
+                            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                            }
+
+                            @Override
+                            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+
+
+
 
 
                     }

@@ -15,6 +15,9 @@ public class User {
         Role = role;
     }
 
+    public User() {
+    }
+
     public String getUuid() {
         return uuid;
     }

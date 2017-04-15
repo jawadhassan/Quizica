@@ -7,13 +7,19 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.firebase.ui.auth.AuthUI;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 /**
  * Created by Hamid-PC on 1/30/2017.
@@ -26,7 +32,17 @@ public class AuthenticationActivity extends AppCompatActivity {
     private FirebaseAuth mFireAuth;
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mDatabaseReference;
+    private DatabaseReference mUserReference;
     private FirebaseAuth.AuthStateListener mAuthListener;
+
+
+    public static Intent newIntent(Context packageContext) {
+        Intent intent = new Intent(packageContext, AuthenticationActivity.class);
+        return intent;
+
+    }
+
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -37,7 +53,7 @@ public class AuthenticationActivity extends AppCompatActivity {
 
         mFireAuth = FirebaseAuth.getInstance();
         mFirebaseDatabase = FirebaseDatabase.getInstance();
-
+        mUserReference = mFirebaseDatabase.getReference().child("user");
 
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -47,15 +63,64 @@ public class AuthenticationActivity extends AppCompatActivity {
 
                 if (user != null) {
 
-                    mDatabaseReference = mFirebaseDatabase.getReference(user.getUid());
-                    if (mDatabaseReference == null) {
-                        Intent intent = ProfileDataActivity.newIntent(AuthenticationActivity.this);
-                        startActivity(intent);
-                    } else {
+                    Query query = mUserReference.orderByChild("uuid").equalTo(user.getUid());
+                    query.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            if (!dataSnapshot.exists()) {
+                                Intent intent = ProfileDataActivity.newIntent(AuthenticationActivity.this);
+                                startActivity(intent);
+                            }
+                        }
 
-                        Intent intent = CourseListActivity.newIntent(AuthenticationActivity.this);
-                        startActivity(intent);
-                    }
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+
+                    //Log.d("authenticate","ok");
+
+                    query.addChildEventListener(new ChildEventListener() {
+                        @Override
+                        public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+
+                            User userData = dataSnapshot.getValue(User.class);
+                            if (userData.getRole().equals("Teacher")) {
+                                Intent intent = CourseListActivity.newIntent(AuthenticationActivity.this);
+                                startActivity(intent);
+
+                                //  Log.d("authenticate","else");
+                            } else if (userData.getRole().equals("student")) {
+                                Log.d("okay", "okay");
+                                Intent intent = CourseListStudentPanelActivity.newIntent(AuthenticationActivity.this);
+                                startActivity(intent);
+
+                            }
+                        }
+
+                        @Override
+                        public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                        }
+
+                        @Override
+                        public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                        }
+
+                        @Override
+                        public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+
+
 
                 } else {
                     startActivityForResult(
