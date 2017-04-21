@@ -27,6 +27,10 @@ public class Question {
 
     }
 
+    public Question() {
+
+    }
+
 
     public String getAnswer() {
         return answer;

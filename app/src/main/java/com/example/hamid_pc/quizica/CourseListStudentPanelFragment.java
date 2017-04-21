@@ -132,9 +132,9 @@ public class CourseListStudentPanelFragment extends Fragment {
         @Override
         public void onClick(View v) {
             AppCompatActivity appCompatActivity = (AppCompatActivity) v.getContext();
-            if (appCompatActivity instanceof CourseListActivity) {
+            if (appCompatActivity instanceof CourseListStudentPanelActivity) {
 
-                CourseListActivity activityCourseList = (CourseListActivity) appCompatActivity;
+                CourseListStudentPanelActivity activityCourseList = (CourseListStudentPanelActivity) appCompatActivity;
                 FragmentManager manager = activityCourseList.getSupportFragmentManager();
                 CourseOperationStudentFragment courseOperationStudentFragment = CourseOperationStudentFragment.newInstance(mCourse.getCourseName());
                 courseOperationStudentFragment.show(manager, DIALOG_OPERATION);
