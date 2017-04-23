@@ -5,10 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 
 import com.google.firebase.database.DataSnapshot;
@@ -23,7 +20,7 @@ import java.util.ArrayList;
  * Created by Hamid-PC on 4/21/2017.
  */
 
-public class QuestionsPagerActivity extends FragmentActivity {
+public class QuestionsPagerActivity extends SingleFragmentActivity {
 
 
     private FirebaseDatabase mFirebaseDatabase;
@@ -40,14 +37,20 @@ public class QuestionsPagerActivity extends FragmentActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_question_pager);
         Log.d("questionspageracitivity", "okay");
 
+
+    }
+
+
+    @Override
+    protected Fragment createFragment() {
 
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mDatabaseReference = mFirebaseDatabase.getReference("questions");
 
-        mQuestionsList = new ArrayList<Question>();
+        mQuestionsList = new ArrayList<>();
+
         mDatabaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -69,41 +72,31 @@ public class QuestionsPagerActivity extends FragmentActivity {
             }
         });
 
-        ViewPager pager = (ViewPager) findViewById(R.id.viewPager);
-        pager.setAdapter(new MyPagerAdapter(getSupportFragmentManager()));
+
+        if ((mQuestionsList.size() - 1) > 1 && mQuestionsList.get(0).getOptionOne() == null) {
+            return new TextQuizFragment();
+        } else {
+
+            return new MCQQuizFragment();
+        }
 
 
     }
 
-    private class MyPagerAdapter extends FragmentPagerAdapter {
+    public void replaceFragment() {
 
 
-        public MyPagerAdapter(FragmentManager fm) {
-            super(fm);
-        }
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
 
+        if ((mQuestionsList.size() - 1) > 1 && mQuestionsList.get(0).getOptionOne() == null) {
 
-        @Override
-        public int getCount() {
-            return mQuestionsList.size();
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            Question question = mQuestionsList.get(position);
-            if (question.getOptionOne() != null) {
-                return new MCQQuizFragment();
-            } else {
-                return new TextQuizFragment();
-            }
-
-        }
-
-        @Override
-        public void notifyDataSetChanged() {
-            super.notifyDataSetChanged();
-            getCount();
+            fragmentTransaction.replace(R.id.fragment_container, new MCQQuizFragment());
+            fragmentTransaction.commit();
+        } else {
+            fragmentTransaction.replace(R.id.fragment_container, new TextQuizFragment());
+            fragmentTransaction.commit();
         }
     }
+
 }
 

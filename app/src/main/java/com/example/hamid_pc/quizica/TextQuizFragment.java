@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -22,6 +23,7 @@ public class TextQuizFragment extends Fragment {
     private DatabaseReference mDatabaseReference;
     private EditText editTextAnswer;
     private TextView textViewQuestion;
+    private Button mSubmitButton;
     public TextQuizFragment() {
         super();
     }
@@ -42,7 +44,15 @@ public class TextQuizFragment extends Fragment {
         textViewQuestion = (TextView) v.findViewById(R.id.textView);
         editTextAnswer = (EditText) v.findViewById(R.id.editText);
         //textViewQuestion.setText();
-        
+        mSubmitButton = (Button) v.findViewById(R.id.button_submit);
+
+        mSubmitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                QuestionsPagerActivity questionsPagerActivity = (QuestionsPagerActivity) getActivity();
+                questionsPagerActivity.replaceFragment();
+            }
+        });
         return v;
     }
 }

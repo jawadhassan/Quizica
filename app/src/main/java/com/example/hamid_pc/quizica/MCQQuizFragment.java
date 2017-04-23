@@ -83,7 +83,13 @@ public class MCQQuizFragment extends Fragment {
         });
 
 
-
+        mSubmitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                QuestionsPagerActivity questionsPagerActivity = (QuestionsPagerActivity) getActivity();
+                questionsPagerActivity.replaceFragment();
+            }
+        });
 
         return v;
     }
