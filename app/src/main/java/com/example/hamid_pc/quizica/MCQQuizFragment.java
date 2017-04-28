@@ -27,8 +27,28 @@ public class MCQQuizFragment extends Fragment {
     private RadioButton mRadioButton3;
     private RadioButton mRadioButton4;
     private Button mSubmitButton;
+
+    private String mQuesionText;
+    private String mOptionOneText;
+    private String mOptionTwoText;
+    private String mOptionThreeText;
+    private String mOptionFourText;
+
     public MCQQuizFragment() {
+        super();
         // Required empty public constructor
+    }
+
+    public static MCQQuizFragment newInstance(String question, String OptionOne, String OptionTwo, String OptionThree, String OptionFour) {
+        MCQQuizFragment mcqQuizFragment = new MCQQuizFragment();
+        Bundle args = new Bundle();
+        args.putString("question", question);
+        args.putString("optionOne", OptionOne);
+        args.putString("optionTwo", OptionTwo);
+        args.putString("optionThree", OptionThree);
+        args.putString("optionFour", OptionFour);
+        mcqQuizFragment.setArguments(args);
+        return mcqQuizFragment;
     }
 
     @Override
@@ -36,6 +56,11 @@ public class MCQQuizFragment extends Fragment {
         super.onCreate(savedInstanceState);
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mDatabaseReference = mFirebaseDatabase.getReference().child("questions");
+        mQuesionText = getArguments().getString("quesion");
+        mOptionOneText = getArguments().getString("optionOne");
+        mOptionTwoText = getArguments().getString("optionTwo");
+        mOptionThreeText = getArguments().getString("optionThree");
+        mOptionFourText = getArguments().getString("optionFour");
 
 
     }
@@ -46,11 +71,19 @@ public class MCQQuizFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_quiz_mcq, container, false);
         mQuestionTextView = (TextView) v.findViewById(R.id.question_text_view);
 
+        mQuestionTextView.setText(mQuesionText);
 
         mRadioButton1 = (RadioButton) v.findViewById(R.id.radioButton1);
+        mRadioButton1.setText(mOptionOneText);
+
         mRadioButton2 = (RadioButton) v.findViewById(R.id.radioButton2);
+        mRadioButton2.setText(mOptionTwoText);
+
         mRadioButton3 = (RadioButton) v.findViewById(R.id.radioButton3);
+        mRadioButton3.setText(mOptionThreeText);
+
         mRadioButton4 = (RadioButton) v.findViewById(R.id.radioButton4);
+        mRadioButton4.setText(mOptionFourText);
 
         mSubmitButton = (Button) v.findViewById(R.id.next_question_button);
 

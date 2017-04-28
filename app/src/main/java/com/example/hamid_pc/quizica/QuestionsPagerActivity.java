@@ -38,14 +38,6 @@ public class QuestionsPagerActivity extends SingleFragmentActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.d("questionspageracitivity", "okay");
-
-
-    }
-
-
-    @Override
-    protected Fragment createFragment() {
-
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mDatabaseReference = mFirebaseDatabase.getReference("questions");
 
@@ -73,12 +65,25 @@ public class QuestionsPagerActivity extends SingleFragmentActivity {
         });
 
 
-        if ((mQuestionsList.size() - 1) > 1 && mQuestionsList.get(0).getOptionOne() == null) {
-            return new TextQuizFragment();
-        } else {
+    }
 
-            return new MCQQuizFragment();
+
+    @Override
+    protected Fragment createFragment() {
+
+
+        if ((mQuestionsList.size()) > 0) {
+            if (mQuestionsList.get(0).getOptionOne() == null) {
+                return TextQuizFragment.newInstance(mQuestionsList.get(0).getQuesiton());
+            } else {
+
+                return MCQQuizFragment.newInstance(mQuestionsList.get(0).getQuesiton(), mQuestionsList.get(0).getOptionOne(), mQuestionsList.get(0).getOptionTwo(), mQuestionsList.get(0).getOptionThree(), mQuestionsList.get(0).getOptionFour());
+            }
+
+        } else {
+            return null;
         }
+
 
 
     }
@@ -88,13 +93,17 @@ public class QuestionsPagerActivity extends SingleFragmentActivity {
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
 
-        if ((mQuestionsList.size() - 1) > 1 && mQuestionsList.get(0).getOptionOne() == null) {
+        if ((mQuestionsList.size()) > 0) {
 
-            fragmentTransaction.replace(R.id.fragment_container, new MCQQuizFragment());
+            if (mQuestionsList.get(0).getOptionOne() == null) {
+
+                fragmentTransaction.replace(R.id.fragment_container, TextQuizFragment.newInstance(mQuestionsList.get(0).getQuesiton()));
             fragmentTransaction.commit();
-        } else {
-            fragmentTransaction.replace(R.id.fragment_container, new TextQuizFragment());
-            fragmentTransaction.commit();
+            } else {
+                fragmentTransaction.replace(R.id.fragment_container, new MCQQuizFragment());
+                fragmentTransaction.commit();
+            }
+            mQuestionsList.remove(mQuestionsList.get(0));
         }
     }
 

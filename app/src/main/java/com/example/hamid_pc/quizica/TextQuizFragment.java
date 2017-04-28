@@ -24,17 +24,24 @@ public class TextQuizFragment extends Fragment {
     private EditText editTextAnswer;
     private TextView textViewQuestion;
     private Button mSubmitButton;
+    private String mQuesitionText;
     public TextQuizFragment() {
         super();
     }
 
-
+    public static TextQuizFragment newInstance(String question) {
+        TextQuizFragment textQuizFragment = new TextQuizFragment();
+        Bundle args = new Bundle();
+        args.putString("question", question);
+        textQuizFragment.setArguments(args);
+        return textQuizFragment;
+    }
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mDatabaseReference = mFirebaseDatabase.getReference().child("questions");
-
+        mQuesitionText = getArguments().getString("question");
     }
 
     @Nullable
@@ -42,6 +49,7 @@ public class TextQuizFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_quiz_text, container, false);
         textViewQuestion = (TextView) v.findViewById(R.id.textView);
+        textViewQuestion.setText(mQuesitionText);
         editTextAnswer = (EditText) v.findViewById(R.id.editText);
         //textViewQuestion.setText();
         mSubmitButton = (Button) v.findViewById(R.id.button_submit);
