@@ -24,7 +24,12 @@ public class TextQuizFragment extends Fragment {
     private EditText editTextAnswer;
     private TextView textViewQuestion;
     private Button mSubmitButton;
-    private String mQuesitionText;
+    private Answer mAnswer;
+
+
+    private String mQuestionText;
+    private String mAnswerText;
+
     public TextQuizFragment() {
         super();
     }
@@ -40,8 +45,8 @@ public class TextQuizFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mFirebaseDatabase = FirebaseDatabase.getInstance();
-        mDatabaseReference = mFirebaseDatabase.getReference().child("questions");
-        mQuesitionText = getArguments().getString("question");
+        mDatabaseReference = mFirebaseDatabase.getReference().child("answers");
+        mQuestionText = getArguments().getString("question");
     }
 
     @Nullable
@@ -49,7 +54,7 @@ public class TextQuizFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_quiz_text, container, false);
         textViewQuestion = (TextView) v.findViewById(R.id.textView);
-        textViewQuestion.setText(mQuesitionText);
+        textViewQuestion.setText(mQuestionText);
         editTextAnswer = (EditText) v.findViewById(R.id.editText);
         //textViewQuestion.setText();
         mSubmitButton = (Button) v.findViewById(R.id.button_submit);
@@ -58,6 +63,10 @@ public class TextQuizFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 QuestionsPagerActivity questionsPagerActivity = (QuestionsPagerActivity) getActivity();
+                mAnswerText = editTextAnswer.getText().toString();
+                mAnswer = new Answer(mAnswerText);
+
+                mDatabaseReference.push().setValue(mAnswer);
                 questionsPagerActivity.replaceFragment();
             }
         });

@@ -3,16 +3,15 @@ package com.example.hamid_pc.quizica;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -27,12 +26,20 @@ public class MCQQuizFragment extends Fragment {
     private RadioButton mRadioButton3;
     private RadioButton mRadioButton4;
     private Button mSubmitButton;
+    private RadioGroup mRadioGroup;
+    private RadioButton mRadioButton;
+
+    private Answer mAnswer;
+
 
     private String mQuesionText;
     private String mOptionOneText;
     private String mOptionTwoText;
     private String mOptionThreeText;
     private String mOptionFourText;
+
+
+    private String mAnswerText;
 
     public MCQQuizFragment() {
         super();
@@ -51,12 +58,13 @@ public class MCQQuizFragment extends Fragment {
         return mcqQuizFragment;
     }
 
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mFirebaseDatabase = FirebaseDatabase.getInstance();
-        mDatabaseReference = mFirebaseDatabase.getReference().child("questions");
-        mQuesionText = getArguments().getString("quesion");
+        mDatabaseReference = mFirebaseDatabase.getReference().child("answers");
+        mQuesionText = getArguments().getString("question");
         mOptionOneText = getArguments().getString("optionOne");
         mOptionTwoText = getArguments().getString("optionTwo");
         mOptionThreeText = getArguments().getString("optionThree");
@@ -69,6 +77,8 @@ public class MCQQuizFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_quiz_mcq, container, false);
+
+
         mQuestionTextView = (TextView) v.findViewById(R.id.question_text_view);
 
         mQuestionTextView.setText(mQuesionText);
@@ -85,40 +95,26 @@ public class MCQQuizFragment extends Fragment {
         mRadioButton4 = (RadioButton) v.findViewById(R.id.radioButton4);
         mRadioButton4.setText(mOptionFourText);
 
+        mRadioGroup = (RadioGroup) v.findViewById(R.id.radioGroup);
+
+
         mSubmitButton = (Button) v.findViewById(R.id.next_question_button);
-
-
-        mDatabaseReference.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                // Question question = dataSnapshot.getValue(Question.class)
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
 
 
         mSubmitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                int SelectedValue = mRadioGroup.getCheckedRadioButtonId();
+                mRadioButton = (RadioButton) v.getRootView().findViewById(SelectedValue);
+                mAnswerText = mRadioButton.getText().toString();
+
+
+                Log.d("MCQFragment", "" + mAnswerText);
+
+                mAnswerText = mRadioButton.getText().toString();
+                mAnswer = new Answer(mAnswerText);
+                mDatabaseReference.push().setValue(mAnswer);
                 QuestionsPagerActivity questionsPagerActivity = (QuestionsPagerActivity) getActivity();
                 questionsPagerActivity.replaceFragment();
             }

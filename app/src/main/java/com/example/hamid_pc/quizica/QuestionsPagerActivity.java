@@ -38,6 +38,14 @@ public class QuestionsPagerActivity extends SingleFragmentActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.d("questionspageracitivity", "okay");
+
+
+    }
+
+
+    @Override
+    protected Fragment createFragment() {
+
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mDatabaseReference = mFirebaseDatabase.getReference("questions");
 
@@ -65,12 +73,6 @@ public class QuestionsPagerActivity extends SingleFragmentActivity {
         });
 
 
-    }
-
-
-    @Override
-    protected Fragment createFragment() {
-
 
         if ((mQuestionsList.size()) > 0) {
             if (mQuestionsList.get(0).getOptionOne() == null) {
@@ -81,7 +83,7 @@ public class QuestionsPagerActivity extends SingleFragmentActivity {
             }
 
         } else {
-            return null;
+            return TextQuizFragment.newInstance("Skip");
         }
 
 
@@ -100,7 +102,7 @@ public class QuestionsPagerActivity extends SingleFragmentActivity {
                 fragmentTransaction.replace(R.id.fragment_container, TextQuizFragment.newInstance(mQuestionsList.get(0).getQuesiton()));
             fragmentTransaction.commit();
             } else {
-                fragmentTransaction.replace(R.id.fragment_container, new MCQQuizFragment());
+                fragmentTransaction.replace(R.id.fragment_container, MCQQuizFragment.newInstance(mQuestionsList.get(0).getQuesiton(), mQuestionsList.get(0).getOptionOne(), mQuestionsList.get(0).getOptionTwo(), mQuestionsList.get(0).getOptionThree(), mQuestionsList.get(0).getOptionFour()));
                 fragmentTransaction.commit();
             }
             mQuestionsList.remove(mQuestionsList.get(0));

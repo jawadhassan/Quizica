@@ -2,18 +2,18 @@ package com.example.hamid_pc.quizica;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.widget.Toast;
 
-
 /**
- * Created by Hamid-PC on 1/22/2017.
+ * Created by Hamid-PC on 5/1/2017.
  */
 
-public class QuizOperationFragment extends DialogFragment {
+public class QuizStudentOperationFragment extends DialogFragment {
 
 
     @NonNull
@@ -29,8 +29,8 @@ public class QuizOperationFragment extends DialogFragment {
                     public void onClick(DialogInterface dialog, int which) {
                         switch (which) {
                             case 0:
-                                //  Intent intent = QuestionsPagerActivity.NewIntent(getActivity());
-                                //  startActivity(intent);
+                                Intent intent = QuestionsPagerActivity.NewIntent(getActivity());
+                                startActivity(intent);
                                 break;
                             case 1:
                                 Toast.makeText(getActivity(), "You have pressed Edit Quiz", Toast.LENGTH_LONG).show();
