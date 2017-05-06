@@ -7,26 +7,55 @@
 
     <TextView
         android:id="@+id/view_question_option"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:layout_marginTop="200dp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="30dp"
+        android:layout_marginTop="180dp"
+        android:fontFamily="sans-serif-medium"
         android:text="@string/questiontype_option"
         android:textAlignment="center" />
 
+
     <Button
         android:id="@+id/button_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginEnd="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginStart="20dp"
+        android:background="@android:color/holo_orange_light"
+        android:fontFamily="sans-serif-medium"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:text="@string/questiontype_buttontext"
+        android:textSize="14sp" />
+
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="15dp"
-        android:layout_marginLeft="150dp"
-        android:text="@string/questiontype_buttontext" />
+        android:layout_gravity="center"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="20dp"
+        android:fontFamily="sans-serif-medium"
+        android:text="@string/Or" />
 
     <Button
         android:id="@+id/button_mcq"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="150dp"
-        android:text="@string/questiontype_buttonmcq" />
+        android:layout_gravity="center"
+        android:layout_marginEnd="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginStart="20dp"
+        android:background="@android:color/darker_gray"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:text="@string/questiontype_buttonmcq"
+        android:textColor="@color/cardview_light_background" />
+
 
 </LinearLayout>

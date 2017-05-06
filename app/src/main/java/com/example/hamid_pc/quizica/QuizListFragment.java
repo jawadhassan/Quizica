@@ -52,8 +52,6 @@ public class QuizListFragment extends Fragment {
         mfloatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //  Intent intent = QuestionCreateActivity.newIntent(getContext());
-                //  startActivity(intent);
                 Intent intent = QuizCreateActivity.newIntent(getContext(), mCourseName);
                 startActivity(intent);
             }
@@ -63,13 +61,7 @@ public class QuizListFragment extends Fragment {
     }
 
     public void updateUI() {
-        //  page no 184 of Big nerd ranch
-        //Temporary Code For Checking
 
-        //  mQuizes = new ArrayList<>();
-//        for (int i = 0; i < 20; i++) {
-//            mQuizes.add(new Quiz("Database Introduction", 1));
-//        }
 
         mAdapter = new FirebaseRecyclerAdapter<Quiz, QuizHolder>(
                 Quiz.class,
@@ -79,6 +71,7 @@ public class QuizListFragment extends Fragment {
             @Override
             protected void populateViewHolder(QuizHolder viewHolder, Quiz model, int position) {
                 viewHolder.mTitleTextView.setText(model.getmTitle());
+                viewHolder.mNumberTextView.setText("" + model.getmQuizNumber());
                 Quiz quiz = getItem(position);
                 viewHolder.bindCourse(quiz);
             }
@@ -88,6 +81,7 @@ public class QuizListFragment extends Fragment {
 
     private static class QuizHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView mTitleTextView;
+        public TextView mNumberTextView;
         public Quiz mQuiz;
 
         public QuizHolder(View itemView) {
@@ -95,6 +89,7 @@ public class QuizListFragment extends Fragment {
             itemView.setOnClickListener(this);
             this.mTitleTextView = (TextView)
                     itemView.findViewById(R.id.list_item_quiz_title_text_view);
+            this.mNumberTextView = (TextView) itemView.findViewById(R.id.list_item_quiz_number_text_view);
         }
 
         public void bindCourse(Quiz quiz) {

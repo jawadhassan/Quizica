@@ -40,6 +40,7 @@
         <activity android:name=".QuestionsPagerActivity"></activity>
         <activity android:name=".CourseListStudentPanelActivity"></activity>
         <activity android:name=".QuizListStudentActivity"></activity>
+        <activity android:name=".CheckerActivity"></activity>
     </application>
 
 </manifest>

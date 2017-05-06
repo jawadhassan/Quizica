@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -21,6 +22,8 @@ public class CheckerFragment extends Fragment {
     private TextView mQuestionTextView;
     private TextView mAnswerTextView;
     private EditText mEditTextView;
+
+    private Button mSubmitButton;
 
     private String mQuestionText;
     private String mAnswerText;
@@ -50,9 +53,19 @@ public class CheckerFragment extends Fragment {
         mQuestionTextView = (TextView) view.findViewById(R.id.question_text_view);
         mAnswerTextView = (TextView) view.findViewById(R.id.answer_text_view);
         mEditTextView = (EditText) view.findViewById(R.id.number_edit_text);
+        mSubmitButton = (Button) view.findViewById(R.id.button_submit);
 
         mQuestionTextView.setText(mQuestionText);
         mAnswerTextView.setText(mAnswerText);
+
+
+        mSubmitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CheckerActivity checkerActivity = (CheckerActivity) getActivity();
+                checkerActivity.replaceFragment();
+            }
+        });
 
         mEditTextView.addTextChangedListener(new TextWatcher() {
             @Override
