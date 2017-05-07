@@ -30,7 +30,7 @@ public class QuizProgressFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mFirebaseDatabase = FirebaseDatabase.getInstance();
-        mDatabaseReference = mFirebaseDatabase.getReference("students");
+        mDatabaseReference = mFirebaseDatabase.getReference("student");
 
     }
 
@@ -49,7 +49,7 @@ public class QuizProgressFragment extends Fragment {
     public void updateUI() {
         mAdapter = new FirebaseRecyclerAdapter<Student, StudentHolder>(
                 Student.class,
-                R.layout.list_item_quiz,
+                R.layout.list_item_student,
                 StudentHolder.class,
                 mDatabaseReference) {
             @Override

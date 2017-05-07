@@ -33,7 +33,8 @@ public class QuizStudentOperationFragment extends DialogFragment {
                                 startActivity(intent);
                                 break;
                             case 1:
-                                Toast.makeText(getActivity(), "You have pressed Edit Quiz", Toast.LENGTH_LONG).show();
+                                Intent intent1 = QuizResultActivity.NewIntent(getActivity());
+                                startActivity(intent1);
                                 break;
                             case 2:
                                 Toast.makeText(getActivity(), "You have pressed Update Quiz", Toast.LENGTH_LONG).show();
