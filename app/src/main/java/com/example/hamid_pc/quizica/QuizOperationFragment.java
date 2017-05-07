@@ -17,9 +17,22 @@ import android.widget.Toast;
 public class QuizOperationFragment extends DialogFragment {
 
 
+    public static QuizOperationFragment newInstance(int QuizNumber, String QuizName) {
+        QuizOperationFragment frag = new QuizOperationFragment();
+        Bundle args = new Bundle();
+        args.putString("quizname", QuizName);
+        args.putInt("quiznumber", QuizNumber);
+        frag.setArguments(args);
+        return frag;
+    }
+
+
+
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
+        final String QuizName = getArguments().getString("quizname");
+        final int QuizNumber = getArguments().getInt("quiznumber");
         //    View v = LayoutInflater.from(getActivity())
         //          .inflate(R.layout.dialog_operation,null);
         return new AlertDialog.Builder(getActivity())
@@ -34,7 +47,7 @@ public class QuizOperationFragment extends DialogFragment {
                                 //  startActivity(intent);
                                 break;
                             case 1:
-                                Intent intent = CheckerActivity.newIntent(getActivity());
+                                Intent intent = CheckerActivity.newIntent(getActivity(), QuizNumber, QuizName);
                                 startActivity(intent);
                                 break;
                             case 2:

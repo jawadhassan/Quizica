@@ -5,7 +5,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +27,10 @@ public class CheckerFragment extends Fragment {
     private String mQuestionText;
     private String mAnswerText;
 
+
+    private int mTotalMarks;
+    private int mQuizNumber;
+    private String mQuizName;
 
     public static CheckerFragment newInstance(String questionuuid, String answer) {
         CheckerFragment checkerFragment = new CheckerFragment();
@@ -63,7 +66,7 @@ public class CheckerFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 CheckerActivity checkerActivity = (CheckerActivity) getActivity();
-                checkerActivity.replaceFragment();
+                checkerActivity.replaceFragment(mTotalMarks);
             }
         });
 
@@ -81,8 +84,9 @@ public class CheckerFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-                String text = mEditTextView.getText().toString();
-                Log.d("checkerfragment", "" + text);
+                mTotalMarks = Integer.parseInt(mEditTextView.getText().toString());
+
+
             }
         });
 

@@ -21,13 +21,18 @@ import java.util.ArrayList;
 
 public class CheckerActivity extends SingleFragmentActivity {
 
+    private static String mQuizName;
+    private static int mQuizNumber;
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mDatabaseReference;
     private ArrayList<Answer> mAnswersList;
     private Answer mAnswer;
+    private int mTotalObtainedMarks = 0;
 
-    public static Intent newIntent(Context packageContext) {
+    public static Intent newIntent(Context packageContext, int QuizNumber, String QuizName) {
         Intent i = new Intent(packageContext, CheckerActivity.class);
+        mQuizName = QuizName;
+        mQuizNumber = QuizNumber;
         return i;
     }
 
@@ -43,6 +48,7 @@ public class CheckerActivity extends SingleFragmentActivity {
 
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mDatabaseReference = mFirebaseDatabase.getReference("answers");
+
 
         mAnswersList = new ArrayList<>();
 
@@ -65,17 +71,23 @@ public class CheckerActivity extends SingleFragmentActivity {
     }
 
 
-    public void replaceFragment() {
+    public void replaceFragment(int Totalmarks) {
 
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
 
         if ((mAnswersList.size()) > 0) {
-
+            mTotalObtainedMarks = mTotalObtainedMarks + 1;
 
             fragmentTransaction.replace(R.id.fragment_container, CheckerFragment.newInstance(mAnswersList.get(0).getQuestionUuid(), mAnswersList.get(0).getAnswerText()));
             fragmentTransaction.commit();
             mAnswersList.remove(0);
+        } else {
+
+            mDatabaseReference = mFirebaseDatabase.getReference("results");
+            StudentResult studentResult = new StudentResult(mQuizNumber, mQuizName, 20, mTotalObtainedMarks);
+            mDatabaseReference.push().setValue(studentResult);
+
         }
 
         }

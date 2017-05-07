@@ -98,17 +98,21 @@ public class QuizListFragment extends Fragment {
 
         @Override
         public void onClick(View v) {
+
+
             AppCompatActivity appCompatActivity = (AppCompatActivity) v.getContext();
             if (appCompatActivity instanceof QuizListActivity) {
                 QuizListActivity activityQuizList = (QuizListActivity) appCompatActivity;
                 FragmentManager manager = activityQuizList.getSupportFragmentManager();
-                QuizOperationFragment quizOperationFragment = new QuizOperationFragment();
+                QuizOperationFragment quizOperationFragment = QuizOperationFragment.newInstance(mQuiz.getmQuizNumber(), mQuiz.getmTitle());
                 quizOperationFragment.show(manager, DIALOG_OPERATION);
 
 
             }
 
         }
+
+
     }
 
 
