@@ -66,14 +66,6 @@ public class QuizListStudentFragment extends Fragment {
     }
 
     public void updateUI() {
-        //  page no 184 of Big nerd ranch
-        //Temporary Code For Checking
-
-        //  mQuizes = new ArrayList<>();
-//        for (int i = 0; i < 20; i++) {
-//            mQuizes.add(new Quiz("Database Introduction", 1));
-//        }
-
         mAdapter = new FirebaseRecyclerAdapter<Quiz, QuizHolder>(
                 Quiz.class,
                 R.layout.list_item_quiz,

@@ -43,8 +43,8 @@ public class QuizOperationFragment extends DialogFragment {
                     public void onClick(DialogInterface dialog, int which) {
                         switch (which) {
                             case 0:
-                                //  Intent intent = QuestionsPagerActivity.NewIntent(getActivity());
-                                //  startActivity(intent);
+                                Intent QuizProgressIntent = QuizProgressActivity.NewIntent(getActivity());
+                                startActivity(QuizProgressIntent);
                                 break;
                             case 1:
                                 Intent intent = CheckerActivity.newIntent(getActivity(), QuizNumber, QuizName);
