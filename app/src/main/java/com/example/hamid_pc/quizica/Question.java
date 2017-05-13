@@ -5,17 +5,17 @@ package com.example.hamid_pc.quizica;
  */
 
 public class Question {
-    private String quesiton;
+    private String question;
     private String optionOne;
     private String optionTwo;
     private String optionThree;
     private String optionFour;
     private String answer;
 
-    public Question(String question, String optoinOne, String optionTwo, String optionThree, String optionFour, String answer) {
+    public Question(String question, String optionOne, String optionTwo, String optionThree, String optionFour, String answer) {
 
-        this.quesiton = question;
-        this.optionOne = optoinOne;
+        this.question = question;
+        this.optionOne = optionOne;
         this.optionTwo = optionTwo;
         this.optionThree = optionThree;
         this.optionFour = optionFour;
@@ -23,7 +23,7 @@ public class Question {
     }
 
     public Question(String question) {
-        this.quesiton = question;
+        this.question = question;
 
     }
 
@@ -76,12 +76,12 @@ public class Question {
         this.optionOne = optionOne;
     }
 
-    public String getQuesiton() {
+    public String getQuestion() {
 
-        return quesiton;
+        return question;
     }
 
-    public void setQuesiton(String quesiton) {
-        this.quesiton = quesiton;
+    public void setQuestion(String question) {
+        this.question = question;
     }
 }

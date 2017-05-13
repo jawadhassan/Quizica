@@ -1,6 +1,5 @@
 package com.example.hamid_pc.quizica;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -51,16 +50,6 @@ public class QuizListStudentFragment extends Fragment {
         mfloatingActionButton = (FloatingActionButton) view.findViewById(R.id.quiz_floating_button);
         updateUI();
 
-
-        mfloatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //  Intent intent = QuestionCreateActivity.newIntent(getContext());
-                //  startActivity(intent);
-                Intent intent = QuizCreateActivity.newIntent(getContext(), mCourseName);
-                startActivity(intent);
-            }
-        });
 
         return view;
     }
