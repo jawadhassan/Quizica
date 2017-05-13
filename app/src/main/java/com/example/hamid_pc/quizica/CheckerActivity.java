@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -19,10 +21,12 @@ import java.util.ArrayList;
  * Created by Hamid-PC on 4/10/2017.
  */
 
-public class CheckerActivity extends SingleFragmentActivity {
+public class CheckerActivity extends AppCompatActivity {
 
     private static String mQuizName;
     private static int mQuizNumber;
+    FragmentManager fragmentManager;
+    Fragment quizFragment;
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mDatabaseReference;
     private ArrayList<Answer> mAnswersList;
@@ -40,12 +44,7 @@ public class CheckerActivity extends SingleFragmentActivity {
     @Override
     public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
         super.onCreate(savedInstanceState, persistentState);
-
-    }
-
-    @Override
-    protected Fragment createFragment() {
-
+        setContentView(R.layout.activity_fragment);
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mDatabaseReference = mFirebaseDatabase.getReference("answers");
 
@@ -59,6 +58,15 @@ public class CheckerActivity extends SingleFragmentActivity {
                     mAnswer = snapshot.getValue(Answer.class);
                     mAnswersList.add(mAnswer);
                 }
+
+                if (quizFragment == null) {
+                    if (!mAnswersList.isEmpty()) {
+                        quizFragment = createFragment();
+                        fragmentManager.beginTransaction()
+                                .add(R.id.fragment_container, quizFragment)
+                                .commit();
+                    }
+                }
             }
 
             @Override
@@ -67,7 +75,14 @@ public class CheckerActivity extends SingleFragmentActivity {
             }
         });
 
-        return CheckerFragment.newInstance("Okay", "Right");
+
+    }
+
+
+    public Fragment createFragment() {
+
+
+        return CheckerFragment.newInstance(mAnswersList.get(0).getQuestionUuid(), mAnswersList.get(0).getAnswerText());
     }
 
 
