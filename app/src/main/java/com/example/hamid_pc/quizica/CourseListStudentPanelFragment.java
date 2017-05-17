@@ -8,7 +8,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -56,10 +55,8 @@ public class CourseListStudentPanelFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.miProfile:
-                Log.d("check", "okay");
                 FirebaseAuth.getInstance().signOut();
                 AuthenticationActivity.newIntent(getActivity());
-
         }
 
         return true;
@@ -71,11 +68,8 @@ public class CourseListStudentPanelFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_course_list_student_panel, container, false);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.course_recycler_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
         setHasOptionsMenu(true);
-
         UpdateUI();
-
         return view;
     }
 
@@ -93,11 +87,7 @@ public class CourseListStudentPanelFragment extends Fragment {
                 viewHolder.textView.setText(model.getCourseName());
                 Course course = getItem(position);
                 viewHolder.bindCourse(course);
-
-
             }
-
-
         };
         mRecyclerView.setAdapter(mAdapter);
     }
@@ -118,14 +108,11 @@ public class CourseListStudentPanelFragment extends Fragment {
             super(itemView);
             itemView.setOnClickListener(this);
             textView = (TextView) itemView.findViewById(R.id.list_item_course_title_text_view);
-
-
         }
 
 
         public void bindCourse(Course course) {
             mCourse = course;
-
         }
 
 
@@ -133,13 +120,10 @@ public class CourseListStudentPanelFragment extends Fragment {
         public void onClick(View v) {
             AppCompatActivity appCompatActivity = (AppCompatActivity) v.getContext();
             if (appCompatActivity instanceof CourseListStudentPanelActivity) {
-
                 CourseListStudentPanelActivity activityCourseList = (CourseListStudentPanelActivity) appCompatActivity;
                 FragmentManager manager = activityCourseList.getSupportFragmentManager();
                 CourseOperationStudentFragment courseOperationStudentFragment = CourseOperationStudentFragment.newInstance(mCourse.getCourseName());
                 courseOperationStudentFragment.show(manager, DIALOG_OPERATION);
-
-
             }
         }
 

@@ -79,15 +79,6 @@ public class QuestionsPagerActivity extends AppCompatActivity {
 
 
     public Fragment createFragment() {
-
-
-
-
-
-
-
-
-
         if ((mQuestionsList.size()) > 0) {
             if (mQuestionsList.get(0).getOptionOne() == null) {
                 return TextQuizFragment.newInstance(mQuestionsList.get(0).getQuestion());
@@ -99,9 +90,6 @@ public class QuestionsPagerActivity extends AppCompatActivity {
         } else {
             return TextQuizFragment.newInstance("Skip");
         }
-
-
-
     }
 
     public void replaceFragment() {

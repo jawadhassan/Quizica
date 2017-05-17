@@ -43,6 +43,7 @@ dependencies {
     compile 'com.firebaseui:firebase-ui-auth:1.1.1'
     compile 'com.firebaseui:firebase-ui:1.1.1'
     compile 'com.android.support:design:25.1.0'
+    compile 'com.yqritc:recyclerview-flexibledivider:1.4.0'
     testCompile 'junit:junit:4.12'
 }
 

@@ -3,7 +3,6 @@ package com.example.hamid_pc.quizica;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -42,11 +41,16 @@ public class CheckerActivity extends AppCompatActivity {
 
 
     @Override
-    public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
-        super.onCreate(savedInstanceState, persistentState);
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fragment);
+
+
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mDatabaseReference = mFirebaseDatabase.getReference("answers");
+
+        fragmentManager = getSupportFragmentManager();
+        quizFragment = fragmentManager.findFragmentById(R.id.fragment_container);
 
 
         mAnswersList = new ArrayList<>();
@@ -58,7 +62,6 @@ public class CheckerActivity extends AppCompatActivity {
                     mAnswer = snapshot.getValue(Answer.class);
                     mAnswersList.add(mAnswer);
                 }
-
                 if (quizFragment == null) {
                     if (!mAnswersList.isEmpty()) {
                         quizFragment = createFragment();
@@ -67,6 +70,7 @@ public class CheckerActivity extends AppCompatActivity {
                                 .commit();
                     }
                 }
+
             }
 
             @Override
@@ -74,15 +78,12 @@ public class CheckerActivity extends AppCompatActivity {
 
             }
         });
-
-
     }
 
 
     public Fragment createFragment() {
-
-
         return CheckerFragment.newInstance(mAnswersList.get(0).getQuestionUuid(), mAnswersList.get(0).getAnswerText());
+
     }
 
 
@@ -91,7 +92,7 @@ public class CheckerActivity extends AppCompatActivity {
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
 
-        if ((mAnswersList.size()) > 0) {
+        if (!mAnswersList.isEmpty()) {
             mTotalObtainedMarks = mTotalObtainedMarks + 1;
 
             fragmentTransaction.replace(R.id.fragment_container, CheckerFragment.newInstance(mAnswersList.get(0).getQuestionUuid(), mAnswersList.get(0).getAnswerText()));
@@ -102,14 +103,11 @@ public class CheckerActivity extends AppCompatActivity {
             mDatabaseReference = mFirebaseDatabase.getReference("results");
             StudentResult studentResult = new StudentResult(mQuizNumber, mQuizName, 20, mTotalObtainedMarks);
             mDatabaseReference.push().setValue(studentResult);
+            finish();
 
         }
 
         }
 
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
 }
