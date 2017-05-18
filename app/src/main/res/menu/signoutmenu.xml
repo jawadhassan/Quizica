@@ -5,7 +5,7 @@
     <item
         android:id="@+id/miProfile"
         android:title="@string/Sign_out"
-        app:showAsAction="ifRoom|withText"></item>
+        app:showAsAction="always|withText"></item>
 
 
 </menu>

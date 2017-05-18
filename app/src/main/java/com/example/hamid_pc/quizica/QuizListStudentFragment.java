@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.fondesa.recyclerviewdivider.RecyclerViewDivider;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -68,6 +69,7 @@ public class QuizListStudentFragment extends Fragment {
             }
         };
         mQuizRecyclerView.setAdapter(mAdapter);
+        RecyclerViewDivider.with(getContext()).build().addTo(mQuizRecyclerView);
     }
 
     private static class QuizHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

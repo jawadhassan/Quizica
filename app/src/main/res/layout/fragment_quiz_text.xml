@@ -33,6 +33,6 @@
         android:fontFamily="sans-serif-medium"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
-        android:text="Button"
+        android:text="@string/next"
         android:textSize="14sp" />
 </LinearLayout>

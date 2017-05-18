@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.firebase.ui.auth.ResultCodes;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.fondesa.recyclerviewdivider.RecyclerViewDivider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -90,6 +91,7 @@ public class CourseListStudentPanelFragment extends Fragment {
             }
         };
         mRecyclerView.setAdapter(mAdapter);
+        RecyclerViewDivider.with(getContext()).build().addTo(mRecyclerView);
     }
 
     @Override

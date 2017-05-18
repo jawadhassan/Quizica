@@ -20,10 +20,10 @@ import android.widget.TextView;
 
 import com.firebase.ui.auth.ResultCodes;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.fondesa.recyclerviewdivider.RecyclerViewDivider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration;
 
 /**
  * Created by Hamid-PC on 1/26/2017.
@@ -65,7 +65,7 @@ public class CourseListFragment extends Fragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         MenuInflater inflater1 = getActivity().getMenuInflater();
-        inflater1.inflate(R.menu.signoutmenu, menu);
+        inflater1.inflate(R.menu.mainmenu, menu);
 
     }
 
@@ -75,8 +75,8 @@ public class CourseListFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_course_list, container, false);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.course_recycler_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mRecyclerView.addItemDecoration(new HorizontalDividerItemDecoration.Builder(getContext())
-                .color(R.color.tw__composer_deep_gray).sizeResId(R.dimen.tw__composer_divider_height).build());
+//        mRecyclerView.addItemDecoration(new HorizontalDividerItemDecoration.Builder(getContext())
+//                .color(R.color.tw__composer_deep_gray).sizeResId(R.dimen.tw__composer_divider_height).build());
         UpdateUI();
 
 
@@ -114,6 +114,7 @@ public class CourseListFragment extends Fragment {
 
         };
         mRecyclerView.setAdapter(mAdapter);
+        RecyclerViewDivider.with(getContext()).build().addTo(mRecyclerView);
     }
 
     @Override

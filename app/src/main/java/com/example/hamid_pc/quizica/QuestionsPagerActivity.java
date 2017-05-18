@@ -109,6 +109,7 @@ public class QuestionsPagerActivity extends AppCompatActivity {
             }
             mQuestionsList.remove(mQuestionsList.get(0));
         }
+        finish();
     }
 
 }
