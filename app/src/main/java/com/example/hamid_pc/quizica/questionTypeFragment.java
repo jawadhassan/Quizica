@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,10 +18,21 @@ public class QuestionTypeFragment extends Fragment {
 
     private Button mMcqButton;
     private Button mTextButton;
+    private String mQuizUuid;
+
+    public static QuestionTypeFragment newInstance(String QuizUuid) {
+        QuestionTypeFragment frag = new QuestionTypeFragment();
+        Bundle args = new Bundle();
+        args.putString("quizuuid", QuizUuid);
+        frag.setArguments(args);
+        return frag;
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mQuizUuid = getArguments().getString("quizuuid");
+        Log.d("Check", mQuizUuid);
     }
 
     @Nullable
@@ -34,7 +46,7 @@ public class QuestionTypeFragment extends Fragment {
         mMcqButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = McqMakerActivity.newIntent(getContext());
+                Intent i = McqMakerActivity.newIntent(getContext(), mQuizUuid);
                 startActivity(i);
             }
         });
@@ -42,7 +54,7 @@ public class QuestionTypeFragment extends Fragment {
         mTextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = TextMakerActivity.newIntent(getContext());
+                Intent i = TextMakerActivity.newIntent(getContext(), mQuizUuid);
                 startActivity(i);
             }
         });

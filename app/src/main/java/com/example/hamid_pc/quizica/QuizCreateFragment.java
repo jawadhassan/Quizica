@@ -30,6 +30,7 @@ public class QuizCreateFragment extends Fragment {
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mDatabaseReference;
 
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -48,7 +49,7 @@ public class QuizCreateFragment extends Fragment {
 
                 // Replacing QuizCreateFragment with QuestionCreateFragment
                 final FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                ft.replace(R.id.fragment_container, new QuestionTypeFragment(), QUESTION_FRAG);
+                ft.replace(R.id.fragment_container, QuestionTypeFragment.newInstance(mQuiz.getmQuizUuid()), QUESTION_FRAG);
                 ft.commit();
 
 

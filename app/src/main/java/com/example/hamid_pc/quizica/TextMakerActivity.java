@@ -7,14 +7,17 @@ import android.support.v4.app.Fragment;
 
 public class TextMakerActivity extends SingleFragmentActivity {
 
-    public static Intent newIntent(Context packageContext) {
+    static String mQuizUuid;
+
+    public static Intent newIntent(Context packageContext, String QuizUuid) {
         Intent i = new Intent(packageContext, TextMakerActivity.class);
+        mQuizUuid = QuizUuid;
         return i;
     }
 
     @Override
     protected Fragment createFragment() {
-        return new TextMakerFragment();
+        return TextMakerFragment.newInstance(mQuizUuid);
 
     }
 

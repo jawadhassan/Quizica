@@ -11,15 +11,17 @@ import android.support.v4.app.Fragment;
 
 public class McqMakerActivity extends SingleFragmentActivity {
 
+    static String mQuizUuid;
 
-    public static Intent newIntent(Context packageContext) {
+    public static Intent newIntent(Context packageContext, String QuizUuid) {
         Intent i = new Intent(packageContext, McqMakerActivity.class);
+        mQuizUuid = QuizUuid;
         return i;
     }
 
     @Override
     protected Fragment createFragment() {
-        return new McqMakerFragment();
+        return McqMakerFragment.newInstance(mQuizUuid);
 
     }
 

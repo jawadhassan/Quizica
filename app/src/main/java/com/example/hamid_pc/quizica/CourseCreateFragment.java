@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,8 +14,11 @@ import android.widget.EditText;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 /**
  * Created by Hamid-PC on 2/9/2017.
@@ -54,11 +58,32 @@ public class CourseCreateFragment extends Fragment {
 
 
                 course = new Course(CourseId, CourseName, mUsername);
-                mDatabaseReference.push().setValue(course);
 
-                Intent intent = new Intent();
-                getActivity().setResult(Activity.RESULT_OK);
-                getActivity().finish();
+                mDatabaseReference.child(CourseName).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.exists()) {
+                            Log.d("Check", "Record already exists");
+
+
+                        } else {
+                            Log.d("Check", "Record added");
+
+                            mDatabaseReference.child(CourseName).setValue(course);
+                            Intent intent = new Intent();
+                            getActivity().setResult(Activity.RESULT_OK);
+                            getActivity().finish();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
+
+
 
             }
         });

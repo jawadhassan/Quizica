@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
-import android.widget.Toast;
 
 
 /**
@@ -17,11 +16,12 @@ import android.widget.Toast;
 public class QuizOperationFragment extends DialogFragment {
 
 
-    public static QuizOperationFragment newInstance(int QuizNumber, String QuizName) {
+    public static QuizOperationFragment newInstance(int QuizNumber, String QuizName, String QuizUuid) {
         QuizOperationFragment frag = new QuizOperationFragment();
         Bundle args = new Bundle();
         args.putString("quizname", QuizName);
         args.putInt("quiznumber", QuizNumber);
+        args.putString("quizuuid", QuizUuid);
         frag.setArguments(args);
         return frag;
     }
@@ -33,6 +33,7 @@ public class QuizOperationFragment extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         final String QuizName = getArguments().getString("quizname");
         final int QuizNumber = getArguments().getInt("quiznumber");
+        final String mQuizUuid = getArguments().getString("quizuuid");
         //    View v = LayoutInflater.from(getActivity())
         //          .inflate(R.layout.dialog_operation,null);
         return new AlertDialog.Builder(getActivity())
@@ -51,7 +52,6 @@ public class QuizOperationFragment extends DialogFragment {
                                 startActivity(intent);
                                 break;
                             case 2:
-                                Toast.makeText(getActivity(), "You have pressed Update Quiz", Toast.LENGTH_LONG).show();
                                 break;
                         }
                     }

@@ -94,6 +94,7 @@ public class QuizListStudentFragment extends Fragment {
                 QuizListStudentActivity activityStudentQuizList = (QuizListStudentActivity) appCompatActivity;
                 FragmentManager manager = activityStudentQuizList.getSupportFragmentManager();
                 QuizStudentOperationFragment quizStudentOperationFragment = new QuizStudentOperationFragment();
+
                 quizStudentOperationFragment.show(manager, QUIZ_OPERATION);
 
 

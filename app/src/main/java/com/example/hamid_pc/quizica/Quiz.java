@@ -1,5 +1,7 @@
 package com.example.hamid_pc.quizica;
 
+import java.util.UUID;
+
 /**
  * Created by Hamid-PC on 1/20/2017.
  */
@@ -7,11 +9,13 @@ package com.example.hamid_pc.quizica;
 public class Quiz {
     private String mTitle;
     private int mQuizNumber;
+    private String mQuizUuid;
 
 
     public Quiz(String mTitle, int mQuizNumber) {
         this.mTitle = mTitle;
         this.mQuizNumber = mQuizNumber;
+        mQuizUuid = UUID.randomUUID().toString();
     }
 
     public Quiz() {
@@ -31,5 +35,13 @@ public class Quiz {
 
     public void setmQuizNumber(int mQuizNumber) {
         this.mQuizNumber = mQuizNumber;
+    }
+
+    public String getmQuizUuid() {
+        return mQuizUuid;
+    }
+
+    public void setmQuizUuid(String mQuizUuid) {
+        this.mQuizUuid = mQuizUuid;
     }
 }

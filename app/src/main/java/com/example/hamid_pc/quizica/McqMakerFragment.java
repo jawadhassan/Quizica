@@ -43,6 +43,7 @@ public class McqMakerFragment extends Fragment {
     private String optionFour;
 
     private Question question;
+    private String mQuizUuid;
 
     private Boolean isQuestionTextValidated = false;
     private Boolean isOptionOneTextValidated = false;
@@ -57,12 +58,21 @@ public class McqMakerFragment extends Fragment {
     private Boolean isOptionFourValidated = false;
 
 
+    public static McqMakerFragment newInstance(String QuizUuid) {
+        McqMakerFragment frag = new McqMakerFragment();
+        Bundle args = new Bundle();
+        args.putString("quizuuid", QuizUuid);
+        frag.setArguments(args);
+        return frag;
+    }
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mFirebaseDatabase = FirebaseDatabase.getInstance();
-        mDatabaseReference = mFirebaseDatabase.getReference().child("questions");
+        mQuizUuid = getArguments().getString("quizuuid");
+        mDatabaseReference = mFirebaseDatabase.getReference().child("questions/" + mQuizUuid);
     }
 
 
