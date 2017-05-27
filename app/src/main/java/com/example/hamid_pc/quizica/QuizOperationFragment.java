@@ -48,7 +48,8 @@ public class QuizOperationFragment extends DialogFragment {
                                 startActivity(QuizProgressIntent);
                                 break;
                             case 1:
-                                Intent intent = CheckerActivity.newIntent(getActivity(), QuizNumber, QuizName);
+                                // Intent intent = CheckerActivity.newIntent(getActivity(), QuizNumber, QuizName);
+                                Intent intent = StudentsAnswersListActivity.newIntent(getActivity(), mQuizUuid);
                                 startActivity(intent);
                                 break;
                             case 2:

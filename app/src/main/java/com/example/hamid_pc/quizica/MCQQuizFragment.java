@@ -12,6 +12,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -37,6 +38,7 @@ public class MCQQuizFragment extends Fragment {
     private String mOptionTwoText;
     private String mOptionThreeText;
     private String mOptionFourText;
+    private String mQuizUuid;
 
 
     private String mAnswerText;
@@ -46,7 +48,7 @@ public class MCQQuizFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static MCQQuizFragment newInstance(String question, String OptionOne, String OptionTwo, String OptionThree, String OptionFour) {
+    public static MCQQuizFragment newInstance(String QuizUuid, String question, String OptionOne, String OptionTwo, String OptionThree, String OptionFour) {
         MCQQuizFragment mcqQuizFragment = new MCQQuizFragment();
         Bundle args = new Bundle();
         args.putString("question", question);
@@ -54,6 +56,7 @@ public class MCQQuizFragment extends Fragment {
         args.putString("optionTwo", OptionTwo);
         args.putString("optionThree", OptionThree);
         args.putString("optionFour", OptionFour);
+        args.putString("quizuuid", QuizUuid);
         mcqQuizFragment.setArguments(args);
         return mcqQuizFragment;
     }
@@ -63,14 +66,13 @@ public class MCQQuizFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mFirebaseDatabase = FirebaseDatabase.getInstance();
-        mDatabaseReference = mFirebaseDatabase.getReference().child("answers");
         mQuesionText = getArguments().getString("question");
         mOptionOneText = getArguments().getString("optionOne");
         mOptionTwoText = getArguments().getString("optionTwo");
         mOptionThreeText = getArguments().getString("optionThree");
         mOptionFourText = getArguments().getString("optionFour");
-
-
+        mQuizUuid = getArguments().getString("quizuuid");
+        mDatabaseReference = mFirebaseDatabase.getReference().child("answers/" + mQuizUuid + "/" + FirebaseAuth.getInstance().getCurrentUser().getUid());
     }
 
     @Nullable

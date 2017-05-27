@@ -43,6 +43,8 @@
         <activity android:name=".CheckerActivity"></activity>
         <activity android:name=".QuizProgressActivity"></activity>
         <activity android:name=".QuizResultActivity"></activity>
+        <activity android:name=".StudentsAnswersListActivity"></activity>
+
     </application>
 
 </manifest>

@@ -93,8 +93,8 @@ public class QuizListStudentFragment extends Fragment {
             if (appCompatActivity instanceof QuizListStudentActivity) {
                 QuizListStudentActivity activityStudentQuizList = (QuizListStudentActivity) appCompatActivity;
                 FragmentManager manager = activityStudentQuizList.getSupportFragmentManager();
-                QuizStudentOperationFragment quizStudentOperationFragment = new QuizStudentOperationFragment();
 
+                QuizStudentOperationFragment quizStudentOperationFragment = QuizStudentOperationFragment.newInstance(mQuiz.getmQuizUuid());
                 quizStudentOperationFragment.show(manager, QUIZ_OPERATION);
 
 
