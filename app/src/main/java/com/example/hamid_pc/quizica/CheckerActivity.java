@@ -23,19 +23,24 @@ import java.util.ArrayList;
 public class CheckerActivity extends AppCompatActivity {
 
     private static String mQuizName;
-    private static int mQuizNumber;
+    private static String mQuizUuid;
+    private static String mStudentUuid;
     FragmentManager fragmentManager;
     Fragment quizFragment;
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mDatabaseReference;
+
+
     private ArrayList<Answer> mAnswersList;
     private Answer mAnswer;
     private int mTotalObtainedMarks = 0;
+    private String mQuestionUuid;
+    private String mAnswerText;
 
-    public static Intent newIntent(Context packageContext, int QuizNumber, String QuizName) {
+    public static Intent newIntent(Context packageContext, String QuizUuid, String StudentUuid) {
         Intent i = new Intent(packageContext, CheckerActivity.class);
-        mQuizName = QuizName;
-        mQuizNumber = QuizNumber;
+        mQuizUuid = QuizUuid;
+        mStudentUuid = StudentUuid;
         return i;
     }
 
@@ -47,7 +52,8 @@ public class CheckerActivity extends AppCompatActivity {
 
 
         mFirebaseDatabase = FirebaseDatabase.getInstance();
-        mDatabaseReference = mFirebaseDatabase.getReference("answers");
+        mDatabaseReference = mFirebaseDatabase.getReference("answers/" + mQuizUuid + "/" + mStudentUuid);
+
 
         fragmentManager = getSupportFragmentManager();
         quizFragment = fragmentManager.findFragmentById(R.id.fragment_container);
@@ -78,11 +84,20 @@ public class CheckerActivity extends AppCompatActivity {
 
             }
         });
+
+
     }
 
 
+
     public Fragment createFragment() {
-        return CheckerFragment.newInstance(mAnswersList.get(0).getQuestionUuid(), mAnswersList.get(0).getAnswerText());
+
+
+        mQuestionUuid = mAnswersList.get(0).getQuestionUuid();
+        mAnswerText = mAnswersList.get(0).getAnswerText();
+        mAnswersList.remove(0);
+        return CheckerFragment.newInstance(mQuizUuid, mQuestionUuid, mAnswerText);
+
 
     }
 
@@ -91,17 +106,20 @@ public class CheckerActivity extends AppCompatActivity {
 
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        mQuestionUuid = mAnswersList.get(0).getQuestionUuid();
+        mAnswerText = mAnswersList.get(0).getAnswerText();
 
         if (!mAnswersList.isEmpty()) {
             mTotalObtainedMarks = mTotalObtainedMarks + 1;
 
-            fragmentTransaction.replace(R.id.fragment_container, CheckerFragment.newInstance(mAnswersList.get(0).getQuestionUuid(), mAnswersList.get(0).getAnswerText()));
+            fragmentTransaction.replace(R.id.fragment_container, CheckerFragment.newInstance(mQuizUuid, mQuestionUuid, mAnswerText));
             fragmentTransaction.commit();
             mAnswersList.remove(0);
         } else {
 
-            mDatabaseReference = mFirebaseDatabase.getReference("results");
-            StudentResult studentResult = new StudentResult(mQuizNumber, mQuizName, 20, mTotalObtainedMarks);
+            mDatabaseReference = mFirebaseDatabase.getReference("results/" + mStudentUuid);
+
+            StudentResult studentResult = new StudentResult(mQuizUuid, mQuizName, 20, mTotalObtainedMarks);
             mDatabaseReference.push().setValue(studentResult);
             finish();
 

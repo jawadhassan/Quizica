@@ -5,7 +5,7 @@ package com.example.hamid_pc.quizica;
  */
 
 public class StudentResult {
-    private Integer mQuizNumber;
+    private String mQuizUuid;
     private String mQuizName;
     private Integer mTotalMarks;
     private Integer mTotalObtainedMarks;
@@ -14,19 +14,19 @@ public class StudentResult {
     public StudentResult() {
     }
 
-    public StudentResult(Integer mQuizNumber, String mQuizName, Integer mTotalMarks, Integer mTotalObtainedMarks) {
-        this.mQuizNumber = mQuizNumber;
+    public StudentResult(String mQuizUuid, String mQuizName, Integer mTotalMarks, Integer mTotalObtainedMarks) {
+        this.mQuizUuid = mQuizUuid;
         this.mQuizName = mQuizName;
         this.mTotalMarks = mTotalMarks;
         this.mTotalObtainedMarks = mTotalObtainedMarks;
     }
 
-    public Integer getmQuizNumber() {
-        return mQuizNumber;
+    public String getmQuizUuid() {
+        return mQuizUuid;
     }
 
-    public void setmQuizNumber(Integer mQuizNumber) {
-        this.mQuizNumber = mQuizNumber;
+    public void setmQuizUuid(String mQuizUuid) {
+        this.mQuizUuid = mQuizUuid;
     }
 
     public String getmQuizName() {

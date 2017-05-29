@@ -9,11 +9,17 @@ public class Answer {
     private String AnswerText;
     private String QuestionUuid;
 
-    public Answer() {
+    public Answer(String QuestionUuid, String AnswerText) {
+        this.AnswerText = AnswerText;
+        this.QuestionUuid = QuestionUuid;
     }
 
-    public Answer(String answerText) {
-        AnswerText = answerText;
+    public Answer(String AnswerText) {
+        this.AnswerText = AnswerText;
+
+    }
+
+    public Answer() {
     }
 
     public String getAnswerText() {

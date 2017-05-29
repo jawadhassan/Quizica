@@ -39,6 +39,12 @@ public class QuestionsPagerActivity extends AppCompatActivity {
     private Student mStudent;
 
     private String mStudentUuid;
+    private String mQuestionUuid;
+    private String mQuestionText;
+    private String mQuestionOptionOne;
+    private String mQuestionOptionTwo;
+    private String mQuestionOptionThree;
+    private String mQuestionOptionFour;
 
     public static Intent NewIntent(Context packageContext, String QuizUuid) {
         Intent intent = new Intent(packageContext, QuestionsPagerActivity.class);
@@ -122,11 +128,19 @@ public class QuestionsPagerActivity extends AppCompatActivity {
     public Fragment createFragment() {
         mQuizReference.push().setValue(mStudent);
         if ((mQuestionsList.size()) > 0) {
+            mQuestionText = mQuestionsList.get(0).getQuestion();
+            mQuestionUuid = mQuestionsList.get(0).getQuestionUuid();
             if (mQuestionsList.get(0).getOptionOne() == null) {
-                return TextQuizFragment.newInstance(mQuestionsList.get(0).getQuestion());
+                return TextQuizFragment.newInstance(mQuestionText);
             } else {
 
-                return MCQQuizFragment.newInstance(mQuizUuid, mQuestionsList.get(0).getQuestion(), mQuestionsList.get(0).getOptionOne(), mQuestionsList.get(0).getOptionTwo(), mQuestionsList.get(0).getOptionThree(), mQuestionsList.get(0).getOptionFour());
+                mQuestionText = mQuestionsList.get(0).getQuestion();
+                mQuestionOptionOne = mQuestionsList.get(0).getOptionOne();
+                mQuestionOptionThree = mQuestionsList.get(0).getOptionThree();
+                mQuestionOptionTwo = mQuestionsList.get(0).getOptionTwo();
+                mQuestionOptionFour = mQuestionsList.get(0).getOptionFour();
+
+                return MCQQuizFragment.newInstance(mQuizUuid, mQuestionUuid, mQuestionText, mQuestionOptionOne, mQuestionOptionTwo, mQuestionOptionThree, mQuestionOptionFour);
             }
 
         } else {
@@ -146,7 +160,7 @@ public class QuestionsPagerActivity extends AppCompatActivity {
                 fragmentTransaction.replace(R.id.fragment_container, TextQuizFragment.newInstance(mQuestionsList.get(0).getQuestion()));
             fragmentTransaction.commit();
             } else {
-                fragmentTransaction.replace(R.id.fragment_container, MCQQuizFragment.newInstance(mQuizUuid, mQuestionsList.get(0).getQuestion(), mQuestionsList.get(0).getOptionOne(), mQuestionsList.get(0).getOptionTwo(), mQuestionsList.get(0).getOptionThree(), mQuestionsList.get(0).getOptionFour()));
+                fragmentTransaction.replace(R.id.fragment_container, MCQQuizFragment.newInstance(mQuizUuid, mQuestionUuid, mQuestionsList.get(0).getQuestion(), mQuestionsList.get(0).getOptionOne(), mQuestionsList.get(0).getOptionTwo(), mQuestionsList.get(0).getOptionThree(), mQuestionsList.get(0).getOptionFour()));
                 fragmentTransaction.commit();
             }
             mQuestionsList.remove(mQuestionsList.get(0));

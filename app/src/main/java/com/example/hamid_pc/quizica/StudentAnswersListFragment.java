@@ -1,8 +1,10 @@
 package com.example.hamid_pc.quizica;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -22,14 +24,11 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class StudentAnswersListFragment extends Fragment {
 
+    private static String mQuizUuid;
     private RecyclerView mQuizRecyclerView;
     private FirebaseRecyclerAdapter mAdapter;
-
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mDatabaseReference;
-
-    private String mQuizUuid;
-
 
     public static StudentAnswersListFragment newInstance(String QuizUuid) {
         StudentAnswersListFragment frag = new StudentAnswersListFragment();
@@ -96,8 +95,13 @@ public class StudentAnswersListFragment extends Fragment {
 
         @Override
         public void onClick(View v) {
+            AppCompatActivity appCompatActivity = (AppCompatActivity) v.getContext();
 
+            Intent CheckerIntent = CheckerActivity.newIntent(v.getContext(), mQuizUuid, mStudent.getUuid());
+            appCompatActivity.startActivity(CheckerIntent);
         }
+
     }
+
 
 }

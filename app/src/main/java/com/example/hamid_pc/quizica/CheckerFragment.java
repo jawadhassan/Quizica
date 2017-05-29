@@ -3,15 +3,18 @@ package com.example.hamid_pc.quizica;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 /**
  * Created by Hamid-PC on 4/10/2017.
@@ -27,17 +30,25 @@ public class CheckerFragment extends Fragment {
 
     private String mQuestionText;
     private String mAnswerText;
+    private String mQuestionUuid;
 
 
+    private DatabaseReference mQuestionReference;
+    private FirebaseDatabase mFirebaseDatabase;
+    private Question mQuestion;
+
+
+    private String mQuizUuid;
     private int mTotalMarks;
     private int mQuizNumber;
     private String mQuizName;
 
-    public static CheckerFragment newInstance(String questionuuid, String answer) {
+    public static CheckerFragment newInstance(String quizuuid, String questionuuid, String answer) {
         CheckerFragment checkerFragment = new CheckerFragment();
         Bundle args = new Bundle();
         args.putString("questionuuid", questionuuid);
         args.putString("answer", answer);
+        args.putString("quizuuid", quizuuid);
         checkerFragment.setArguments(args);
         return checkerFragment;
     }
@@ -45,10 +56,12 @@ public class CheckerFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d("LOG_Check", "In_Fragment");
-        mQuestionText = getArguments().getString("questionuuid");
-        mAnswerText = getArguments().getString("answer");
 
+
+        mQuestionUuid = getArguments().getString("questionuuid");
+        mQuizUuid = getArguments().getString("quizuuid");
+        mAnswerText = getArguments().getString("answer");
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
     }
 
     @Nullable
@@ -60,7 +73,7 @@ public class CheckerFragment extends Fragment {
         mEditTextView = (EditText) view.findViewById(R.id.number_edit_text);
         mSubmitButton = (Button) view.findViewById(R.id.button_submit);
 
-        mQuestionTextView.setText(mQuestionText);
+
         mAnswerTextView.setText(mAnswerText);
 
 
@@ -68,29 +81,40 @@ public class CheckerFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 CheckerActivity checkerActivity = (CheckerActivity) getActivity();
+                mTotalMarks = Integer.parseInt(mEditTextView.getText().toString());
                 checkerActivity.replaceFragment(mTotalMarks);
             }
         });
 
-        mEditTextView.addTextChangedListener(new TextWatcher() {
+        mQuestionReference = mFirebaseDatabase.getReference().child("questions/" + mQuizUuid);
+        mQuestionReference.orderByChild("questionUuid").equalTo(mQuestionUuid).addChildEventListener(new ChildEventListener() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                mQuestion = dataSnapshot.getValue(Question.class);
+                mQuestionTextView.setText(mQuestion.getQuestion());
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
 
             }
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
 
             }
 
             @Override
-            public void afterTextChanged(Editable s) {
-                mTotalMarks = Integer.parseInt(mEditTextView.getText().toString());
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
 
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
 
             }
         });
+
 
         return view;
 

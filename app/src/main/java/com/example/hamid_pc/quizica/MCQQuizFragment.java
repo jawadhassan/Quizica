@@ -39,7 +39,7 @@ public class MCQQuizFragment extends Fragment {
     private String mOptionThreeText;
     private String mOptionFourText;
     private String mQuizUuid;
-
+    private String mQuestionUuid;
 
     private String mAnswerText;
 
@@ -48,7 +48,7 @@ public class MCQQuizFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static MCQQuizFragment newInstance(String QuizUuid, String question, String OptionOne, String OptionTwo, String OptionThree, String OptionFour) {
+    public static MCQQuizFragment newInstance(String QuizUuid, String QuestionUuid, String question, String OptionOne, String OptionTwo, String OptionThree, String OptionFour) {
         MCQQuizFragment mcqQuizFragment = new MCQQuizFragment();
         Bundle args = new Bundle();
         args.putString("question", question);
@@ -57,6 +57,7 @@ public class MCQQuizFragment extends Fragment {
         args.putString("optionThree", OptionThree);
         args.putString("optionFour", OptionFour);
         args.putString("quizuuid", QuizUuid);
+        args.putString("questionuuid", QuestionUuid);
         mcqQuizFragment.setArguments(args);
         return mcqQuizFragment;
     }
@@ -72,6 +73,7 @@ public class MCQQuizFragment extends Fragment {
         mOptionThreeText = getArguments().getString("optionThree");
         mOptionFourText = getArguments().getString("optionFour");
         mQuizUuid = getArguments().getString("quizuuid");
+        mQuestionUuid = getArguments().getString("questionuuid");
         mDatabaseReference = mFirebaseDatabase.getReference().child("answers/" + mQuizUuid + "/" + FirebaseAuth.getInstance().getCurrentUser().getUid());
     }
 
@@ -115,7 +117,7 @@ public class MCQQuizFragment extends Fragment {
                 Log.d("MCQFragment", "" + mAnswerText);
 
                 mAnswerText = mRadioButton.getText().toString();
-                mAnswer = new Answer(mAnswerText);
+                mAnswer = new Answer(mQuestionUuid, mAnswerText);
                 mDatabaseReference.push().setValue(mAnswer);
                 QuestionsPagerActivity questionsPagerActivity = (QuestionsPagerActivity) getActivity();
                 questionsPagerActivity.replaceFragment();
