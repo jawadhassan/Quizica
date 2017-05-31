@@ -25,6 +25,7 @@ public class CheckerActivity extends AppCompatActivity {
     private static String mQuizName;
     private static String mQuizUuid;
     private static String mStudentUuid;
+    private static int mQuizTotalMarks;
     FragmentManager fragmentManager;
     Fragment quizFragment;
     private FirebaseDatabase mFirebaseDatabase;
@@ -35,11 +36,14 @@ public class CheckerActivity extends AppCompatActivity {
     private Answer mAnswer;
     private int mTotalObtainedMarks = 0;
     private String mQuestionUuid;
+
+    private float mMarksPerQuestion;
     private String mAnswerText;
 
-    public static Intent newIntent(Context packageContext, String QuizUuid, String StudentUuid) {
+    public static Intent newIntent(Context packageContext, String QuizUuid, int QuizTotalMarks, String StudentUuid) {
         Intent i = new Intent(packageContext, CheckerActivity.class);
         mQuizUuid = QuizUuid;
+        mQuizTotalMarks = QuizTotalMarks;
         mStudentUuid = StudentUuid;
         return i;
     }
@@ -92,11 +96,11 @@ public class CheckerActivity extends AppCompatActivity {
 
     public Fragment createFragment() {
 
-
+        mMarksPerQuestion = (float) mQuizTotalMarks / mAnswersList.size();
         mQuestionUuid = mAnswersList.get(0).getQuestionUuid();
         mAnswerText = mAnswersList.get(0).getAnswerText();
         mAnswersList.remove(0);
-        return CheckerFragment.newInstance(mQuizUuid, mQuestionUuid, mAnswerText);
+        return CheckerFragment.newInstance(mQuizUuid, mQuestionUuid, mMarksPerQuestion, mAnswerText);
 
 
     }
@@ -106,20 +110,22 @@ public class CheckerActivity extends AppCompatActivity {
 
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        mQuestionUuid = mAnswersList.get(0).getQuestionUuid();
-        mAnswerText = mAnswersList.get(0).getAnswerText();
+        mTotalObtainedMarks = mTotalObtainedMarks + Totalmarks;
 
         if (!mAnswersList.isEmpty()) {
-            mTotalObtainedMarks = mTotalObtainedMarks + 1;
+            mQuestionUuid = mAnswersList.get(0).getQuestionUuid();
+            mAnswerText = mAnswersList.get(0).getAnswerText();
 
-            fragmentTransaction.replace(R.id.fragment_container, CheckerFragment.newInstance(mQuizUuid, mQuestionUuid, mAnswerText));
+
+            fragmentTransaction.replace(R.id.fragment_container, CheckerFragment.newInstance(mQuizUuid, mQuestionUuid, mMarksPerQuestion, mAnswerText));
             fragmentTransaction.commit();
             mAnswersList.remove(0);
         } else {
 
             mDatabaseReference = mFirebaseDatabase.getReference("results/" + mStudentUuid);
 
-            StudentResult studentResult = new StudentResult(mQuizUuid, mQuizName, 20, mTotalObtainedMarks);
+
+            StudentResult studentResult = new StudentResult(mQuizUuid, mQuizName, mQuizTotalMarks, mTotalObtainedMarks);
             mDatabaseReference.push().setValue(studentResult);
             finish();
 

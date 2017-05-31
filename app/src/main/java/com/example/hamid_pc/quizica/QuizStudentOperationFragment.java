@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
-import android.widget.Toast;
 
 /**
  * Created by Hamid-PC on 5/1/2017.
@@ -34,7 +33,7 @@ public class QuizStudentOperationFragment extends DialogFragment {
         return new AlertDialog.Builder(getActivity())
                 //        .setView(v)
                 .setTitle(R.string.operation_picker)
-                .setItems(R.array.operation_options, new DialogInterface.OnClickListener() {
+                .setItems(R.array.student_operation_options, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         switch (which) {
@@ -43,12 +42,10 @@ public class QuizStudentOperationFragment extends DialogFragment {
                                 startActivity(intent);
                                 break;
                             case 1:
-                                Intent intent1 = QuizResultActivity.NewIntent(getActivity());
+                                Intent intent1 = QuizResultActivity.NewIntent(getActivity(), mQuizUuid);
                                 startActivity(intent1);
                                 break;
-                            case 2:
-                                Toast.makeText(getActivity(), "You have pressed Update Quiz", Toast.LENGTH_LONG).show();
-                                break;
+
                         }
                     }
                 })

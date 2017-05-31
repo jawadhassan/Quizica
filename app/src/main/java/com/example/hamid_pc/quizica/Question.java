@@ -28,7 +28,7 @@ public class Question {
 
     public Question(String question) {
         this.question = question;
-
+        QuestionUuid = UUID.randomUUID().toString();
     }
 
     public Question() {

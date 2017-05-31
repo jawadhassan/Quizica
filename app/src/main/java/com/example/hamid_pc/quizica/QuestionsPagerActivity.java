@@ -131,7 +131,8 @@ public class QuestionsPagerActivity extends AppCompatActivity {
             mQuestionText = mQuestionsList.get(0).getQuestion();
             mQuestionUuid = mQuestionsList.get(0).getQuestionUuid();
             if (mQuestionsList.get(0).getOptionOne() == null) {
-                return TextQuizFragment.newInstance(mQuestionText);
+                mQuestionsList.remove(0);
+                return TextQuizFragment.newInstance(mQuizUuid, mQuestionUuid, mQuestionText);
             } else {
 
                 mQuestionText = mQuestionsList.get(0).getQuestion();
@@ -139,12 +140,12 @@ public class QuestionsPagerActivity extends AppCompatActivity {
                 mQuestionOptionThree = mQuestionsList.get(0).getOptionThree();
                 mQuestionOptionTwo = mQuestionsList.get(0).getOptionTwo();
                 mQuestionOptionFour = mQuestionsList.get(0).getOptionFour();
-
+                mQuestionsList.remove(0);
                 return MCQQuizFragment.newInstance(mQuizUuid, mQuestionUuid, mQuestionText, mQuestionOptionOne, mQuestionOptionTwo, mQuestionOptionThree, mQuestionOptionFour);
             }
 
         } else {
-            return TextQuizFragment.newInstance("Skip");
+            return TextQuizFragment.newInstance(mQuizUuid, mQuestionUuid, "Skip");
         }
     }
 
@@ -157,15 +158,16 @@ public class QuestionsPagerActivity extends AppCompatActivity {
 
             if (mQuestionsList.get(0).getOptionOne() == null) {
 
-                fragmentTransaction.replace(R.id.fragment_container, TextQuizFragment.newInstance(mQuestionsList.get(0).getQuestion()));
+                fragmentTransaction.replace(R.id.fragment_container, TextQuizFragment.newInstance(mQuizUuid, mQuestionUuid, mQuestionsList.get(0).getQuestion()));
             fragmentTransaction.commit();
             } else {
                 fragmentTransaction.replace(R.id.fragment_container, MCQQuizFragment.newInstance(mQuizUuid, mQuestionUuid, mQuestionsList.get(0).getQuestion(), mQuestionsList.get(0).getOptionOne(), mQuestionsList.get(0).getOptionTwo(), mQuestionsList.get(0).getOptionThree(), mQuestionsList.get(0).getOptionFour()));
                 fragmentTransaction.commit();
             }
             mQuestionsList.remove(mQuestionsList.get(0));
+        } else {
+            finish();
         }
-        finish();
     }
 
 }

@@ -106,7 +106,7 @@ public class QuizListFragment extends Fragment {
             if (appCompatActivity instanceof QuizListActivity) {
                 QuizListActivity activityQuizList = (QuizListActivity) appCompatActivity;
                 FragmentManager manager = activityQuizList.getSupportFragmentManager();
-                QuizOperationFragment quizOperationFragment = QuizOperationFragment.newInstance(mQuiz.getmQuizNumber(), mQuiz.getmTitle(), mQuiz.getmQuizUuid());
+                QuizOperationFragment quizOperationFragment = QuizOperationFragment.newInstance(mQuiz.getmQuizNumber(), mQuiz.getmTitle(), mQuiz.getmQuizTotalMarks(), mQuiz.getmQuizUuid());
                 quizOperationFragment.show(manager, DIALOG_OPERATION);
 
 

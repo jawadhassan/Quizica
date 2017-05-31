@@ -14,10 +14,7 @@ public class Answer {
         this.QuestionUuid = QuestionUuid;
     }
 
-    public Answer(String AnswerText) {
-        this.AnswerText = AnswerText;
 
-    }
 
     public Answer() {
     }

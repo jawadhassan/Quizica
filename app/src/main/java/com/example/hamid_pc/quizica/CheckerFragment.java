@@ -3,6 +3,7 @@ package com.example.hamid_pc.quizica;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,16 +40,18 @@ public class CheckerFragment extends Fragment {
 
 
     private String mQuizUuid;
-    private int mTotalMarks;
+    private int mTotalMarksObtained;
     private int mQuizNumber;
     private String mQuizName;
+    private float mTotalMarksPerQuestion;
 
-    public static CheckerFragment newInstance(String quizuuid, String questionuuid, String answer) {
+    public static CheckerFragment newInstance(String quizuuid, String questionuuid, float totalmarksperquestion, String answer) {
         CheckerFragment checkerFragment = new CheckerFragment();
         Bundle args = new Bundle();
         args.putString("questionuuid", questionuuid);
         args.putString("answer", answer);
         args.putString("quizuuid", quizuuid);
+        args.putFloat("totalquestionmarks", totalmarksperquestion);
         checkerFragment.setArguments(args);
         return checkerFragment;
     }
@@ -61,6 +64,7 @@ public class CheckerFragment extends Fragment {
         mQuestionUuid = getArguments().getString("questionuuid");
         mQuizUuid = getArguments().getString("quizuuid");
         mAnswerText = getArguments().getString("answer");
+        mTotalMarksPerQuestion = getArguments().getFloat("totalquestionmarks");
         mFirebaseDatabase = FirebaseDatabase.getInstance();
     }
 
@@ -81,8 +85,13 @@ public class CheckerFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 CheckerActivity checkerActivity = (CheckerActivity) getActivity();
-                mTotalMarks = Integer.parseInt(mEditTextView.getText().toString());
-                checkerActivity.replaceFragment(mTotalMarks);
+
+                mTotalMarksObtained = Integer.parseInt(mEditTextView.getText().toString());
+                if (mTotalMarksPerQuestion < mTotalMarksObtained) {
+                    Log.d("check", "Marks exceed the limit");
+                } else {
+                    checkerActivity.replaceFragment(mTotalMarksObtained);
+                }
             }
         });
 

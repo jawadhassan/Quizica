@@ -2,7 +2,6 @@ package com.example.hamid_pc.quizica;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
@@ -27,7 +26,6 @@ public class QuizListStudentFragment extends Fragment {
     private static final String QUIZ_OPERATION = "DialogOperation";
     private RecyclerView mQuizRecyclerView;
     private FirebaseRecyclerAdapter mAdapter;
-    private FloatingActionButton mfloatingActionButton;
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mDatabaseReference;
 
@@ -45,10 +43,9 @@ public class QuizListStudentFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_quiz_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_quizlist_student, container, false);
         mQuizRecyclerView = (RecyclerView) view.findViewById(R.id.quiz_recycler_view);
         mQuizRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mfloatingActionButton = (FloatingActionButton) view.findViewById(R.id.quiz_floating_button);
         updateUI();
 
 

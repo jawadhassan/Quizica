@@ -26,12 +26,25 @@ public class QuizProgressFragment extends Fragment {
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mDatabaseReference;
 
+    private String mQuizUuid;
+
+
+    public static QuizProgressFragment newInstance(String QuizUuid) {
+        QuizProgressFragment frag = new QuizProgressFragment();
+        Bundle args = new Bundle();
+        args.putString("quizuuid", QuizUuid);
+        frag.setArguments(args);
+        return frag;
+    }
+
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mQuizUuid = getArguments().getString("quizuuid");
         mFirebaseDatabase = FirebaseDatabase.getInstance();
-        mDatabaseReference = mFirebaseDatabase.getReference("student");
+        mDatabaseReference = mFirebaseDatabase.getReference().child(mQuizUuid);
 
     }
 

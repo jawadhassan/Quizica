@@ -14,5 +14,9 @@
         <item>Quiz</item>
         <item>View Results</item>
     </string-array>
+    <string-array name="student_operation_options">
+        <item>Start Quiz</item>
+        <item>View Results</item>
+    </string-array>
 
 </resources>

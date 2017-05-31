@@ -10,15 +10,25 @@ public class Quiz {
     private String mTitle;
     private int mQuizNumber;
     private String mQuizUuid;
+    private int mQuizTotalMarks;
 
 
-    public Quiz(String mTitle, int mQuizNumber) {
+    public Quiz(String mTitle, int mQuizNumber, int mQuizTotalMarks) {
         this.mTitle = mTitle;
         this.mQuizNumber = mQuizNumber;
+        this.mQuizTotalMarks = mQuizTotalMarks;
         mQuizUuid = UUID.randomUUID().toString();
     }
 
     public Quiz() {
+    }
+
+    public int getmQuizTotalMarks() {
+        return mQuizTotalMarks;
+    }
+
+    public void setmQuizTotalMarks(int mQuizTotalMarks) {
+        this.mQuizTotalMarks = mQuizTotalMarks;
     }
 
     public String getmTitle() {

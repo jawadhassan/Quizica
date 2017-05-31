@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -26,6 +27,8 @@ public class TextQuizFragment extends Fragment {
     private Button mSubmitButton;
     private Answer mAnswer;
 
+    private String mQuizUuid;
+    private String mQuestionUuid;
 
     private String mQuestionText;
     private String mAnswerText;
@@ -34,10 +37,12 @@ public class TextQuizFragment extends Fragment {
         super();
     }
 
-    public static TextQuizFragment newInstance(String question) {
+    public static TextQuizFragment newInstance(String QuizUuid, String QuestionUuid, String question) {
         TextQuizFragment textQuizFragment = new TextQuizFragment();
         Bundle args = new Bundle();
         args.putString("question", question);
+        args.putString("quizuuid", QuizUuid);
+        args.putString("questionuuid", QuestionUuid);
         textQuizFragment.setArguments(args);
         return textQuizFragment;
     }
@@ -45,8 +50,10 @@ public class TextQuizFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mFirebaseDatabase = FirebaseDatabase.getInstance();
-        mDatabaseReference = mFirebaseDatabase.getReference().child("answers");
         mQuestionText = getArguments().getString("question");
+        mQuizUuid = getArguments().getString("quizuuid");
+        mQuestionUuid = getArguments().getString("questionuuid");
+        mDatabaseReference = mFirebaseDatabase.getReference().child("answers/" + mQuizUuid + "/" + FirebaseAuth.getInstance().getCurrentUser().getUid());
     }
 
     @Nullable
@@ -64,8 +71,7 @@ public class TextQuizFragment extends Fragment {
             public void onClick(View v) {
                 QuestionsPagerActivity questionsPagerActivity = (QuestionsPagerActivity) getActivity();
                 mAnswerText = editTextAnswer.getText().toString();
-                mAnswer = new Answer(mAnswerText);
-
+                mAnswer = new Answer(mQuestionUuid, mAnswerText);
                 mDatabaseReference.push().setValue(mAnswer);
                 questionsPagerActivity.replaceFragment();
             }

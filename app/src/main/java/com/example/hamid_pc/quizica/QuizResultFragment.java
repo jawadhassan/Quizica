@@ -3,12 +3,12 @@ package com.example.hamid_pc.quizica;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -22,20 +22,29 @@ import com.google.firebase.database.FirebaseDatabase;
 public class QuizResultFragment extends Fragment {
 
 
+    String mQuizUuid;
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mDatabaseReference;
-
     private TextView mMarksObtained;
     private TextView mTotalMarks;
     private TextView mTitle;
     private TextView mMessage;
 
+    public static QuizResultFragment newInstance(String QuizUuid) {
+        QuizResultFragment frag = new QuizResultFragment();
+        Bundle args = new Bundle();
+        args.putString("quizuuid", QuizUuid);
+        frag.setArguments(args);
+        return frag;
+    }
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mQuizUuid = getArguments().getString("quizuuid");
         mFirebaseDatabase = FirebaseDatabase.getInstance();
-        mDatabaseReference = mFirebaseDatabase.getReference().child("results");
+        mDatabaseReference = mFirebaseDatabase.getReference().child("results/" + FirebaseAuth.getInstance().getCurrentUser().getUid());
     }
 
     @Nullable
@@ -51,15 +60,12 @@ public class QuizResultFragment extends Fragment {
     }
 
     public void updateUI() {
-
-        Log.d("check", "ok");
-
-        mDatabaseReference.orderByChild("mQuizName").equalTo("DiodeQuiz").addChildEventListener(new ChildEventListener() {
+        mDatabaseReference.orderByChild("mQuizUuid").equalTo(mQuizUuid).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
 
                 StudentResult studentResult = dataSnapshot.getValue(StudentResult.class);
-                Log.d("check", "" + studentResult.getmQuizName());
+
                 mTotalMarks.setText("" + studentResult.getmTotalMarks());
                 mMarksObtained.setText("" + studentResult.getmTotalObtainedMarks());
 

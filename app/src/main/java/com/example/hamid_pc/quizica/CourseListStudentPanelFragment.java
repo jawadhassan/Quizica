@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -58,6 +57,7 @@ public class CourseListStudentPanelFragment extends Fragment {
             case R.id.miProfile:
                 FirebaseAuth.getInstance().signOut();
                 AuthenticationActivity.newIntent(getActivity());
+                getActivity().finish();
         }
 
         return true;
@@ -122,10 +122,14 @@ public class CourseListStudentPanelFragment extends Fragment {
         public void onClick(View v) {
             AppCompatActivity appCompatActivity = (AppCompatActivity) v.getContext();
             if (appCompatActivity instanceof CourseListStudentPanelActivity) {
-                CourseListStudentPanelActivity activityCourseList = (CourseListStudentPanelActivity) appCompatActivity;
-                FragmentManager manager = activityCourseList.getSupportFragmentManager();
-                CourseOperationStudentFragment courseOperationStudentFragment = CourseOperationStudentFragment.newInstance(mCourse.getCourseName());
-                courseOperationStudentFragment.show(manager, DIALOG_OPERATION);
+//                CourseListStudentPanelActivity activityCourseList = (CourseListStudentPanelActivity) appCompatActivity;
+//                FragmentManager manager = activityCourseList.getSupportFragmentManager();
+//                CourseOperationStudentFragment courseOperationStudentFragment = CourseOperationStudentFragment.newInstance(mCourse.getCourseName());
+//                courseOperationStudentFragment.show(manager, DIALOG_OPERATION);
+//            }
+
+                Intent quizIntent = QuizListStudentActivity.newIntent(v.getContext(), mCourse.getCourseName());
+                appCompatActivity.startActivity(quizIntent);
             }
         }
 

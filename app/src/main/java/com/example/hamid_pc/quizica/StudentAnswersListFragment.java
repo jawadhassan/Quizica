@@ -25,15 +25,17 @@ import com.google.firebase.database.FirebaseDatabase;
 public class StudentAnswersListFragment extends Fragment {
 
     private static String mQuizUuid;
+    private static int mQuizTotalMarks;
     private RecyclerView mQuizRecyclerView;
     private FirebaseRecyclerAdapter mAdapter;
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mDatabaseReference;
 
-    public static StudentAnswersListFragment newInstance(String QuizUuid) {
+    public static StudentAnswersListFragment newInstance(String QuizUuid, int quizTotalMarks) {
         StudentAnswersListFragment frag = new StudentAnswersListFragment();
         Bundle args = new Bundle();
         args.putString("quizuuid", QuizUuid);
+        args.putInt("quiztotalmarks", quizTotalMarks);
         frag.setArguments(args);
         return frag;
     }
@@ -42,6 +44,7 @@ public class StudentAnswersListFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mQuizUuid = getArguments().getString("quizuuid");
+        mQuizTotalMarks = getArguments().getInt("quiztotalmarks");
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mDatabaseReference = mFirebaseDatabase.getReference().child(mQuizUuid);
 
@@ -97,7 +100,7 @@ public class StudentAnswersListFragment extends Fragment {
         public void onClick(View v) {
             AppCompatActivity appCompatActivity = (AppCompatActivity) v.getContext();
 
-            Intent CheckerIntent = CheckerActivity.newIntent(v.getContext(), mQuizUuid, mStudent.getUuid());
+            Intent CheckerIntent = CheckerActivity.newIntent(v.getContext(), mQuizUuid, mQuizTotalMarks, mStudent.getUuid());
             appCompatActivity.startActivity(CheckerIntent);
         }
 

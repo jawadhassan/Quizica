@@ -3,7 +3,6 @@ package com.example.hamid_pc.quizica;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -111,11 +110,6 @@ public class MCQQuizFragment extends Fragment {
 
                 int SelectedValue = mRadioGroup.getCheckedRadioButtonId();
                 mRadioButton = (RadioButton) v.getRootView().findViewById(SelectedValue);
-                mAnswerText = mRadioButton.getText().toString();
-
-
-                Log.d("MCQFragment", "" + mAnswerText);
-
                 mAnswerText = mRadioButton.getText().toString();
                 mAnswer = new Answer(mQuestionUuid, mAnswerText);
                 mDatabaseReference.push().setValue(mAnswer);

@@ -10,14 +10,16 @@ import android.support.v4.app.Fragment;
 
 public class QuizProgressActivity extends SingleFragmentActivity {
 
+    private static String mQuizUuid;
 
-    public static Intent NewIntent(Context packageContext) {
+    public static Intent NewIntent(Context packageContext, String QuizUuid) {
         Intent intent = new Intent(packageContext, QuizProgressActivity.class);
+        mQuizUuid = QuizUuid;
         return intent;
     }
 
     @Override
     protected Fragment createFragment() {
-        return new QuizProgressFragment();
+        return QuizProgressFragment.newInstance(mQuizUuid);
     }
 }

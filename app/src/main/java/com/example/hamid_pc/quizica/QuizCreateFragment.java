@@ -25,6 +25,8 @@ public class QuizCreateFragment extends Fragment {
     private Button submitButton;
     private String mQuizName;
     private int mQuizNumber;
+    private int mQuizTotalMarks;
+    private EditText QuizTotalMarks;
     private String mCourseName;
     private Quiz mQuiz;
     private FirebaseDatabase mFirebaseDatabase;
@@ -37,6 +39,8 @@ public class QuizCreateFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_quiz_create, container, false);
         QuizTitleText = (EditText) view.findViewById(R.id.view_edittext_title);
         QuizIdText = (EditText) view.findViewById(R.id.view_edittext_number);
+        QuizTotalMarks = (EditText) view.findViewById(R.id.view_edittext_totalmarks_numbers);
+
         submitButton = (Button) view.findViewById(R.id.button_submit);
 
         submitButton.setOnClickListener(new View.OnClickListener() {
@@ -44,7 +48,8 @@ public class QuizCreateFragment extends Fragment {
             public void onClick(View v) {
                 mQuizName = QuizTitleText.getText().toString();
                 mQuizNumber = Integer.parseInt(QuizIdText.getText().toString());
-                mQuiz = new Quiz(mQuizName, mQuizNumber);
+                mQuizTotalMarks = Integer.parseInt(QuizTotalMarks.getText().toString());
+                mQuiz = new Quiz(mQuizName, mQuizNumber, mQuizTotalMarks);
                 mDatabaseReference.push().setValue(mQuiz);
 
                 // Replacing QuizCreateFragment with QuestionCreateFragment
