@@ -1,9 +1,9 @@
 package com.example.hamid_pc.quizica;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -24,13 +24,11 @@ import com.google.firebase.database.FirebaseDatabase;
 public class QuizListStudentFragment extends Fragment {
 
     private static final String QUIZ_OPERATION = "DialogOperation";
+    private static String mCourseName;
     private RecyclerView mQuizRecyclerView;
     private FirebaseRecyclerAdapter mAdapter;
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mDatabaseReference;
-
-    private String mCourseName;
-
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -101,11 +99,8 @@ public class QuizListStudentFragment extends Fragment {
 
 
                 QuizListStudentActivity activityStudentQuizList = (QuizListStudentActivity) appCompatActivity;
-                FragmentManager manager = activityStudentQuizList.getSupportFragmentManager();
-                QuizStudentOperationFragment quizStudentOperationFragment = QuizStudentOperationFragment.newInstance(mQuiz.getmQuizUuid());
-                quizStudentOperationFragment.show(manager, QUIZ_OPERATION);
-
-
+                Intent QuizStartActivityIntent = QuizStartActivity.NewIntent(activityStudentQuizList, mCourseName, mQuiz.getmQuizUuid());
+                activityStudentQuizList.startActivity(QuizStartActivityIntent);
 
             }
 

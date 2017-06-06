@@ -29,6 +29,8 @@ public class QuizResultFragment extends Fragment {
     private TextView mTotalMarks;
     private TextView mTitle;
     private TextView mMessage;
+    private TextView mNotFound;
+    private TextView mOutOFSign;
 
     public static QuizResultFragment newInstance(String QuizUuid) {
         QuizResultFragment frag = new QuizResultFragment();
@@ -56,6 +58,9 @@ public class QuizResultFragment extends Fragment {
         updateUI();
         mMarksObtained = (TextView) view.findViewById(R.id.marks_obtained);
         mTotalMarks = (TextView) view.findViewById(R.id.total_marks);
+        mNotFound = (TextView) view.findViewById(R.id.not_found);
+        mOutOFSign = (TextView) view.findViewById(R.id.out_of_sign);
+        mNotFound.setVisibility(View.VISIBLE);
         return view;
     }
 
@@ -65,7 +70,12 @@ public class QuizResultFragment extends Fragment {
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
 
                 StudentResult studentResult = dataSnapshot.getValue(StudentResult.class);
-
+                mNotFound.setVisibility(View.INVISIBLE);
+                mOutOFSign.setVisibility(View.VISIBLE);
+                mTitle.setVisibility(View.VISIBLE);
+                mMarksObtained.setVisibility(View.VISIBLE);
+                mTotalMarks.setVisibility(View.VISIBLE);
+                mMessage.setVisibility(View.VISIBLE);
                 mTotalMarks.setText("" + studentResult.getmTotalMarks());
                 mMarksObtained.setText("" + studentResult.getmTotalObtainedMarks());
 

@@ -44,7 +44,7 @@
         <activity android:name=".QuizProgressActivity"></activity>
         <activity android:name=".QuizResultActivity"></activity>
         <activity android:name=".StudentsAnswersListActivity"></activity>
-
+        <activity android:name=".QuizStartActivity"></activity>
     </application>
 
 </manifest>

@@ -15,7 +15,8 @@
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Title"
         android:textColor="@color/authui_inputTextColorDark"
-        android:textSize="30sp" />
+        android:textSize="30sp"
+        android:visibility="invisible" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -33,16 +34,18 @@
             android:layout_weight="1"
             android:textAlignment="viewEnd"
             android:textAppearance="@style/TextAppearance.AppCompat.Display4"
+            android:visibility="invisible"
             tools:text="9" />
 
         <TextView
-            android:id="@+id/textView6"
+            android:id="@+id/out_of_sign"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/out_of"
             android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.AppCompat.Display4"
+            android:visibility="invisible"
             tools:text="/" />
 
         <TextView
@@ -53,10 +56,15 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:textAppearance="@style/TextAppearance.AppCompat.Display4"
+            android:visibility="invisible"
             tools:text="20" />
 
     </LinearLayout>
 
+    <RelativeLayout
+        android:id="@+id/mybutton"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
     <TextView
         android:id="@+id/message"
         android:layout_width="match_parent"
@@ -64,6 +72,19 @@
         android:layout_marginTop="14sp"
         android:text="@string/Tag_line"
         android:textAlignment="center"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:visibility="invisible" />
 
+        <TextView
+            android:id="@+id/not_found"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@id/message"
+            android:layout_alignTop="@id/message"
+            android:layout_marginTop="14sp"
+            android:text="@string/result_not_found"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:visibility="invisible" />
+    </RelativeLayout>
 </LinearLayout>
