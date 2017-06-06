@@ -21,7 +21,7 @@ public class QuizCreateFragment extends Fragment {
 
     private final String QUESTION_FRAG = "QuestionCreateFragment";
     private EditText QuizTitleText;
-    private EditText QuizIdText;
+    private EditText QuizNumberText;
     private Button submitButton;
     private String mQuizName;
     private int mQuizNumber;
@@ -38,7 +38,7 @@ public class QuizCreateFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_quiz_create, container, false);
         QuizTitleText = (EditText) view.findViewById(R.id.view_edittext_title);
-        QuizIdText = (EditText) view.findViewById(R.id.view_edittext_number);
+        QuizNumberText = (EditText) view.findViewById(R.id.view_edittext_number);
         QuizTotalMarks = (EditText) view.findViewById(R.id.view_edittext_totalmarks_numbers);
 
         submitButton = (Button) view.findViewById(R.id.button_submit);
@@ -46,16 +46,40 @@ public class QuizCreateFragment extends Fragment {
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mQuizName = QuizTitleText.getText().toString();
-                mQuizNumber = Integer.parseInt(QuizIdText.getText().toString());
-                mQuizTotalMarks = Integer.parseInt(QuizTotalMarks.getText().toString());
-                mQuiz = new Quiz(mQuizName, mQuizNumber, mQuizTotalMarks);
-                mDatabaseReference.push().setValue(mQuiz);
 
-                // Replacing QuizCreateFragment with QuestionCreateFragment
-                final FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                ft.replace(R.id.fragment_container, QuestionTypeFragment.newInstance(mQuiz.getmQuizUuid()), QUESTION_FRAG);
-                ft.commit();
+                mQuizName = QuizTitleText.getText().toString();
+                if (mQuizName.length() == 0) {
+                    QuizTitleText.setError("Enter Quiz Title");
+                }
+
+
+                try {
+                    mQuizNumber = Integer.parseInt(QuizNumberText.getText().toString());
+
+
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                    QuizNumberText.setError("Enter Number");
+
+                }
+
+                try {
+                    mQuizTotalMarks = Integer.parseInt(QuizTotalMarks.getText().toString());
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                    QuizTotalMarks.setError("Enter Number");
+                }
+
+                if (!(mQuizName.length() == 0) && !(mQuizNumber == 0) && !(mQuizTotalMarks == 0)) {
+                    mQuiz = new Quiz(mQuizName, mQuizNumber, mQuizTotalMarks);
+                    mDatabaseReference.push().setValue(mQuiz);
+
+                    // Replacing QuizCreateFragment with QuestionCreateFragment
+                    final FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                    ft.replace(R.id.fragment_container, QuestionTypeFragment.newInstance(mQuiz.getmQuizUuid()), QUESTION_FRAG);
+                    ft.commit();
+                }
+
 
 
             }

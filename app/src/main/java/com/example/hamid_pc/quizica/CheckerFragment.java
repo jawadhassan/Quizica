@@ -2,8 +2,8 @@ package com.example.hamid_pc.quizica;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -80,6 +80,8 @@ public class CheckerFragment extends Fragment {
 
         mAnswerTextView.setText(mAnswerText);
 
+        TextInputLayout textInputLayout = (TextInputLayout) view.findViewById(R.id.view_edittext_layout_number);
+        textInputLayout.setHint("Enter Marks out of" + mTotalMarksPerQuestion);
 
         mSubmitButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,8 +89,8 @@ public class CheckerFragment extends Fragment {
                 CheckerActivity checkerActivity = (CheckerActivity) getActivity();
 
                 mTotalMarksObtained = Integer.parseInt(mEditTextView.getText().toString());
-                if (mTotalMarksPerQuestion < mTotalMarksObtained) {
-                    Log.d("check", "Marks exceed the limit");
+                if (mTotalMarksPerQuestion < mTotalMarksObtained || mTotalMarksObtained < 0) {
+                    mEditTextView.setError("The Number must be between 0 and" + mTotalMarksPerQuestion);
                 } else {
                     checkerActivity.replaceFragment(mTotalMarksObtained);
                 }

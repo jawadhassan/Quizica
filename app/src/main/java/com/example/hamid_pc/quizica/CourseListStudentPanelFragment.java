@@ -40,7 +40,6 @@ public class CourseListStudentPanelFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mFirebaseDatabase = FirebaseDatabase.getInstance();
-
         mDatabaseReference = mFirebaseDatabase.getReference().child(FirebaseAuth.getInstance().getCurrentUser().getUid());
     }
 
@@ -86,6 +85,8 @@ public class CourseListStudentPanelFragment extends Fragment {
             @Override
             protected void populateViewHolder(CourseViewHolder viewHolder, Course model, int position) {
                 viewHolder.textView.setText(model.getCourseName());
+                viewHolder.courseCodeView.setText("CourseCode: " + model.getCourseCode());
+                viewHolder.courseInstructorView.setText("CourseInstructor: " + model.getCourseInstructor());
                 Course course = getItem(position);
                 viewHolder.bindCourse(course);
             }
@@ -104,12 +105,17 @@ public class CourseListStudentPanelFragment extends Fragment {
 
     private static class CourseViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView textView;
+        TextView courseCodeView;
+        TextView courseInstructorView;
         Course mCourse;
 
         public CourseViewHolder(View itemView) {
             super(itemView);
             itemView.setOnClickListener(this);
             textView = (TextView) itemView.findViewById(R.id.list_item_course_title_text_view);
+            courseCodeView = (TextView) itemView.findViewById(R.id.course_code);
+            courseInstructorView = (TextView) itemView.findViewById(R.id.course_instructor);
+
         }
 
 

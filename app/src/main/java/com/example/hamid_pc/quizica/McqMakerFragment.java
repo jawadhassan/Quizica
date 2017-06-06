@@ -113,9 +113,6 @@ public class McqMakerFragment extends Fragment {
         doneButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Question question = new Question(editTextQuestion.getText().toString(), editTextOptionOne.getText().toString(), editTextOptionTwo.getText().toString(), editTextOptionThree.getText().toString(), editTextOptionFour.getText().toString(), editTextAnswer.getText().toString());
-                //Question question = new Question(editTextQuestion.getText().toString());
-                //mDatabaseReference.push().setValue(question);
                 submitForm();
             }
         });
@@ -199,7 +196,6 @@ public class McqMakerFragment extends Fragment {
     public void submitForm() {
         question = new Question(editTextQuestion.getText().toString(), editTextOptionOne.getText().toString(), editTextOptionTwo.getText().toString(), editTextOptionThree.getText().toString(), editTextOptionFour.getText().toString(), editTextAnswer.getText().toString());
         mDatabaseReference.push().setValue(question);
-
         getActivity().finish();
 
     }

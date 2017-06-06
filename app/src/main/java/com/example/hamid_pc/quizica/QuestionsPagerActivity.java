@@ -8,7 +8,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
@@ -102,7 +101,6 @@ public class QuestionsPagerActivity extends AppCompatActivity {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     question = snapshot.getValue(Question.class);
                     mQuestionsList.add(question);
-                    Log.d("quizacitivty", "" + mQuestionsList.get(mQuestionsList.size() - 1).getQuestion());
                     if (quizFragment == null) {
                         if (!mQuestionsList.isEmpty()) {
                             quizFragment = createFragment();
@@ -128,12 +126,15 @@ public class QuestionsPagerActivity extends AppCompatActivity {
     public Fragment createFragment() {
         mQuizReference.push().setValue(mStudent);
         if ((mQuestionsList.size()) > 0) {
-            mQuestionText = mQuestionsList.get(0).getQuestion();
-            mQuestionUuid = mQuestionsList.get(0).getQuestionUuid();
+
             if (mQuestionsList.get(0).getOptionOne() == null) {
+                mQuestionText = mQuestionsList.get(0).getQuestion();
+                mQuestionUuid = mQuestionsList.get(0).getQuestionUuid();
                 mQuestionsList.remove(0);
                 return TextQuizFragment.newInstance(mQuizUuid, mQuestionUuid, mQuestionText);
             } else {
+                mQuestionText = mQuestionsList.get(0).getQuestion();
+                mQuestionUuid = mQuestionsList.get(0).getQuestionUuid();
 
                 mQuestionText = mQuestionsList.get(0).getQuestion();
                 mQuestionOptionOne = mQuestionsList.get(0).getOptionOne();
@@ -157,10 +158,14 @@ public class QuestionsPagerActivity extends AppCompatActivity {
         if ((mQuestionsList.size()) > 0) {
 
             if (mQuestionsList.get(0).getOptionOne() == null) {
+                mQuestionText = mQuestionsList.get(0).getQuestion();
+                mQuestionUuid = mQuestionsList.get(0).getQuestionUuid();
 
                 fragmentTransaction.replace(R.id.fragment_container, TextQuizFragment.newInstance(mQuizUuid, mQuestionUuid, mQuestionsList.get(0).getQuestion()));
             fragmentTransaction.commit();
             } else {
+                mQuestionText = mQuestionsList.get(0).getQuestion();
+                mQuestionUuid = mQuestionsList.get(0).getQuestionUuid();
                 fragmentTransaction.replace(R.id.fragment_container, MCQQuizFragment.newInstance(mQuizUuid, mQuestionUuid, mQuestionsList.get(0).getQuestion(), mQuestionsList.get(0).getOptionOne(), mQuestionsList.get(0).getOptionTwo(), mQuestionsList.get(0).getOptionThree(), mQuestionsList.get(0).getOptionFour()));
                 fragmentTransaction.commit();
             }

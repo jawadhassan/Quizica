@@ -6,16 +6,45 @@
     android:clickable="true"
     android:orientation="vertical">
 
-
     <TextView
         android:id="@+id/list_item_course_title_text_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:height="72dp"
+        android:height="36dp"
         android:fontFamily="sans-serif"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
         android:paddingTop="8dp"
+        android:textColor="@android:color/black"
         android:textSize="16sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingBottom="5dp">
+
+        <TextView
+            android:id="@+id/course_code"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:height="15dp"
+            android:fontFamily="sans-serif-condensed"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:text="Check" />
+
+        <TextView
+            android:id="@+id/course_instructor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:height="15dp"
+            android:fontFamily="sans-serif-condensed"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:text="Check"
+            android:textStyle="normal|italic" />
+
+    </LinearLayout>
 
 </LinearLayout>

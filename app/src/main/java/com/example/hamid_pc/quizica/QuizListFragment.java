@@ -72,7 +72,8 @@ public class QuizListFragment extends Fragment {
             @Override
             protected void populateViewHolder(QuizHolder viewHolder, Quiz model, int position) {
                 viewHolder.mTitleTextView.setText(model.getmTitle());
-                viewHolder.mNumberTextView.setText("" + model.getmQuizNumber());
+                viewHolder.mNumberTextView.setText("Quiz Number: " + model.getmQuizNumber());
+                viewHolder.mTotalMarksTextView.setText("Total Marks: " + model.getmQuizTotalMarks());
                 Quiz quiz = getItem(position);
                 viewHolder.bindCourse(quiz);
             }
@@ -82,9 +83,10 @@ public class QuizListFragment extends Fragment {
     }
 
     private static class QuizHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        public TextView mTitleTextView;
-        public TextView mNumberTextView;
-        public Quiz mQuiz;
+        TextView mTitleTextView;
+        TextView mNumberTextView;
+        TextView mTotalMarksTextView;
+        Quiz mQuiz;
 
         public QuizHolder(View itemView) {
             super(itemView);
@@ -92,6 +94,7 @@ public class QuizListFragment extends Fragment {
             this.mTitleTextView = (TextView)
                     itemView.findViewById(R.id.list_item_quiz_title_text_view);
             this.mNumberTextView = (TextView) itemView.findViewById(R.id.list_item_quiz_number_text_view);
+            this.mTotalMarksTextView = (TextView) itemView.findViewById(R.id.total_marks);
         }
 
         public void bindCourse(Quiz quiz) {

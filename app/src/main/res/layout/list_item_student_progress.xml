@@ -8,6 +8,7 @@
     android:clickable="true"
     android:orientation="horizontal">
 
+
     <com.makeramen.roundedimageview.RoundedImageView
 
         android:id="@+id/imageView1"
@@ -23,8 +24,6 @@
         app:riv_mutate_background="true"
         app:riv_oval="true" />
 
-    <!--/>-->
-
 
     <TextView
         android:id="@+id/list_item_student_title_text_view"
@@ -39,5 +38,21 @@
         android:text="Okay"
         android:textColor="@android:color/black"
         android:textSize="16sp" />
+
+
+    <TextView
+        android:layout_width="49dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:height="56dp"
+        android:fontFamily="sans-serif"
+        android:paddingRight="8dp"
+        android:paddingTop="8dp"
+        android:text="@string/joined"
+        android:textAlignment="viewEnd"
+        android:textColor="#4788C7"
+        android:textSize="12sp"
+        android:textStyle="normal|italic" />
+
 
 </LinearLayout>

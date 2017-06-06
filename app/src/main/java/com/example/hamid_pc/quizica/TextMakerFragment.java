@@ -3,13 +3,11 @@ package com.example.hamid_pc.quizica;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -34,7 +32,6 @@ public class TextMakerFragment extends Fragment {
     public static TextMakerFragment newInstance(String QuizUuid) {
         TextMakerFragment frag = new TextMakerFragment();
         Bundle args = new Bundle();
-        Log.d("CheckTextMaker", QuizUuid);
         args.putString("quizuuid", QuizUuid);
         frag.setArguments(args);
         return frag;
@@ -88,14 +85,16 @@ public class TextMakerFragment extends Fragment {
     public void enableButton() {
         if (mQuestionValidated) {
             mButtonAddMore.setEnabled(true);
+            mButtonDone.setEnabled(true);
         }
     }
 
     public void submitForm() {
-        Toast.makeText(getContext(), "Successful", Toast.LENGTH_LONG).show();
         mQuestion = new Question(mQuestionText.getText().toString());
         mDatabaseReference.push().setValue(mQuestion);
         getActivity().finish();
 
     }
 }
+
+

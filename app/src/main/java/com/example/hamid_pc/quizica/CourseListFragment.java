@@ -9,7 +9,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -52,9 +51,10 @@ public class CourseListFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.miProfile:
-                Log.d("check", "okay");
                 FirebaseAuth.getInstance().signOut();
                 AuthenticationActivity.newIntent(getActivity());
+                getActivity().finish();
+
 
         }
 
@@ -65,7 +65,7 @@ public class CourseListFragment extends Fragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         MenuInflater inflater1 = getActivity().getMenuInflater();
-        inflater1.inflate(R.menu.mainmenu, menu);
+        inflater1.inflate(R.menu.signoutmenu, menu);
 
     }
 
@@ -75,8 +75,6 @@ public class CourseListFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_course_list, container, false);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.course_recycler_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-//        mRecyclerView.addItemDecoration(new HorizontalDividerItemDecoration.Builder(getContext())
-//                .color(R.color.tw__composer_deep_gray).sizeResId(R.dimen.tw__composer_divider_height).build());
         UpdateUI();
 
 
@@ -88,7 +86,7 @@ public class CourseListFragment extends Fragment {
                 startActivityForResult(intent, RC_COURSE);
             }
         });
-
+        setHasOptionsMenu(true);
 
         return view;
     }
@@ -105,6 +103,8 @@ public class CourseListFragment extends Fragment {
             @Override
             protected void populateViewHolder(CourseViewHolder viewHolder, Course model, int position) {
                 viewHolder.textView.setText(model.getCourseName());
+                viewHolder.courseCodeView.setText("CourseCode: " + model.getCourseCode());
+                viewHolder.courseInstructorView.setText("CourseInstructor: " + model.getCourseInstructor());
                 Course course = getItem(position);
                 viewHolder.bindCourse(course);
 
@@ -127,12 +127,15 @@ public class CourseListFragment extends Fragment {
 
     private static class CourseViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView textView;
+        TextView courseCodeView;
+        TextView courseInstructorView;
         Course mCourse;
         public CourseViewHolder(View itemView) {
             super(itemView);
             itemView.setOnClickListener(this);
             textView = (TextView) itemView.findViewById(R.id.list_item_course_title_text_view);
-
+            courseCodeView = (TextView) itemView.findViewById(R.id.course_code);
+            courseInstructorView = (TextView) itemView.findViewById(R.id.course_instructor);
 
         }
 

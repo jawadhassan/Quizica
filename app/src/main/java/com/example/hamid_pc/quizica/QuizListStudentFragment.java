@@ -38,6 +38,8 @@ public class QuizListStudentFragment extends Fragment {
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mCourseName = getArguments().getString("coursename");
         mDatabaseReference = mFirebaseDatabase.getReference(mCourseName + "/quizzes");
+
+
     }
 
     @Nullable
@@ -61,6 +63,8 @@ public class QuizListStudentFragment extends Fragment {
             @Override
             protected void populateViewHolder(QuizHolder viewHolder, Quiz model, int position) {
                 viewHolder.mTitleTextView.setText(model.getmTitle());
+                viewHolder.mNumberTextView.setText("Quiz Number: " + model.getmQuizNumber());
+                viewHolder.mTotalMarksTextView.setText("Total Marks: " + model.getmQuizTotalMarks());
                 Quiz quiz = getItem(position);
                 viewHolder.bindCourse(quiz);
             }
@@ -72,12 +76,16 @@ public class QuizListStudentFragment extends Fragment {
     private static class QuizHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView mTitleTextView;
         public Quiz mQuiz;
+        TextView mNumberTextView;
+        TextView mTotalMarksTextView;
 
         public QuizHolder(View itemView) {
             super(itemView);
             itemView.setOnClickListener(this);
             this.mTitleTextView = (TextView)
                     itemView.findViewById(R.id.list_item_quiz_title_text_view);
+            this.mNumberTextView = (TextView) itemView.findViewById(R.id.list_item_quiz_number_text_view);
+            this.mTotalMarksTextView = (TextView) itemView.findViewById(R.id.total_marks);
         }
 
         public void bindCourse(Quiz quiz) {
@@ -86,13 +94,17 @@ public class QuizListStudentFragment extends Fragment {
 
         @Override
         public void onClick(View v) {
+
+
             AppCompatActivity appCompatActivity = (AppCompatActivity) v.getContext();
             if (appCompatActivity instanceof QuizListStudentActivity) {
+
+
                 QuizListStudentActivity activityStudentQuizList = (QuizListStudentActivity) appCompatActivity;
                 FragmentManager manager = activityStudentQuizList.getSupportFragmentManager();
-
                 QuizStudentOperationFragment quizStudentOperationFragment = QuizStudentOperationFragment.newInstance(mQuiz.getmQuizUuid());
                 quizStudentOperationFragment.show(manager, QUIZ_OPERATION);
+
 
 
             }

@@ -63,7 +63,7 @@ public class QuizProgressFragment extends Fragment {
     public void updateUI() {
         mAdapter = new FirebaseRecyclerAdapter<Student, StudentHolder>(
                 Student.class,
-                R.layout.list_item_student,
+                R.layout.list_item_student_progress,
                 StudentHolder.class,
                 mDatabaseReference) {
             @Override
