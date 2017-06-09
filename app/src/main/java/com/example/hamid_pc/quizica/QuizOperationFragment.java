@@ -16,13 +16,14 @@ import android.support.v7.app.AlertDialog;
 public class QuizOperationFragment extends DialogFragment {
 
 
-    public static QuizOperationFragment newInstance(int QuizNumber, String QuizName, int QuizTotalMarks, String QuizUuid) {
+    public static QuizOperationFragment newInstance(String CourseName, int QuizNumber, String QuizName, int QuizTotalMarks, String QuizUuid) {
         QuizOperationFragment frag = new QuizOperationFragment();
         Bundle args = new Bundle();
         args.putString("quizname", QuizName);
         args.putInt("quiznumber", QuizNumber);
         args.putString("quizuuid", QuizUuid);
         args.putInt("quiztotalmarks", QuizTotalMarks);
+        args.putString("coursename", CourseName);
         frag.setArguments(args);
         return frag;
     }
@@ -36,6 +37,7 @@ public class QuizOperationFragment extends DialogFragment {
         final int QuizNumber = getArguments().getInt("quiznumber");
         final String mQuizUuid = getArguments().getString("quizuuid");
         final int mQuizTotalMarks = getArguments().getInt("quiztotalmarks");
+        final String CourseName = getArguments().getString("coursename");
         //    View v = LayoutInflater.from(getActivity())
         //          .inflate(R.layout.dialog_operation,null);
         return new AlertDialog.Builder(getActivity())
@@ -46,7 +48,7 @@ public class QuizOperationFragment extends DialogFragment {
                     public void onClick(DialogInterface dialog, int which) {
                         switch (which) {
                             case 0:
-                                Intent QuizProgressIntent = QuizProgressActivity.NewIntent(getActivity(), mQuizUuid);
+                                Intent QuizProgressIntent = QuizProgressActivity.NewIntent(getActivity(), CourseName, mQuizUuid);
                                 startActivity(QuizProgressIntent);
                                 break;
                             case 1:

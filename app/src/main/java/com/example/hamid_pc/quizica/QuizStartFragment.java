@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
@@ -96,9 +97,11 @@ public class QuizStartFragment extends Fragment {
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 mQuiz = dataSnapshot.getValue(Quiz.class);
 
+
                 mQuizTitle.setText(mQuiz.getmTitle());
                 mQuizNumber.setText(mQuizNumberString + mQuiz.getmQuizNumber());
                 mQuizTotalMarks.setText(mTotalMarksString + mQuiz.getmQuizTotalMarks());
+
             }
 
             @Override
@@ -126,16 +129,22 @@ public class QuizStartFragment extends Fragment {
         mViewResult.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Intent intent = QuizResultActivity.NewIntent(getActivity(), mQuizUuid);
                 startActivity(intent);
+
             }
         });
 
         mStartQuiz.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (mQuiz.ismStarted()) {
                 Intent StartQuizIntent = QuestionsPagerActivity.NewIntent(getActivity(), mQuizUuid);
-                startActivity(StartQuizIntent);
+                    startActivity(StartQuizIntent);
+                } else {
+                    Toast.makeText(getActivity(), "Quiz not started yet by Instructor", Toast.LENGTH_LONG).show();
+                }
             }
         });
 

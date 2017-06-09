@@ -11,6 +11,7 @@ public class Quiz {
     private int mQuizNumber;
     private String mQuizUuid;
     private int mQuizTotalMarks;
+    private boolean mStarted;
 
 
     public Quiz(String mTitle, int mQuizNumber, int mQuizTotalMarks) {
@@ -18,9 +19,18 @@ public class Quiz {
         this.mQuizNumber = mQuizNumber;
         this.mQuizTotalMarks = mQuizTotalMarks;
         mQuizUuid = UUID.randomUUID().toString();
+        mStarted = false;
     }
 
     public Quiz() {
+    }
+
+    public boolean ismStarted() {
+        return mStarted;
+    }
+
+    public void setmStarted(boolean mStarted) {
+        this.mStarted = mStarted;
     }
 
     public int getmQuizTotalMarks() {

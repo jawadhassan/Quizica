@@ -94,7 +94,7 @@ public class QuizCreateFragment extends Fragment {
         super.onCreate(savedInstanceState);
         mCourseName = getArguments().getString("coursename");
         mFirebaseDatabase = FirebaseDatabase.getInstance();
-        mDatabaseReference = mFirebaseDatabase.getReference().child(mCourseName + "/quizzes");
+        mDatabaseReference = mFirebaseDatabase.getReference(mCourseName + "/quizzes");
 
 
     }

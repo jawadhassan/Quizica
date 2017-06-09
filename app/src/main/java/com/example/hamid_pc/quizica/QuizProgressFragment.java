@@ -12,6 +12,9 @@ import android.widget.TextView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.fondesa.recyclerviewdivider.RecyclerViewDivider;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -25,14 +28,16 @@ public class QuizProgressFragment extends Fragment {
     private FirebaseRecyclerAdapter mAdapter;
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mDatabaseReference;
-
+    private DatabaseReference mQuizReference;
+    private String mCourseName;
     private String mQuizUuid;
+    private Quiz mQuiz;
 
-
-    public static QuizProgressFragment newInstance(String QuizUuid) {
+    public static QuizProgressFragment newInstance(String CourseName, String QuizUuid) {
         QuizProgressFragment frag = new QuizProgressFragment();
         Bundle args = new Bundle();
         args.putString("quizuuid", QuizUuid);
+        args.putString("coursename", CourseName);
         frag.setArguments(args);
         return frag;
     }
@@ -43,10 +48,40 @@ public class QuizProgressFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mQuizUuid = getArguments().getString("quizuuid");
+        mCourseName = getArguments().getString("coursename");
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mDatabaseReference = mFirebaseDatabase.getReference().child(mQuizUuid);
+        mQuizReference = mFirebaseDatabase.getReference().child(mCourseName + "/quizzes");
+        mQuizReference.orderByChild("mQuizUuid").equalTo(mQuizUuid).addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                dataSnapshot.getRef().child("mStarted").setValue(true);
+
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
     }
+
 
     @Nullable
     @Override
@@ -59,6 +94,7 @@ public class QuizProgressFragment extends Fragment {
 
         return view;
     }
+
 
     public void updateUI() {
         mAdapter = new FirebaseRecyclerAdapter<Student, StudentHolder>(
@@ -99,6 +135,7 @@ public class QuizProgressFragment extends Fragment {
 
         }
     }
+
 
 }
 
