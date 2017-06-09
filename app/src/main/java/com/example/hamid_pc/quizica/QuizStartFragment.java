@@ -74,23 +74,7 @@ public class QuizStartFragment extends Fragment {
         mTotalMarksString = getResources().getString(R.string.quiz_total_marks);
         mQuizNumberString = getResources().getString(R.string.quiz_number);
 
-
-        mQuizReference.orderByChild("uuid").equalTo(FirebaseAuth.getInstance().getCurrentUser().getUid());
-        mQuizReference.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    mViewResult.setVisibility(View.VISIBLE);
-                } else {
-                    mStartQuiz.setVisibility(View.VISIBLE);
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
+        SwitchLayout();
 
         mDatabaseReference.orderByChild("mQuizUuid").equalTo(mQuizUuid).addChildEventListener(new ChildEventListener() {
             @Override
@@ -151,5 +135,37 @@ public class QuizStartFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        SwitchLayout();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mViewResult.setVisibility(View.INVISIBLE);
+        mStartQuiz.setVisibility(View.INVISIBLE);
+    }
+
+    public void SwitchLayout() {
+        mQuizReference.orderByChild("uuid").equalTo(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        mQuizReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    mViewResult.setVisibility(View.VISIBLE);
+                } else {
+                    mStartQuiz.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+    }
 
 }
