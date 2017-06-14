@@ -7,6 +7,14 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 
 /**
@@ -15,6 +23,9 @@ import android.support.v7.app.AlertDialog;
 
 public class QuizOperationFragment extends DialogFragment {
 
+
+    private FirebaseDatabase mFirebaseDatabase;
+    private DatabaseReference mQuizReference;
 
     public static QuizOperationFragment newInstance(String CourseName, int QuizNumber, String QuizName, int QuizTotalMarks, String QuizUuid) {
         QuizOperationFragment frag = new QuizOperationFragment();
@@ -38,6 +49,9 @@ public class QuizOperationFragment extends DialogFragment {
         final String mQuizUuid = getArguments().getString("quizuuid");
         final int mQuizTotalMarks = getArguments().getInt("quiztotalmarks");
         final String CourseName = getArguments().getString("coursename");
+
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        mQuizReference = mFirebaseDatabase.getReference(CourseName + "/quizzes");
         //    View v = LayoutInflater.from(getActivity())
         //          .inflate(R.layout.dialog_operation,null);
         return new AlertDialog.Builder(getActivity())
@@ -57,6 +71,21 @@ public class QuizOperationFragment extends DialogFragment {
                                 startActivity(intent);
                                 break;
                             case 2:
+
+                                Query query = mQuizReference.orderByChild("mQuizUuid").equalTo(mQuizUuid);
+                                query.addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                        for (DataSnapshot coursSnapshot : dataSnapshot.getChildren()) {
+                                            coursSnapshot.getRef().removeValue();
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+                                        Log.e("check", "onCancelled", databaseError.toException());
+                                    }
+                                });
                                 break;
                         }
                     }

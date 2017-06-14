@@ -18,6 +18,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
+
 
 /**
  * Created by Hamid-PC on 4/21/2017.
@@ -101,6 +103,7 @@ public class QuestionsPagerActivity extends AppCompatActivity {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     question = snapshot.getValue(Question.class);
                     mQuestionsList.add(question);
+
                     if (quizFragment == null) {
                         if (!mQuestionsList.isEmpty()) {
                             quizFragment = createFragment();
@@ -125,9 +128,10 @@ public class QuestionsPagerActivity extends AppCompatActivity {
 
     public Fragment createFragment() {
         mQuizReference.push().setValue(mStudent);
-        if ((mQuestionsList.size()) > 0) {
-
+        if (!mQuestionsList.isEmpty()) {
+            Collections.shuffle(mQuestionsList);
             if (mQuestionsList.get(0).getOptionOne() == null) {
+
                 mQuestionText = mQuestionsList.get(0).getQuestion();
                 mQuestionUuid = mQuestionsList.get(0).getQuestionUuid();
                 mQuestionsList.remove(0);
@@ -152,6 +156,7 @@ public class QuestionsPagerActivity extends AppCompatActivity {
 
     public void replaceFragment() {
 
+        Collections.shuffle(mQuestionsList);
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
 
